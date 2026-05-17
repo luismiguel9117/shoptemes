@@ -1,0 +1,17 @@
+# OS Files
+.DS_Store
+Thumbs.db
+*.log
+
+# Shopify CLI Caches and Configs
+.shopify/
+.shopify
+
+# IDEs and Editors
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?

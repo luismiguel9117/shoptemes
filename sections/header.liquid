@@ -1,0 +1,100 @@
+<nav id="shopify-section-header" class="fixed top-0 w-full z-50 transition-all duration-500 bg-surface/90 h-16 border-b border-white/20 backdrop-blur-xl flex items-center px-6 md:px-20">
+  <div class="max-w-7xl mx-auto w-full flex justify-between items-center h-full relative">
+    <div class="flex items-center gap-6">
+      <button onclick="toggleDrawer()" class="p-2 -ml-2 text-primary hover:opacity-70 transition-all cursor-pointer lg:hidden">
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-8 h-8"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+      </button>
+      <a href="/" class="cursor-pointer flex items-center gap-3 group">
+        <div class="relative w-10 h-10 rounded-full border border-accent/20 overflow-hidden flex items-center justify-center flex-shrink-0 shadow-sm transition-all duration-500 group-hover:border-accent/40">
+          <img src="{{ 'logo.png' | asset_url }}" alt="{{ shop.name }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 relative z-10" />
+        </div>
+        <div class="flex flex-col -space-y-1.5">
+          <span class="font-serif text-[18px] font-bold tracking-[0.1em] uppercase text-on-surface leading-tight">Ritual</span>
+          <span class="font-serif text-[11px] font-medium tracking-[0.1em] uppercase text-accent leading-tight">Cosmético</span>
+        </div>
+      </a>
+    </div>
+    
+    <div class="hidden lg:flex items-center gap-10">
+      {% for link in linklists.main-menu.links %}
+      <a href="{{ link.url }}" class="font-sans text-[12px] font-bold uppercase transition-all tracking-[0.2em] cursor-pointer relative group {% if link.active %}text-primary{% else %}text-on-surface-variant hover:text-primary{% endif %}">
+        {{ link.title }}
+        <span class="absolute -bottom-1 left-0 h-0.5 bg-accent transition-all duration-300 {% if link.active %}w-full{% else %}w-0 group-hover:w-full{% endif %}"></span>
+      </a>
+      {% endfor %}
+    </div>
+
+    <div class="flex items-center gap-6">
+      <a href="/cart" class="flex items-center gap-3 group cursor-pointer relative">
+        <span class="text-[12px] font-bold text-on-surface-variant hidden md:block uppercase tracking-widest">Carrito</span>
+        <div class="relative">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6 text-[#1a1c1a] group-hover:scale-110 transition-transform"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+          {% if cart.item_count > 0 %}
+            <div class="absolute -top-1.5 -right-1.5 w-5 h-5 bg-accent text-white text-[10px] font-bold flex items-center justify-center rounded-full shadow-lg">
+              {{ cart.item_count }}
+            </div>
+          {% endif %}
+        </div>
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- Drawer Overlay (Hidden by default) -->
+<div id="mobile-drawer" class="hidden">
+  <div onclick="toggleDrawer()" class="fixed inset-0 bg-on-background/20 backdrop-blur-sm z-[60]"></div>
+  <aside class="fixed top-0 left-0 h-full w-80 md:w-96 bg-surface/90 backdrop-blur-2xl border-r border-white/20 shadow-2xl z-[70] flex flex-col p-12 space-y-12 transition-transform -translate-x-full duration-300 ease-out" id="drawer-menu">
+    <div class="flex justify-between items-center">
+      <a href="/" class="cursor-pointer">
+        <!-- Logo here -->
+      </a>
+      <button onclick="toggleDrawer()" class="text-primary hover:rotate-90 transition-all duration-300 cursor-pointer">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+      </button>
+    </div>
+    <nav class="flex flex-col space-y-8">
+      {% for link in linklists.main-menu.links %}
+      <a href="{{ link.url }}" class="group flex items-center gap-4 text-[12px] font-semibold tracking-[0.2em] uppercase text-on-surface-variant hover:text-primary hover:translate-x-2 transition-transform duration-300 text-left">
+        {{ link.title }}
+      </a>
+      {% endfor %}
+    </nav>
+  </aside>
+</div>
+
+<script>
+  function toggleDrawer() {
+    const drawer = document.getElementById('mobile-drawer');
+    const menu = document.getElementById('drawer-menu');
+    if (drawer.classList.contains('hidden')) {
+      drawer.classList.remove('hidden');
+      setTimeout(() => {
+        menu.classList.remove('-translate-x-full');
+      }, 10);
+    } else {
+      menu.classList.add('-translate-x-full');
+      setTimeout(() => {
+        drawer.classList.add('hidden');
+      }, 300);
+    }
+  }
+
+  // Scroll effect
+  window.addEventListener('scroll', () => {
+    const nav = document.getElementById('shopify-section-header');
+    if (window.scrollY > 50) {
+      nav.classList.add('bg-surface/90', 'h-16', 'border-b', 'border-white/20');
+      nav.classList.remove('bg-transparent', 'h-24');
+    } else {
+      nav.classList.remove('bg-surface/90', 'h-16', 'border-b', 'border-white/20');
+      nav.classList.add('bg-transparent', 'h-24');
+    }
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": []
+}
+{% endschema %}
