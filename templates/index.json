@@ -3,30 +3,6 @@
     "hero": {
       "type": "luxury-hero",
       "blocks": {
-        "nav_1": {
-          "type": "nav_item",
-          "settings": {
-            "label": "Shop"
-          }
-        },
-        "nav_2": {
-          "type": "nav_item",
-          "settings": {
-            "label": "Collections"
-          }
-        },
-        "nav_3": {
-          "type": "nav_item",
-          "settings": {
-            "label": "About"
-          }
-        },
-        "nav_4": {
-          "type": "nav_item",
-          "settings": {
-            "label": "Journal"
-          }
-        },
         "subtitle": {
           "type": "subtitle",
           "settings": {
@@ -75,10 +51,6 @@
         }
       },
       "block_order": [
-        "nav_1",
-        "nav_2",
-        "nav_3",
-        "nav_4",
         "subtitle",
         "spacer_1",
         "title",
@@ -88,8 +60,6 @@
         "buttons"
       ],
       "settings": {
-        "show_header": true,
-        "brand_name": "LUMINA",
         "bottom_left_label": "Handcrafted",
         "bottom_left_text": "Lima — Peru",
         "bottom_right_label": "New Drop",

@@ -1,11 +1,9 @@
 {%- comment -%}
-  Ritual Cosmético / ShopTHEMES - Luxury Hero Section (OS 2.0 Block-Based Architecture with Editable Nav Tabs)
-  Permite al comerciante añadir, quitar y reordenar pestañas del navbar e interactuar con el contenido.
+  Ritual Cosmético / ShopTHEMES - Luxury Hero Section (OS 2.0 Banner Pure Content)
+  Este componente se enfoca 100% en la presentación visual del Hero (títulos, espaciadores, descripciones, botones).
 {%- endcomment -%}
 
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Montserrat:wght@200;300;400;500;700&display=swap');
-
   .luxury-hero-{{ section.id }} {
     --heading-font: 'Cormorant Garamond', serif;
     --sans-font: 'Montserrat', sans-serif;
@@ -55,86 +53,6 @@
     opacity: var(--overlay-opacity);
     z-index: 2;
     transition: opacity 0.5s ease;
-  }
-
-  /* Navigation Header Overlay */
-  .luxury-hero-{{ section.id }} .luxury-hero__header {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 20;
-    padding: 2.5rem 4rem;
-    display: grid;
-    grid-template-columns: 1fr auto 1fr;
-    align-items: center;
-    box-sizing: border-box;
-  }
-  @media (max-width: 768px) {
-    .luxury-hero-{{ section.id }} .luxury-hero__header {
-      padding: 1.5rem 2rem;
-      display: flex;
-      justify-content: space-between;
-    }
-    .luxury-hero-{{ section.id }} .luxury-hero__nav {
-      display: none !important;
-    }
-  }
-  .luxury-hero-{{ section.id }} .luxury-hero__nav-left {
-    display: flex;
-    gap: 2.5rem;
-    align-items: center;
-  }
-  .luxury-hero-{{ section.id }} .luxury-hero__nav-link {
-    color: var(--text-color);
-    text-decoration: none;
-    font-size: 11px;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.25em;
-    opacity: 0.8;
-    transition: opacity 0.4s cubic-bezier(0.25, 1, 0.5, 1), transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
-    position: relative;
-  }
-  .luxury-hero-{{ section.id }} .luxury-hero__nav-link::after {
-    content: '';
-    position: absolute;
-    bottom: -4px;
-    left: 0;
-    width: 0;
-    height: 1px;
-    background-color: var(--text-color);
-    transition: width 0.4s cubic-bezier(0.25, 1, 0.5, 1);
-  }
-  .luxury-hero-{{ section.id }} .luxury-hero__nav-link:hover {
-    opacity: 1;
-    transform: translateY(-1px);
-  }
-  .luxury-hero-{{ section.id }} .luxury-hero__nav-link:hover::after {
-    width: 100%;
-  }
-
-  .luxury-hero-{{ section.id }} .luxury-hero__logo {
-    font-family: var(--heading-font);
-    font-size: 32px;
-    font-weight: 300;
-    letter-spacing: 0.35em;
-    text-transform: uppercase;
-    color: var(--text-color);
-    text-decoration: none;
-    text-align: center;
-    margin-left: 0.35em; /* Compensar espaciado de letras */
-    transition: opacity 0.5s ease;
-  }
-  .luxury-hero-{{ section.id }} .luxury-hero__logo:hover {
-    opacity: 0.8;
-  }
-
-  .luxury-hero-{{ section.id }} .luxury-hero__nav-right {
-    display: flex;
-    gap: 2.5rem;
-    align-items: center;
-    justify-content: flex-end;
   }
 
   /* Main Hero Content Container */
@@ -416,51 +334,6 @@
     <div class="luxury-hero__overlay"></div>
   </div>
 
-  <!-- Transparent integrated custom header -->
-  {%- if section.settings.show_header -%}
-    <header class="luxury-hero__header">
-      <!-- Left side shop links (Triple Fallback Editable System) -->
-      <nav class="luxury-hero__nav luxury-hero__nav-left">
-        {%- assign has_nav_blocks = false -%}
-        {%- for block in section.blocks -%}
-          {%- if block.type == 'nav_item' -%}
-            {%- assign has_nav_blocks = true -%}
-            <a href="{{ block.settings.link | default: '#' }}" class="luxury-hero__nav-link" {{ block.shopify_attributes }}>
-              {{ block.settings.label }}
-            </a>
-          {%- endif -%}
-        {%- endfor -%}
-
-        {%- if has_nav_blocks == false -%}
-          {%- if section.settings.menu != blank -%}
-            {%- for link in linklists[section.settings.menu].links -%}
-              <a href="{{ link.url }}" class="luxury-hero__nav-link">{{ link.title }}</a>
-            {%- endfor -%}
-          {%- else -%}
-            <a href="#" class="luxury-hero__nav-link">Shop</a>
-            <a href="#" class="luxury-hero__nav-link">Collections</a>
-            <a href="#" class="luxury-hero__nav-link">About</a>
-            <a href="#" class="luxury-hero__nav-link">Journal</a>
-          {%- endif -%}
-        {%- endif -%}
-      </nav>
-
-      <!-- Center Logo brand title -->
-      <a href="{{ routes.root_url }}" class="luxury-hero__logo">
-        {{ section.settings.brand_name }}
-      </a>
-
-      <!-- Right side general links -->
-      <nav class="luxury-hero__nav luxury-hero__nav-right">
-        <a href="/search" class="luxury-hero__nav-link">Search</a>
-        {%- if shop.customer_accounts_enabled -%}
-          <a href="/account" class="luxury-hero__nav-link">Account</a>
-        {%- endif -%}
-        <a href="/cart" class="luxury-hero__nav-link">Cart (0)</a>
-      </nav>
-    </header>
-  {%- endif -%}
-
   <!-- Main visual indicators (LUMINA slide style) -->
   {%- if section.settings.show_slide_indicator -%}
     <div class="luxury-hero__indicator">
@@ -472,7 +345,7 @@
     </div>
   {%- endif -%}
 
-  <!-- Main Content container iterating blocks (ignores nav_item type blocks) -->
+  <!-- Main Content container iterating blocks -->
   <div class="luxury-hero__container">
     <div class="luxury-hero__content">
       {%- for block in section.blocks -%}
@@ -571,28 +444,6 @@
     },
     {
       "type": "header",
-      "content": "Encabezado Premium Integrado"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_header",
-      "label": "Activar Header Integrado",
-      "default": true
-    },
-    {
-      "type": "text",
-      "id": "brand_name",
-      "label": "Nombre de la Marca (Logo)",
-      "default": "LUMINA"
-    },
-    {
-      "type": "link_list",
-      "id": "menu",
-      "label": "Menú de Enlaces Alternativo",
-      "info": "Opcional. Si añades bloques del tipo 'Pestaña de Navegación', estos tendrán prioridad absoluta."
-    },
-    {
-      "type": "header",
       "content": "Detalles de Artesanía e Indicador"
     },
     {
@@ -677,23 +528,6 @@
     }
   ],
   "blocks": [
-    {
-      "type": "nav_item",
-      "name": "Pestaña de Navegación",
-      "settings": [
-        {
-          "type": "text",
-          "id": "label",
-          "label": "Nombre de la Pestaña",
-          "default": "Nueva Pestaña"
-        },
-        {
-          "type": "url",
-          "id": "link",
-          "label": "Enlace (URL)"
-        }
-      ]
-    },
     {
       "type": "subtitle",
       "name": "Subtítulo",
@@ -837,30 +671,6 @@
       "name": "Luxury Hero Editorial",
       "category": "Hero Banners",
       "blocks": [
-        {
-          "type": "nav_item",
-          "settings": {
-            "label": "Shop"
-          }
-        },
-        {
-          "type": "nav_item",
-          "settings": {
-            "label": "Collections"
-          }
-        },
-        {
-          "type": "nav_item",
-          "settings": {
-            "label": "About"
-          }
-        },
-        {
-          "type": "nav_item",
-          "settings": {
-            "label": "Journal"
-          }
-        },
         {
           "type": "subtitle"
         },

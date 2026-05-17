@@ -2,7 +2,47 @@
   "current": "Default",
   "presets": {
     "Default": {
-      "sections": {}
+      "sections": {
+        "header": {
+          "type": "header",
+          "blocks": {
+            "nav_1": {
+              "type": "nav_item",
+              "settings": {
+                "label": "Shop"
+              }
+            },
+            "nav_2": {
+              "type": "nav_item",
+              "settings": {
+                "label": "Collections"
+              }
+            },
+            "nav_3": {
+              "type": "nav_item",
+              "settings": {
+                "label": "About"
+              }
+            },
+            "nav_4": {
+              "type": "nav_item",
+              "settings": {
+                "label": "Journal"
+              }
+            }
+          },
+          "block_order": [
+            "nav_1",
+            "nav_2",
+            "nav_3",
+            "nav_4"
+          ],
+          "settings": {
+            "brand_name": "LUMINA",
+            "text_color": "#ffffff"
+          }
+        }
+      }
     }
   }
 }
