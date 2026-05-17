@@ -22,7 +22,9 @@
     {{ 'theme.css' | asset_url | stylesheet_tag }}
   </head>
   <body class="min-h-screen bg-background font-sans text-on-surface">
-    {% section 'header' %}
+    {% unless template == 'index' %}
+      {% section 'header' %}
+    {% endunless %}
     
     <main role="main" id="MainContent">
       {{ content_for_layout }}
