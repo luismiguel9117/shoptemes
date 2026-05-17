@@ -1,7 +1,75 @@
 {
   "sections": {
     "hero": {
-      "type": "hero"
+      "type": "luxury-hero",
+      "blocks": {
+        "subtitle": {
+          "type": "subtitle",
+          "settings": {
+            "text": "Fine Jewelry Collection 2026"
+          }
+        },
+        "spacer_1": {
+          "type": "spacer",
+          "settings": {
+            "height": 20
+          }
+        },
+        "title": {
+          "type": "title",
+          "settings": {
+            "title_line_1": "Designed to be",
+            "title_line_2": "cherished forever.",
+            "title_line_2_italic": true
+          }
+        },
+        "spacer_2": {
+          "type": "spacer",
+          "settings": {
+            "height": 20
+          }
+        },
+        "description": {
+          "type": "description",
+          "settings": {
+            "text": "Timeless pieces, handcrafted with precision and passion in 18k gold and natural diamonds.",
+            "max_width": 460
+          }
+        },
+        "spacer_3": {
+          "type": "spacer",
+          "settings": {
+            "height": 35
+          }
+        },
+        "buttons": {
+          "type": "buttons",
+          "settings": {
+            "button_style": "underline",
+            "btn_1_label": "Explore Collection"
+          }
+        }
+      },
+      "block_order": [
+        "subtitle",
+        "spacer_1",
+        "title",
+        "spacer_2",
+        "description",
+        "spacer_3",
+        "buttons"
+      ],
+      "settings": {
+        "show_header": true,
+        "brand_name": "LUMINA",
+        "bottom_left_label": "Handcrafted",
+        "bottom_left_text": "Lima — Peru",
+        "bottom_right_label": "New Drop",
+        "bottom_right_text": "Limited Edition Pieces",
+        "show_slide_indicator": true,
+        "slide_current": "01",
+        "slide_total": "03"
+      }
     },
     "product-grid": {
       "type": "product-grid"

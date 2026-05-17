@@ -1,6 +1,6 @@
 {%- comment -%}
-  Ritual Cosmético / ShopTHEMES - Luxury Hero Section (OS 2.0)
-  Fusiona la maquetación editorial de "LUMINA" (imagen de referencia) con los controles de "AUREL" (código React).
+  Ritual Cosmético / ShopTHEMES - Luxury Hero Section (OS 2.0 Block-Based Architecture)
+  Permite al comerciante añadir, quitar, reordenar y espaciar bloques de forma totalmente flexible.
 {%- endcomment -%}
 
 <style>
@@ -137,7 +137,7 @@
     justify-content: flex-end;
   }
 
-  /* Main Hero Content */
+  /* Main Hero Content Container */
   .luxury-hero-{{ section.id }} .luxury-hero__container {
     position: relative;
     z-index: 10;
@@ -155,20 +155,24 @@
     }
   }
   .luxury-hero-{{ section.id }} .luxury-hero__content {
-    max-w: 680px;
+    max-width: 680px;
     text-align: left;
     margin-top: 4rem;
   }
+
+  /* Subtitle Block */
   .luxury-hero-{{ section.id }} .luxury-hero__subtitle {
     font-size: 11px;
     font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 0.45em;
-    margin-bottom: 2rem;
-    opacity: 0.8;
     display: block;
+    margin: 0;
+    opacity: 0;
     animation: fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
+
+  /* Title Block */
   .luxury-hero-{{ section.id }} .luxury-hero__title {
     font-family: var(--heading-font);
     font-size: clamp(48px, 6vw, 84px);
@@ -178,6 +182,7 @@
     text-transform: none;
     letter-spacing: -0.02em;
     color: var(--text-color);
+    opacity: 0;
     animation: fadeInUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
   .luxury-hero-{{ section.id }} .luxury-hero__title span.italic {
@@ -187,24 +192,24 @@
     display: block;
     opacity: 0.9;
   }
+
+  /* Description Block */
   .luxury-hero-{{ section.id }} .luxury-hero__desc {
     font-size: clamp(13px, 1.5vw, 15px);
     line-height: 1.8;
-    max-width: 460px;
-    margin-top: 2rem;
-    margin-bottom: 0;
-    opacity: 0.75;
+    margin: 0;
     font-weight: 300;
+    opacity: 0;
     animation: fadeInUp 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
 
   /* CTAs: Underlined Link vs Dual Pills */
   .luxury-hero-{{ section.id }} .luxury-hero__ctas {
-    margin-top: 3.5rem;
     display: flex;
     flex-wrap: wrap;
     gap: 1.5rem;
     align-items: center;
+    opacity: 0;
     animation: fadeInUp 1.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
   
@@ -273,6 +278,12 @@
     transform: translateY(-2px);
     border-color: var(--text-color);
     background-color: rgba(255,255,255,0.08);
+  }
+
+  /* Spacers */
+  .luxury-hero-{{ section.id }} .luxury-hero__spacer {
+    width: 100%;
+    clear: both;
   }
 
   /* Bottom Details Grid */
@@ -449,50 +460,66 @@
     </div>
   {%- endif -%}
 
-  <!-- Main Content container -->
+  <!-- Main Content container iterating blocks -->
   <div class="luxury-hero__container">
     <div class="luxury-hero__content">
-      {%- if section.settings.subtitle != blank -%}
-        <span class="luxury-hero__subtitle">{{ section.settings.subtitle }}</span>
-      {%- endif -%}
+      {%- for block in section.blocks -%}
+        {%- case block.type -%}
+          
+          {%- when 'subtitle' -%}
+            {%- if block.settings.text != blank -%}
+              <span class="luxury-hero__subtitle" style="{% if block.settings.color != blank %}color: {{ block.settings.color }};{% endif %}" {{ block.shopify_attributes }}>
+                {{ block.settings.text }}
+              </span>
+            {%- endif -%}
 
-      <h1 class="luxury-hero__title">
-        {{ section.settings.title_line_1 }}
-        {%- if section.settings.title_line_2 != blank -%}
-          <span class="{% if section.settings.title_line_2_italic %}italic{% endif %}">
-            {{ section.settings.title_line_2 }}
-          </span>
-        {%- endif -%}
-      </h1>
+          {%- when 'title' -%}
+            <h1 class="luxury-hero__title" style="{% if block.settings.color != blank %}color: {{ block.settings.color }};{% endif %}" {{ block.shopify_attributes }}>
+              {{ block.settings.title_line_1 }}
+              {%- if block.settings.title_line_2 != blank -%}
+                <span class="{% if block.settings.title_line_2_italic %}italic{% endif %}">
+                  {{ block.settings.title_line_2 }}
+                </span>
+              {%- endif -%}
+            </h1>
 
-      {%- if section.settings.description != blank -%}
-        <p class="luxury-hero__desc">{{ section.settings.description }}</p>
-      {%- endif -%}
+          {%- when 'description' -%}
+            {%- if block.settings.text != blank -%}
+              <p class="luxury-hero__desc" style="max-width: {{ block.settings.max_width }}px; {% if block.settings.color != blank %}color: {{ block.settings.color }};{% endif %}" {{ block.shopify_attributes }}>
+                {{ block.settings.text }}
+              </p>
+            {%- endif -%}
 
-      <!-- CTAs: Exponemos estilo doble boton o enlace sutil según configuración -->
-      <div class="luxury-hero__ctas">
-        {%- if section.settings.button_style == 'underline' -%}
-          {%- if section.settings.btn_1_label != blank -%}
-            <a href="{{ section.settings.btn_1_link | default: '#' }}" class="luxury-hero__cta-underline">
-              {{ section.settings.btn_1_label }}
-              <svg viewBox="0 0 24 24">
-                <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </a>
-          {%- endif -%}
-        {%- else -%}
-          {%- if section.settings.btn_1_label != blank -%}
-            <a href="{{ section.settings.btn_1_link | default: '#' }}" class="luxury-hero__btn-fill">
-              {{ section.settings.btn_1_label }}
-            </a>
-          {%- endif -%}
-          {%- if section.settings.btn_2_label != blank -%}
-            <a href="{{ section.settings.btn_2_link | default: '#' }}" class="luxury-hero__btn-outline">
-              {{ section.settings.btn_2_label }}
-            </a>
-          {%- endif -%}
-        {%- endif -%}
-      </div>
+          {%- when 'buttons' -%}
+            <div class="luxury-hero__ctas" {{ block.shopify_attributes }}>
+              {%- if block.settings.button_style == 'underline' -%}
+                {%- if block.settings.btn_1_label != blank -%}
+                  <a href="{{ block.settings.btn_1_link | default: '#' }}" class="luxury-hero__cta-underline">
+                    {{ block.settings.btn_1_label }}
+                    <svg viewBox="0 0 24 24">
+                      <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </a>
+                {%- endif -%}
+              {%- else -%}
+                {%- if block.settings.btn_1_label != blank -%}
+                  <a href="{{ block.settings.btn_1_link | default: '#' }}" class="luxury-hero__btn-fill">
+                    {{ block.settings.btn_1_label }}
+                  </a>
+                {%- endif -%}
+                {%- if block.settings.btn_2_label != blank -%}
+                  <a href="{{ block.settings.btn_2_link | default: '#' }}" class="luxury-hero__btn-outline">
+                    {{ block.settings.btn_2_label }}
+                  </a>
+                {%- endif -%}
+              {%- endif -%}
+            </div>
+
+          {%- when 'spacer' -%}
+            <div class="luxury-hero__spacer" style="height: {{ block.settings.height }}px;" {{ block.shopify_attributes }}></div>
+
+        {%- endcase -%}
+      {%- endfor -%}
     </div>
   </div>
 
@@ -554,83 +581,6 @@
     },
     {
       "type": "header",
-      "content": "Textos Principales"
-    },
-    {
-      "type": "text",
-      "id": "subtitle",
-      "label": "Subtítulo",
-      "default": "Fine Jewelry Collection 2026"
-    },
-    {
-      "type": "text",
-      "id": "title_line_1",
-      "label": "Título - Línea 1",
-      "default": "Designed to be"
-    },
-    {
-      "type": "text",
-      "id": "title_line_2",
-      "label": "Título - Línea 2",
-      "default": "cherished forever."
-    },
-    {
-      "type": "checkbox",
-      "id": "title_line_2_italic",
-      "label": "Cursiva en Línea 2",
-      "default": false,
-      "info": "Si está activado, la línea 2 tendrá un estilo serif cursiva elegante."
-    },
-    {
-      "type": "textarea",
-      "id": "description",
-      "label": "Descripción",
-      "default": "Timeless pieces, handcrafted with precision and passion in 18k gold and natural diamonds."
-    },
-    {
-      "type": "header",
-      "content": "Acciones y Botones"
-    },
-    {
-      "type": "select",
-      "id": "button_style",
-      "label": "Diseño de Botones",
-      "options": [
-        {
-          "value": "pills",
-          "label": "Botones Cápsula (AUREL Style)"
-        },
-        {
-          "value": "underline",
-          "label": "Enlace Editorial Subrayado (LUMINA Style)"
-        }
-      ],
-      "default": "underline"
-    },
-    {
-      "type": "text",
-      "id": "btn_1_label",
-      "label": "Botón Principal - Texto",
-      "default": "Explore Collection"
-    },
-    {
-      "type": "url",
-      "id": "btn_1_link",
-      "label": "Botón Principal - Enlace"
-    },
-    {
-      "type": "text",
-      "id": "btn_2_label",
-      "label": "Botón Secundario - Texto (Solo estilo Cápsula)",
-      "default": "Discover Brand"
-    },
-    {
-      "type": "url",
-      "id": "btn_2_link",
-      "label": "Botón Secundario - Enlace"
-    },
-    {
-      "type": "header",
       "content": "Detalles de Artesanía e Indicador"
     },
     {
@@ -677,7 +627,7 @@
     },
     {
       "type": "header",
-      "content": "Estilos y Colores"
+      "content": "Estilos y Colores Globales"
     },
     {
       "type": "color",
@@ -714,10 +664,181 @@
       "default": "#000000"
     }
   ],
+  "blocks": [
+    {
+      "type": "subtitle",
+      "name": "Subtítulo",
+      "limit": 3,
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Texto del Subtítulo",
+          "default": "Fine Jewelry Collection 2026"
+        },
+        {
+          "type": "color",
+          "id": "color",
+          "label": "Color de Texto Personalizado"
+        }
+      ]
+    },
+    {
+      "type": "title",
+      "name": "Título Principal",
+      "limit": 2,
+      "settings": [
+        {
+          "type": "text",
+          "id": "title_line_1",
+          "label": "Título - Línea 1",
+          "default": "Designed to be"
+        },
+        {
+          "type": "text",
+          "id": "title_line_2",
+          "label": "Título - Línea 2",
+          "default": "cherished forever."
+        },
+        {
+          "type": "checkbox",
+          "id": "title_line_2_italic",
+          "label": "Cursiva en Línea 2",
+          "default": true
+        },
+        {
+          "type": "color",
+          "id": "color",
+          "label": "Color de Texto Personalizado"
+        }
+      ]
+    },
+    {
+      "type": "description",
+      "name": "Descripción",
+      "limit": 3,
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Texto de Descripción",
+          "default": "Timeless pieces, handcrafted with precision and passion in 18k gold and natural diamonds."
+        },
+        {
+          "type": "range",
+          "id": "max_width",
+          "min": 300,
+          "max": 800,
+          "step": 20,
+          "unit": "px",
+          "label": "Ancho Máximo del Texto",
+          "default": 460
+        },
+        {
+          "type": "color",
+          "id": "color",
+          "label": "Color de Texto Personalizado"
+        }
+      ]
+    },
+    {
+      "type": "buttons",
+      "name": "Botones de Acción",
+      "limit": 2,
+      "settings": [
+        {
+          "type": "select",
+          "id": "button_style",
+          "label": "Diseño de Botones",
+          "options": [
+            {
+              "value": "pills",
+              "label": "Botones Cápsula (AUREL Style)"
+            },
+            {
+              "value": "underline",
+              "label": "Enlace Editorial Subrayado (LUMINA Style)"
+            }
+          ],
+          "default": "underline"
+        },
+        {
+          "type": "text",
+          "id": "btn_1_label",
+          "label": "Botón Principal - Texto",
+          "default": "Explore Collection"
+        },
+        {
+          "type": "url",
+          "id": "btn_1_link",
+          "label": "Botón Principal - Enlace"
+        },
+        {
+          "type": "text",
+          "id": "btn_2_label",
+          "label": "Botón Secundario - Texto (Solo Cápsula)",
+          "default": "Discover Brand"
+        },
+        {
+          "type": "url",
+          "id": "btn_2_link",
+          "label": "Botón Secundario - Enlace"
+        }
+      ]
+    },
+    {
+      "type": "spacer",
+      "name": "Espaciador",
+      "settings": [
+        {
+          "type": "range",
+          "id": "height",
+          "min": 10,
+          "max": 120,
+          "step": 5,
+          "unit": "px",
+          "label": "Altura del Espaciador",
+          "default": 20
+        }
+      ]
+    }
+  ],
   "presets": [
     {
       "name": "Luxury Hero Editorial",
-      "category": "Hero Banners"
+      "category": "Hero Banners",
+      "blocks": [
+        {
+          "type": "subtitle"
+        },
+        {
+          "type": "spacer",
+          "settings": {
+            "height": 20
+          }
+        },
+        {
+          "type": "title"
+        },
+        {
+          "type": "spacer",
+          "settings": {
+            "height": 20
+          }
+        },
+        {
+          "type": "description"
+        },
+        {
+          "type": "spacer",
+          "settings": {
+            "height": 35
+          }
+        },
+        {
+          "type": "buttons"
+        }
+      ]
     }
   ]
 }
