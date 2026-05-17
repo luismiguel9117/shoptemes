@@ -1,6 +1,6 @@
 {%- comment -%}
-  Ritual Cosmético / ShopTHEMES - Luxury Hero Section (OS 2.0 Block-Based Architecture)
-  Permite al comerciante añadir, quitar, reordenar y espaciar bloques de forma totalmente flexible.
+  Ritual Cosmético / ShopTHEMES - Luxury Hero Section (OS 2.0 Block-Based Architecture with Editable Nav Tabs)
+  Permite al comerciante añadir, quitar y reordenar pestañas del navbar e interactuar con el contenido.
 {%- endcomment -%}
 
 <style>
@@ -419,17 +419,29 @@
   <!-- Transparent integrated custom header -->
   {%- if section.settings.show_header -%}
     <header class="luxury-hero__header">
-      <!-- Left side shop links -->
+      <!-- Left side shop links (Triple Fallback Editable System) -->
       <nav class="luxury-hero__nav luxury-hero__nav-left">
-        {%- if section.settings.menu != blank -%}
-          {%- for link in linklists[section.settings.menu].links -%}
-            <a href="{{ link.url }}" class="luxury-hero__nav-link">{{ link.title }}</a>
-          {%- endfor -%}
-        {%- else -%}
-          <a href="#" class="luxury-hero__nav-link">Shop</a>
-          <a href="#" class="luxury-hero__nav-link">Collections</a>
-          <a href="#" class="luxury-hero__nav-link">About</a>
-          <a href="#" class="luxury-hero__nav-link">Journal</a>
+        {%- assign has_nav_blocks = false -%}
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'nav_item' -%}
+            {%- assign has_nav_blocks = true -%}
+            <a href="{{ block.settings.link | default: '#' }}" class="luxury-hero__nav-link" {{ block.shopify_attributes }}>
+              {{ block.settings.label }}
+            </a>
+          {%- endif -%}
+        {%- endfor -%}
+
+        {%- if has_nav_blocks == false -%}
+          {%- if section.settings.menu != blank -%}
+            {%- for link in linklists[section.settings.menu].links -%}
+              <a href="{{ link.url }}" class="luxury-hero__nav-link">{{ link.title }}</a>
+            {%- endfor -%}
+          {%- else -%}
+            <a href="#" class="luxury-hero__nav-link">Shop</a>
+            <a href="#" class="luxury-hero__nav-link">Collections</a>
+            <a href="#" class="luxury-hero__nav-link">About</a>
+            <a href="#" class="luxury-hero__nav-link">Journal</a>
+          {%- endif -%}
         {%- endif -%}
       </nav>
 
@@ -460,7 +472,7 @@
     </div>
   {%- endif -%}
 
-  <!-- Main Content container iterating blocks -->
+  <!-- Main Content container iterating blocks (ignores nav_item type blocks) -->
   <div class="luxury-hero__container">
     <div class="luxury-hero__content">
       {%- for block in section.blocks -%}
@@ -576,8 +588,8 @@
     {
       "type": "link_list",
       "id": "menu",
-      "label": "Menú de Enlaces",
-      "info": "Si se deja en blanco, cargará Shop, Collections, About y Journal por defecto."
+      "label": "Menú de Enlaces Alternativo",
+      "info": "Opcional. Si añades bloques del tipo 'Pestaña de Navegación', estos tendrán prioridad absoluta."
     },
     {
       "type": "header",
@@ -665,6 +677,23 @@
     }
   ],
   "blocks": [
+    {
+      "type": "nav_item",
+      "name": "Pestaña de Navegación",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Nombre de la Pestaña",
+          "default": "Nueva Pestaña"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Enlace (URL)"
+        }
+      ]
+    },
     {
       "type": "subtitle",
       "name": "Subtítulo",
@@ -808,6 +837,30 @@
       "name": "Luxury Hero Editorial",
       "category": "Hero Banners",
       "blocks": [
+        {
+          "type": "nav_item",
+          "settings": {
+            "label": "Shop"
+          }
+        },
+        {
+          "type": "nav_item",
+          "settings": {
+            "label": "Collections"
+          }
+        },
+        {
+          "type": "nav_item",
+          "settings": {
+            "label": "About"
+          }
+        },
+        {
+          "type": "nav_item",
+          "settings": {
+            "label": "Journal"
+          }
+        },
         {
           "type": "subtitle"
         },
