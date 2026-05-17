@@ -1,6 +1,6 @@
 {%- comment -%}
-  Ritual Cosmético / ShopTHEMES - Global Header Premium Luxury (OS 2.0)
-  Sección independiente para la barra de navegación transparente superior con pestañas editables y triple fallback.
+  Ritual Cosmético / ShopTHEMES - Global Header Premium Luxury (OS 2.0 with Text/Image Logo Options)
+  Sección independiente para la barra de navegación transparente superior con pestañas editables y selector de logotipo (Texto / Imagen).
 {%- endcomment -%}
 
 <style>
@@ -99,21 +99,35 @@
     width: 100%;
   }
 
-  /* Center Logo */
+  /* Center Logo Container */
   .luxury-header__logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: opacity 0.5s ease;
+  }
+  .luxury-header__logo:hover {
+    opacity: 0.8;
+  }
+
+  /* Text Logo Styling */
+  .luxury-header__logo-text {
     font-family: var(--heading-font);
     font-size: 32px;
     font-weight: 300;
     letter-spacing: 0.35em;
     text-transform: uppercase;
     color: var(--text-color);
-    text-decoration: none;
-    text-align: center;
     margin-left: 0.35em;
-    transition: opacity 0.5s ease;
+    text-align: center;
   }
-  .luxury-header__logo:hover {
-    opacity: 0.8;
+
+  /* Image Logo Styling */
+  .luxury-header__logo-img {
+    display: block;
+    height: auto;
+    object-fit: contain;
   }
 
   /* Right Side Navigation */
@@ -192,12 +206,16 @@
     align-items: center;
   }
   .luxury-header__drawer-logo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+  }
+  .luxury-header__drawer-logo-text {
     font-family: var(--heading-font);
     font-size: 24px;
     letter-spacing: 0.25em;
     text-transform: uppercase;
     color: var(--text-color);
-    text-decoration: none;
     margin-left: 0.25em;
   }
   .luxury-header__drawer-close {
@@ -269,9 +287,20 @@
       {%- endif -%}
     </nav>
 
-    <!-- Center Logo brand title -->
+    <!-- Center Logo brand title (Text or Image/Isotype Option) -->
     <a href="{{ routes.root_url }}" class="luxury-header__logo">
-      {{ section.settings.brand_name }}
+      {%- if section.settings.logo_type == 'image' and section.settings.logo_image != blank -%}
+        <img
+          src="{{ section.settings.logo_image | image_url: width: 400 }}"
+          alt="{{ section.settings.brand_name | default: shop.name }}"
+          style="max-width: {{ section.settings.logo_width }}px; height: auto;"
+          class="luxury-header__logo-img"
+          width="{{ section.settings.logo_width }}"
+          height="auto"
+        >
+      {%- else -%}
+        <span class="luxury-header__logo-text">{{ section.settings.brand_name }}</span>
+      {%- endif -%}
     </a>
 
     <!-- Right side general links -->
@@ -297,7 +326,16 @@
 <aside id="luxury-drawer" class="luxury-header__drawer">
   <div class="luxury-header__drawer-header">
     <a href="{{ routes.root_url }}" class="luxury-header__drawer-logo">
-      {{ section.settings.brand_name }}
+      {%- if section.settings.logo_type == 'image' and section.settings.logo_image != blank -%}
+        <img
+          src="{{ section.settings.logo_image | image_url: width: 300 }}"
+          alt="{{ section.settings.brand_name | default: shop.name }}"
+          style="max-width: {{ section.settings.logo_width | times: 0.8 | round }}px; height: auto;"
+          class="luxury-header__logo-img"
+        >
+      {%- else -%}
+        <span class="luxury-header__drawer-logo-text">{{ section.settings.brand_name }}</span>
+      {%- endif -%}
     </a>
     <button onclick="toggleLuxuryDrawer(false)" class="luxury-header__drawer-close" aria-label="Cerrar Menú">
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" x2="6" y1="6" y2="18"/><line x1="6" x2="18" y1="6" y2="18"/></svg>
@@ -384,10 +422,49 @@
   "name": "Header Premium Luxury",
   "settings": [
     {
+      "type": "header",
+      "content": "Logotipo de la Marca"
+    },
+    {
+      "type": "select",
+      "id": "logo_type",
+      "label": "Tipo de Logotipo",
+      "options": [
+        {
+          "value": "text",
+          "label": "Logotipo de Texto"
+        },
+        {
+          "value": "image",
+          "label": "Isotipo o Logotipo en Imagen"
+        }
+      ],
+      "default": "text"
+    },
+    {
       "type": "text",
       "id": "brand_name",
-      "label": "Nombre de la Marca (Logo)",
+      "label": "Nombre de la Marca (Texto)",
       "default": "LUMINA"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo_image",
+      "label": "Imagen del Logotipo (Isotipo)"
+    },
+    {
+      "type": "range",
+      "id": "logo_width",
+      "min": 30,
+      "max": 200,
+      "step": 5,
+      "unit": "px",
+      "label": "Ancho del Logotipo (Imagen)",
+      "default": 100
+    },
+    {
+      "type": "header",
+      "content": "Ajustes de Navegación y Estilos"
     },
     {
       "type": "link_list",

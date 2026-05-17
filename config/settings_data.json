@@ -38,6 +38,7 @@
             "nav_4"
           ],
           "settings": {
+            "logo_type": "text",
             "brand_name": "LUMINA",
             "text_color": "#ffffff"
           }
