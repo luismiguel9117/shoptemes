@@ -1,0 +1,404 @@
+{%- comment -%}
+  Ritual Cosmético / ShopTHEMES - Luxury Editorial Bento Gallery (OS 2.0)
+  Sección editorial premium para presentar artesanía, materiales y detalles de marca en un diseño Bento asimétrico.
+{%- endcomment -%}
+
+<style>
+  .luxury-gallery-{{ section.id }} {
+    --bg-color: {{ section.settings.bg_color }};
+    --text-color: {{ section.settings.text_color }};
+    --heading-font: 'Cormorant Garamond', serif;
+    --sans-font: 'Montserrat', sans-serif;
+    
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: var(--sans-font);
+    padding: 7rem 4rem;
+    box-sizing: border-box;
+  }
+  @media (max-width: 768px) {
+    .luxury-gallery-{{ section.id }} {
+      padding: 4rem 2rem;
+    }
+  }
+
+  .luxury-gallery-{{ section.id }} .luxury-gallery__container {
+    max-width: 1600px;
+    margin: 0 auto;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 3.5rem;
+  }
+
+  /* Header Section */
+  .luxury-gallery-{{ section.id }} .luxury-gallery__header {
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .luxury-gallery-{{ section.id }} .luxury-gallery__tag {
+    font-size: 10px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.45em;
+    color: #d4af37;
+    margin: 0;
+  }
+  .luxury-gallery-{{ section.id }} .luxury-gallery__title {
+    font-family: var(--heading-font);
+    font-size: clamp(32px, 4vw, 52px);
+    font-weight: 300;
+    line-height: 1.1;
+    margin: 0;
+    letter-spacing: -0.01em;
+  }
+  .luxury-gallery-{{ section.id }} .luxury-gallery__desc {
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 1.8;
+    opacity: 0.7;
+    margin: 0.5rem 0 0 0;
+  }
+
+  /* Bento Grid Layout */
+  .luxury-gallery-{{ section.id }} .luxury-gallery__grid {
+    display: grid;
+    grid-template-columns: 1.8fr 1fr;
+    gap: 2.5rem;
+    box-sizing: border-box;
+  }
+  @media (max-width: 992px) {
+    .luxury-gallery-{{ section.id }} .luxury-gallery__grid {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+  }
+
+  /* Right column stacks two cards */
+  .luxury-gallery-{{ section.id }} .luxury-gallery__stack {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+  @media (max-width: 992px) {
+    .luxury-gallery-{{ section.id }} .luxury-gallery__stack {
+      gap: 2rem;
+    }
+  }
+
+  /* Double-Bezel Card Shell (Doppelrand Architecture) */
+  .luxury-gallery-{{ section.id }} .luxury-bento-shell {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 8px;
+    border-radius: 16px;
+    box-sizing: border-box;
+    overflow: hidden;
+    position: relative;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.6s ease, box-shadow 0.6s ease;
+  }
+  .luxury-gallery-{{ section.id }} .luxury-bento-shell:hover {
+    transform: translateY(-4px);
+    border-color: rgba(255, 255, 255, 0.12);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+  }
+
+  /* Concentric Inner Core */
+  .luxury-gallery-{{ section.id }} .luxury-bento-core {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: rgba(255,255,255,0.01);
+  }
+
+  /* Big Card sizing */
+  .luxury-gallery-{{ section.id }} .luxury-bento-shell--large {
+    min-height: 520px;
+  }
+  @media (max-width: 992px) {
+    .luxury-gallery-{{ section.id }} .luxury-bento-shell--large {
+      min-height: 380px;
+    }
+  }
+
+  /* Small Cards sizing */
+  .luxury-gallery-{{ section.id }} .luxury-bento-shell--small {
+    min-height: 240px;
+  }
+
+  /* Background image with slow zoom transition */
+  .luxury-gallery-{{ section.id }} .luxury-bento__bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+  }
+  .luxury-gallery-{{ section.id }} .luxury-bento__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    transition: transform 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .luxury-gallery-{{ section.id }} .luxury-bento-shell:hover .luxury-bento__img {
+    transform: scale(1.03);
+  }
+  .luxury-gallery-{{ section.id }} .luxury-bento__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.2) 60%, rgba(0,0,0,0) 100%);
+    z-index: 2;
+  }
+
+  /* Bento content overlay */
+  .luxury-gallery-{{ section.id }} .luxury-bento__content {
+    position: absolute;
+    bottom: 2rem;
+    left: 2rem;
+    right: 2rem;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: flex-start;
+  }
+  .luxury-gallery-{{ section.id }} .luxury-bento__label {
+    font-size: 9px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    color: #d4af37;
+    margin: 0;
+  }
+  .luxury-gallery-{{ section.id }} .luxury-bento__title {
+    font-family: var(--heading-font);
+    font-size: clamp(20px, 2.5vw, 28px);
+    font-weight: 300;
+    line-height: 1.2;
+    margin: 0;
+    letter-spacing: 0.02em;
+    color: #ffffff;
+  }
+  .luxury-gallery-{{ section.id }} .luxury-bento__desc {
+    font-size: 12px;
+    font-weight: 300;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.7);
+    margin: 0;
+    max-width: 480px;
+  }
+</style>
+
+<section class="luxury-gallery-{{ section.id }}">
+  <div class="luxury-gallery__container">
+    
+    <!-- Editorial Header text -->
+    <div class="luxury-gallery__header">
+      <p class="luxury-gallery__tag">{{ section.settings.tagline }}</p>
+      <h2 class="luxury-gallery__title">{{ section.settings.title }}</h2>
+      {%- if section.settings.description != blank -%}
+        <p class="luxury-gallery__desc">{{ section.settings.description }}</p>
+      {%- endif -%}
+    </div>
+
+    <!-- Asymmetrical Bento Grid -->
+    <div class="luxury-gallery__grid">
+      
+      <!-- Left Card (Large, 2/3 width) -->
+      <div class="luxury-bento-shell luxury-bento-shell--large">
+        <div class="luxury-bento-core">
+          <div class="luxury-bento__bg">
+            {%- if section.settings.image_large != blank -%}
+              <img src="{{ section.settings.image_large | image_url: width: 1200 }}" alt="{{ section.settings.title_large | escape }}" class="luxury-bento__img" loading="lazy">
+            {%- else -%}
+              <!-- Curated jewelry workshop placeholder fallback -->
+              <img src="https://images.unsplash.com/photo-1617038260897-41a1f14a8ca0?auto=format&fit=crop&w=1200&q=80" alt="Lumina Craftsmanship Workshop" class="luxury-bento__img" loading="lazy">
+            {%- endif -%}
+            <div class="luxury-bento__overlay"></div>
+          </div>
+
+          <div class="luxury-bento__content">
+            <p class="luxury-bento__label">{{ section.settings.tag_large }}</p>
+            <h3 class="luxury-bento__title">{{ section.settings.title_large }}</h3>
+            <p class="luxury-bento__desc">{{ section.settings.desc_large }}</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column Stacks two cards -->
+      <div class="luxury-gallery__stack">
+        
+        <!-- Right Top Card (Small, 1/3 width) -->
+        <div class="luxury-bento-shell luxury-bento-shell--small">
+          <div class="luxury-bento-core">
+            <div class="luxury-bento__bg">
+              {%- if section.settings.image_small_1 != blank -%}
+                <img src="{{ section.settings.image_small_1 | image_url: width: 800 }}" alt="{{ section.settings.title_small_1 | escape }}" class="luxury-bento__img" loading="lazy">
+              {%- else -%}
+                <!-- Curated gold chain placeholder fallback -->
+                <img src="https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=800&q=80" alt="Fine 18k gold details" class="luxury-bento__img" loading="lazy">
+              {%- endif -%}
+              <div class="luxury-bento__overlay"></div>
+            </div>
+
+            <div class="luxury-bento__content">
+              <p class="luxury-bento__label">{{ section.settings.tag_small_1 }}</p>
+              <h3 class="luxury-bento__title" style="font-size: 22px;">{{ section.settings.title_small_1 }}</h3>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Bottom Card (Small, 1/3 width) -->
+        <div class="luxury-bento-shell luxury-bento-shell--small">
+          <div class="luxury-bento-core">
+            <div class="luxury-bento__bg">
+              {%- if section.settings.image_small_2 != blank -%}
+                <img src="{{ section.settings.image_small_2 | image_url: width: 800 }}" alt="{{ section.settings.title_small_2 | escape }}" class="luxury-bento__img" loading="lazy">
+              {%- else -%}
+                <!-- Curated diamond placeholder fallback -->
+                <img src="https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=800&q=80" alt="Natural fine diamond rings" class="luxury-bento__img" loading="lazy">
+              {%- endif -%}
+              <div class="luxury-bento__overlay"></div>
+            </div>
+
+            <div class="luxury-bento__content">
+              <p class="luxury-bento__label">{{ section.settings.tag_small_2 }}</p>
+              <h3 class="luxury-bento__title" style="font-size: 22px;">{{ section.settings.title_small_2 }}</h3>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Luxury Bento Gallery",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Encabezado de la Sección"
+    },
+    {
+      "type": "text",
+      "id": "tagline",
+      "label": "Etiqueta superior (Tagline)",
+      "default": "THE ART OF JEWELRY"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Título Principal",
+      "default": "Meticulously Crafted"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Descripción corta",
+      "default": "Every Lumina piece tells a story of unmatched expertise, sourced sustainably and shaped with ultimate devotion by master artisans."
+    },
+    {
+      "type": "header",
+      "content": "Ficha Grande (Izquierda)"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_large",
+      "label": "Imagen Ficha Grande"
+    },
+    {
+      "type": "text",
+      "id": "tag_large",
+      "label": "Etiqueta Ficha Grande",
+      "default": "THE WORKSHOP"
+    },
+    {
+      "type": "text",
+      "id": "title_large",
+      "label": "Título Ficha Grande",
+      "default": "Pure 18k Yellow Gold"
+    },
+    {
+      "type": "textarea",
+      "id": "desc_large",
+      "label": "Descripción Ficha Grande",
+      "default": "Each piece is hand-polished and micro-stamped, capturing the light in its most natural form."
+    },
+    {
+      "type": "header",
+      "content": "Ficha Pequeña 1 (Derecha Superior)"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_small_1",
+      "label": "Imagen Ficha 1"
+    },
+    {
+      "type": "text",
+      "id": "tag_small_1",
+      "label": "Etiqueta Ficha 1",
+      "default": "MATERIALS"
+    },
+    {
+      "type": "text",
+      "id": "title_small_1",
+      "label": "Título Ficha 1",
+      "default": "Sustainably Sourced"
+    },
+    {
+      "type": "header",
+      "content": "Ficha Pequeña 2 (Derecha Inferior)"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_small_2",
+      "label": "Imagen Ficha 2"
+    },
+    {
+      "type": "text",
+      "id": "tag_small_2",
+      "label": "Etiqueta Ficha 2",
+      "default": "DESIGN"
+    },
+    {
+      "type": "text",
+      "id": "title_small_2",
+      "label": "Título Ficha 2",
+      "default": "Natural Fine Diamonds"
+    },
+    {
+      "type": "header",
+      "content": "Estilos y Colores"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Color de Fondo",
+      "default": "#0b0b0b"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Color de Texto",
+      "default": "#ffffff"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Luxury Bento Gallery",
+      "category": "Editorial Galleries"
+    }
+  ]
+}
+{% endschema %}

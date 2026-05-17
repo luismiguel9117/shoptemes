@@ -69,12 +69,32 @@
         "slide_total": "03"
       }
     },
+    "editorial-gallery": {
+      "type": "luxury-editorial-gallery",
+      "settings": {
+        "tagline": "THE ART OF JEWELRY",
+        "title": "Meticulously Crafted",
+        "tag_large": "THE WORKSHOP",
+        "title_large": "Pure 18k Yellow Gold",
+        "desc_large": "Each piece is hand-polished and micro-stamped, capturing the light in its most natural form.",
+        "tag_small_1": "MATERIALS",
+        "title_small_1": "Sustainably Sourced",
+        "tag_small_2": "DESIGN",
+        "title_small_2": "Natural Fine Diamonds"
+      }
+    },
     "product-grid": {
-      "type": "product-grid"
+      "type": "product-grid",
+      "settings": {
+        "tagline": "MÁS VENDIDOS",
+        "title": "Favoritos de la Temporada",
+        "products_to_show": 8
+      }
     }
   },
   "order": [
     "hero",
+    "editorial-gallery",
     "product-grid"
   ]
 }

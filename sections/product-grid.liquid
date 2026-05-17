@@ -1,96 +1,384 @@
-<section id="favorites" class="py-16 md:py-20 px-6 md:px-20 bg-surface-container-low overflow-hidden">
-  <div class="max-w-7xl mx-auto">
-    <div class="flex justify-between items-end mb-8">
-      <div class="space-y-2">
-        <p class="text-[10px] font-black tracking-[0.4em] uppercase text-secondary">Más Vendidos</p>
-        <h2 class="font-serif text-3xl md:text-5xl text-primary">{{ section.settings.title | default: 'Favoritos de la Temporada' }}</h2>
+{%- comment -%}
+  Ritual Cosmético / ShopTHEMES - Product Slider Catalog Premium Luxury (OS 2.0)
+  Deslizador de productos de alta gama con doble biselado, efectos cinéticos de zoom y soporte para paletas oscuras o claras.
+{%- endcomment -%}
+
+<style>
+  .luxury-catalog-{{ section.id }} {
+    --bg-color: {{ section.settings.bg_color }};
+    --text-color: {{ section.settings.text_color }};
+    --heading-font: 'Cormorant Garamond', serif;
+    --sans-font: 'Montserrat', sans-serif;
+    --gold-accent: #d4af37;
+    
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: var(--sans-font);
+    padding: 7rem 4rem;
+    overflow: hidden;
+    box-sizing: border-box;
+  }
+  @media (max-width: 768px) {
+    .luxury-catalog-{{ section.id }} {
+      padding: 4rem 2rem;
+    }
+  }
+
+  .luxury-catalog-{{ section.id }} .luxury-catalog__container {
+    max-width: 1600px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  /* Header Alignments & Spatial Tension */
+  .luxury-catalog-{{ section.id }} .luxury-catalog__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 3.5rem;
+  }
+  @media (max-width: 768px) {
+    .luxury-catalog-{{ section.id }} .luxury-catalog__header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+  }
+  .luxury-catalog-{{ section.id }} .luxury-catalog__title-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .luxury-catalog-{{ section.id }} .luxury-catalog__tag {
+    font-size: 10px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.45em;
+    color: var(--gold-accent);
+    margin: 0;
+  }
+  .luxury-catalog-{{ section.id }} .luxury-catalog__title {
+    font-family: var(--heading-font);
+    font-size: clamp(32px, 4vw, 52px);
+    font-weight: 300;
+    line-height: 1.1;
+    margin: 0;
+    letter-spacing: -0.01em;
+  }
+
+  /* Controls (Zero harsh drop shadows, smooth spring curves) */
+  .luxury-catalog-{{ section.id }} .luxury-catalog__controls {
+    display: flex;
+    gap: 1rem;
+  }
+  .luxury-catalog-{{ section.id }} .luxury-catalog__btn {
+    width: 54px;
+    height: 54px;
+    border-radius: 9999px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: transparent;
+    color: var(--text-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+  }
+  .luxury-catalog-{{ section.id }} .luxury-catalog__btn:hover {
+    background-color: var(--text-color);
+    color: var(--bg-color);
+    border-color: var(--text-color);
+  }
+  .luxury-catalog-{{ section.id }} .luxury-catalog__btn svg {
+    width: 20px;
+    height: 20px;
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+  }
+  .luxury-catalog-{{ section.id }} .luxury-catalog__btn--prev:hover svg {
+    transform: translateX(-3px);
+  }
+  .luxury-catalog-{{ section.id }} .luxury-catalog__btn--next:hover svg {
+    transform: translateX(3px);
+  }
+
+  /* Slider Track */
+  .luxury-catalog-{{ section.id }} .luxury-catalog__slider {
+    display: flex;
+    gap: 2.5rem;
+    padding: 1.5rem 0.5rem;
+    overflow-x: auto;
+    snap-type: x mandatory;
+    scroll-behavior: smooth;
+    box-sizing: border-box;
+  }
+  .luxury-catalog-{{ section.id }} .luxury-catalog__slider::-webkit-scrollbar {
+    display: none;
+  }
+  .luxury-catalog-{{ section.id }} .luxury-catalog__slider {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  /* Double-Bezel Card Shell (Doppelrand Architecture) */
+  .luxury-catalog-{{ section.id }} .luxury-card-shell {
+    flex-shrink: 0;
+    width: 32vw;
+    min-width: 360px;
+    snap-align: start;
+    box-sizing: border-box;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 8px;
+    border-radius: 12px;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.6s ease, box-shadow 0.6s ease;
+  }
+  @media (max-width: 1024px) {
+    .luxury-catalog-{{ section.id }} .luxury-card-shell {
+      width: 45vw;
+      min-width: 300px;
+    }
+  }
+  @media (max-width: 576px) {
+    .luxury-catalog-{{ section.id }} .luxury-card-shell {
+      width: 82vw;
+      min-width: 280px;
+    }
+  }
+  .luxury-catalog-{{ section.id }} .luxury-card-shell:hover {
+    transform: translateY(-5px);
+    border-color: rgba(255, 255, 255, 0.12);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+  }
+
+  /* Inner Core Container */
+  .luxury-catalog-{{ section.id }} .luxury-card-core {
+    display: flex;
+    flex-direction: column;
+    border-radius: 8px;
+    overflow: hidden;
+    height: 100%;
+  }
+
+  /* Image Box and Slow Zoom Hover Physics */
+  .luxury-catalog-{{ section.id }} .luxury-card__img-box {
+    aspect-ratio: 4 / 5;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 6px;
+    position: relative;
+    background-color: rgba(255,255,255,0.01);
+  }
+  .luxury-catalog-{{ section.id }} .luxury-card__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .luxury-catalog-{{ section.id }} .luxury-card-shell:hover .luxury-card__img {
+    transform: scale(1.04);
+  }
+
+  /* Card Information details */
+  .luxury-catalog-{{ section.id }} .luxury-card__details {
+    padding: 1.25rem 0.5rem 0.5rem 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .luxury-catalog-{{ section.id }} .luxury-card__row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  .luxury-catalog-{{ section.id }} .luxury-card__title {
+    font-family: var(--heading-font);
+    font-size: 20px;
+    font-weight: 300;
+    margin: 0;
+    text-transform: none;
+    letter-spacing: 0;
+    line-height: 1.2;
+    color: var(--text-color);
+  }
+  .luxury-catalog-{{ section.id }} .luxury-card__title a {
+    color: inherit;
+    text-decoration: none;
+    transition: opacity 0.3s ease;
+  }
+  .luxury-catalog-{{ section.id }} .luxury-card__title a:hover {
+    opacity: 0.75;
+  }
+  .luxury-catalog-{{ section.id }} .luxury-card__price {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--gold-accent);
+    white-space: nowrap;
+    letter-spacing: 0.05em;
+  }
+  .luxury-catalog-{{ section.id }} .luxury-card__category {
+    font-size: 9px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--text-color);
+    opacity: 0.4;
+    margin: 0;
+  }
+
+  /* Actions Pills Buttons */
+  .luxury-catalog-{{ section.id }} .luxury-card__actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.50rem;
+    margin-top: 1rem;
+  }
+  .luxury-catalog-{{ section.id }} .luxury-card__btn-outline {
+    font-size: 9px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--text-color);
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 9999px;
+    padding: 0.75rem;
+    text-decoration: none;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 0.4s ease, background-color 0.4s ease;
+  }
+  .luxury-catalog-{{ section.id }} .luxury-card__btn-outline:hover {
+    border-color: var(--text-color);
+    background-color: rgba(255, 255, 255, 0.04);
+  }
+
+  .luxury-catalog-{{ section.id }} .luxury-card__btn-fill {
+    font-size: 9px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--bg-color);
+    background-color: var(--text-color);
+    border: none;
+    border-radius: 9999px;
+    padding: 0.75rem;
+    text-align: center;
+    cursor: pointer;
+    transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    width: 100%;
+  }
+  .luxury-catalog-{{ section.id }} .luxury-card__btn-fill:hover {
+    opacity: 0.9;
+  }
+</style>
+
+<section class="luxury-catalog-{{ section.id }}">
+  <div class="luxury-catalog__container">
+    
+    <!-- Title and Slider navigation controls -->
+    <div class="luxury-catalog__header">
+      <div class="luxury-catalog__title-group">
+        <p class="luxury-catalog__tag">{{ section.settings.tagline }}</p>
+        <h2 class="luxury-catalog__title">{{ section.settings.title }}</h2>
       </div>
-      <div class="flex gap-2">
-        <button id="prev-product-btn" class="w-12 h-12 rounded-full border border-outline-variant flex items-center justify-center hover:bg-white hover:border-primary transition-all cursor-pointer group">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 text-primary group-hover:-translate-x-1 transition-transform"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
+      
+      <div class="luxury-catalog__controls">
+        <button id="prev-catalog-{{ section.id }}" class="luxury-catalog__btn luxury-catalog__btn--prev" aria-label="Anterior">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5"/></svg>
         </button>
-        <button id="next-product-btn" class="w-12 h-12 rounded-full border border-outline-variant flex items-center justify-center hover:bg-white hover:border-primary transition-all cursor-pointer group">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 text-primary group-hover:translate-x-1 transition-transform"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        <button id="next-catalog-{{ section.id }}" class="luxury-catalog__btn luxury-catalog__btn--next" aria-label="Siguiente">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/></svg>
         </button>
       </div>
     </div>
 
-    <div class="relative">
-      <div class="flex gap-6 py-10 px-4 overflow-x-auto snap-x snap-mandatory hide-scrollbar" id="product-slider">
-        {% assign collection = collections[section.settings.collection] %}
+    <!-- Product Slider Track -->
+    <div class="luxury-catalog__track">
+      <div class="luxury-catalog__slider" id="slider-{{ section.id }}">
+        {%- assign collection = collections[section.settings.collection] -%}
         
-        {% if collection.products.size == 0 %}
-          <div class="min-w-full flex flex-col items-center justify-center py-20 text-center space-y-4">
-            <p class="text-on-surface-variant font-light">Asigna una colección en el editor del tema.</p>
+        {%- if collection.products.size == 0 -%}
+          <div style="width: 100%; padding: 5rem 0; text-align: center; opacity: 0.5; font-size: 13px; font-weight: 300; letter-spacing: 0.1em;">
+            Asigna una colección en el editor del tema.
           </div>
-        {% else %}
-          {% for product in collection.products limit: section.settings.products_to_show %}
-            <div class="snap-start glass-panel p-0 rounded-[28px] hover:shadow-2xl transition-all duration-500 border border-outline-variant/30 overflow-hidden w-[80vw] sm:w-[calc(50vw-100px)] lg:w-[calc(33.33vw-100px)] shrink-0">
-              <div class="flex flex-col h-full">
-                <a href="{{ product.url }}" class="aspect-square rounded-[20px] overflow-hidden m-2 bg-[#f0ebe3] shrink-0 block">
-                  <img src="{{ product.featured_image | img_url: '600x600', crop: 'center' }}" alt="{{ product.title | escape }}" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105" loading="lazy" />
-                </a>
-                <div class="p-4 pt-2 flex flex-col flex-1">
-                  <div class="mb-4">
-                    <div class="flex justify-between items-start mb-1 gap-2">
-                      <h3 class="font-serif text-xl text-[#1a1c1a] m-0 font-normal line-clamp-2 leading-tight flex-1">
-                        <a href="{{ product.url }}">{{ product.title }}</a>
-                      </h3>
-                      <span class="text-[15px] font-black text-[#d4af37] whitespace-nowrap pt-0.5">
-                        {{ product.price | money }}
-                      </span>
-                    </div>
-                    <p class="text-[11px] text-[#999] m-0 uppercase tracking-wider">
-                      {{ product.type }}
-                    </p>
-                  </div>
+        {%- else -%}
+          {%- for product in collection.products limit: section.settings.products_to_show -%}
+            <!-- Outer Shell -->
+            <div class="luxury-card-shell">
+              <!-- Inner Core -->
+              <div class="luxury-card-core">
+                <!-- Aspect Ratio Image Box -->
+                <div class="luxury-card__img-box">
+                  <a href="{{ product.url }}" class="luxury-card__link">
+                    <img
+                      srcset="{{ product.featured_image | img_url: '400x500', crop: 'center' }} 400w,
+                              {{ product.featured_image | img_url: '600x750', crop: 'center' }} 600w"
+                      src="{{ product.featured_image | img_url: '600x750', crop: 'center' }}"
+                      alt="{{ product.title | escape }}"
+                      class="luxury-card__img"
+                      loading="lazy"
+                      width="100%"
+                      height="100%"
+                    >
+                  </a>
+                </div>
+
+                <!-- Info Details -->
+                <div class="luxury-card__details">
+                  <p class="luxury-card__category">{{ product.type | default: 'Fine Jewelry' }}</p>
                   
-                  <div class="grid grid-cols-2 gap-2 mt-auto">
-                    <a href="{{ product.url }}" style="padding: 0.75rem; border: 1.5px solid #1a1c1a; color: #1a1c1a; background: transparent; border-radius: 9999px; font-size: 9px; font-weight: 900; letter-spacing: 0.2em; text-transform: uppercase; cursor: pointer; text-align: center;">Info</a>
+                  <div class="luxury-card__row">
+                    <h3 class="luxury-card__title">
+                      <a href="{{ product.url }}">{{ product.title }}</a>
+                    </h3>
+                    <span class="luxury-card__price">
+                      {{ product.price | money }}
+                    </span>
+                  </div>
+
+                  <!-- Actions Capsules buttons -->
+                  <div class="luxury-card__actions">
+                    <a href="{{ product.url }}" class="luxury-card__btn-outline">Info</a>
                     
-                    {% form 'product', product %}
+                    {%- form 'product', product -%}
                       <input type="hidden" name="id" value="{{ product.variants.first.id }}">
-                      <button type="submit" style="padding: 0.75rem; background: #1a1c1a; color: white; border: none; border-radius: 9999px; font-size: 9px; font-weight: 900; letter-spacing: 0.2em; text-transform: uppercase; cursor: pointer; width: 100%;">
+                      <button type="submit" class="luxury-card__btn-fill">
                         Añadir
                       </button>
-                    {% endform %}
+                    {%- endform -%}
                   </div>
                 </div>
               </div>
             </div>
-          {% endfor %}
-        {% endif %}
+          {%- endfor -%}
+        {%- endif -%}
       </div>
     </div>
+
   </div>
 </section>
 
-<style>
-  /* Hide scrollbar for slider */
-  .hide-scrollbar::-webkit-scrollbar {
-    display: none;
-  }
-  .hide-scrollbar {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-    scroll-behavior: smooth;
-  }
-</style>
-
 <script>
   document.addEventListener("DOMContentLoaded", () => {
-    const slider = document.getElementById('product-slider');
-    const nextBtn = document.getElementById('next-product-btn');
-    const prevBtn = document.getElementById('prev-product-btn');
+    const slider = document.getElementById('slider-{{ section.id }}');
+    const prevBtn = document.getElementById('prev-catalog-{{ section.id }}');
+    const nextBtn = document.getElementById('next-catalog-{{ section.id }}');
     
-    if(slider && nextBtn && prevBtn) {
+    if (slider && prevBtn && nextBtn) {
+      const scrollStep = () => {
+        const firstCard = slider.querySelector('.luxury-card-shell');
+        return firstCard ? firstCard.clientWidth + 40 : 350; // Card width + gap
+      };
+
       nextBtn.addEventListener('click', () => {
-        const itemWidth = slider.firstElementChild ? slider.firstElementChild.clientWidth : 300;
-        slider.scrollBy({ left: itemWidth + 24, behavior: 'smooth' });
+        slider.scrollBy({ left: scrollStep(), behavior: 'smooth' });
       });
       prevBtn.addEventListener('click', () => {
-        const itemWidth = slider.firstElementChild ? slider.firstElementChild.clientWidth : 300;
-        slider.scrollBy({ left: -(itemWidth + 24), behavior: 'smooth' });
+        slider.scrollBy({ left: -scrollStep(), behavior: 'smooth' });
       });
     }
   });
@@ -98,32 +386,55 @@
 
 {% schema %}
 {
-  "name": "Product Grid",
+  "name": "Luxury Slider Catalog",
   "settings": [
     {
       "type": "text",
+      "id": "tagline",
+      "label": "Etiqueta superior (Tagline)",
+      "default": "MÁS VENDIDOS"
+    },
+    {
+      "type": "text",
       "id": "title",
-      "label": "Título de la sección",
+      "label": "Título de la Sección",
       "default": "Favoritos de la Temporada"
     },
     {
       "type": "collection",
       "id": "collection",
-      "label": "Colección a mostrar"
+      "label": "Colección a Mostrar"
     },
     {
       "type": "range",
       "id": "products_to_show",
       "min": 4,
       "max": 12,
-      "step": 4,
+      "step": 2,
       "default": 8,
-      "label": "Cantidad de productos"
+      "label": "Cantidad Máxima de Productos"
+    },
+    {
+      "type": "header",
+      "content": "Estilos y Colores"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Color de Fondo",
+      "default": "#0b0b0b"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Color de Texto",
+      "default": "#ffffff"
     }
   ],
   "presets": [
     {
-      "name": "Grid de Productos"
+      "name": "Luxury Slider Catalog",
+      "category": "Products Grid"
     }
   ]
 }
