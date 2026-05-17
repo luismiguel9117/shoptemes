@@ -49,7 +49,7 @@
     margin: 0 auto;
     width: 100%;
     display: grid;
-    grid-template-columns: 1fr auto 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
     align-items: center;
     box-sizing: border-box;
   }
@@ -119,8 +119,9 @@
     letter-spacing: 0.35em;
     text-transform: uppercase;
     color: var(--text-color);
-    margin-left: 0.35em;
+    margin-right: -0.35em; /* Compensar espaciado de la última letra */
     text-align: center;
+    display: inline-block;
   }
 
   /* Image Logo Styling */
