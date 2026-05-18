@@ -1,0 +1,539 @@
+{%- comment -%}
+  Lumina / ShopTHEMES - Luxury Journal / Blog List Section (OS 2.0)
+  Diseño editorial minimalista de alta gama que implementa el diseño exacto provisto en el mockup.
+{%- endcomment -%}
+
+<style>
+  .luxury-blog {
+    --heading-font: 'Cormorant Garamond', serif;
+    --sans-font: 'Montserrat', sans-serif;
+    --bg-color: #faf6f0;
+    --text-color: #1a1c1a;
+    --gold-accent: #bc9c5d;
+    --border-color: rgba(26, 28, 26, 0.08);
+    
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: var(--sans-font);
+    overflow: hidden;
+  }
+
+  /* Main Hero Header */
+  .luxury-blog-hero {
+    position: relative;
+    padding: 8rem 4rem 4rem 4rem;
+    max-width: 1600px;
+    margin: 0 auto;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+  @media (max-width: 768px) {
+    .luxury-blog-hero {
+      padding: 6rem 2rem 3rem 2rem;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 2rem;
+    }
+  }
+
+  .luxury-blog-hero__content {
+    max-width: 600px;
+    position: relative;
+    z-index: 10;
+  }
+  .luxury-blog-hero__tagline {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    color: var(--text-color);
+    opacity: 0.6;
+    display: block;
+    margin-bottom: 1rem;
+  }
+  .luxury-blog-hero__title {
+    font-family: var(--heading-font);
+    font-size: clamp(64px, 8vw, 110px);
+    font-weight: 300;
+    line-height: 0.85;
+    margin: 0 0 2rem 0;
+    letter-spacing: -0.02em;
+  }
+  .luxury-blog-hero__subtext {
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 1.6;
+    opacity: 0.8;
+    margin: 0;
+    max-width: 420px;
+  }
+  .luxury-blog-hero__cta {
+    font-size: 9.5px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.25em;
+    color: var(--text-color);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin-top: 2rem;
+    border-bottom: 1px solid rgba(26, 28, 26, 0.2);
+    padding-bottom: 4px;
+    transition: gap 0.3s ease, border-color 0.3s ease;
+  }
+  .luxury-blog-hero__cta:hover {
+    gap: 1.2rem;
+    border-bottom-color: var(--text-color);
+  }
+
+  /* Tree Branch Shadow Overlay */
+  .luxury-blog-hero__shadow {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 60%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+    background-image: url('https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?auto=format&fit=crop&w=1200&q=80');
+    background-size: cover;
+    background-position: center;
+    mix-blend-mode: multiply;
+    opacity: 0.07;
+    filter: blur(2px) grayscale(100%);
+    -webkit-filter: blur(2px) grayscale(100%);
+  }
+
+  /* Featured Article Section (2 Columns) */
+  .luxury-blog-featured {
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 0 4rem;
+    box-sizing: border-box;
+    margin-bottom: 6rem;
+  }
+  @media (max-width: 768px) {
+    .luxury-blog-featured {
+      padding: 0 2rem;
+      margin-bottom: 4rem;
+    }
+  }
+
+  .luxury-blog-featured__grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    border: 1px solid var(--border-color);
+    background-color: var(--bg-color);
+  }
+  @media (max-width: 992px) {
+    .luxury-blog-featured__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .luxury-blog-featured__img-wrap {
+    aspect-ratio: 16/10;
+    overflow: hidden;
+    position: relative;
+    background-color: #eae1d7;
+  }
+  @media (max-width: 992px) {
+    .luxury-blog-featured__img-wrap {
+      aspect-ratio: 16/9;
+    }
+  }
+  .luxury-blog-featured__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 1.8s cubic-bezier(0.25, 1, 0.5, 1);
+  }
+  .luxury-blog-featured__grid:hover .luxury-blog-featured__img {
+    transform: scale(1.025);
+  }
+
+  .luxury-blog-featured__card {
+    padding: 4rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    border-left: 1px solid var(--border-color);
+    box-sizing: border-box;
+  }
+  @media (max-width: 992px) {
+    .luxury-blog-featured__card {
+      padding: 3rem 2rem;
+      border-left: none;
+      border-top: 1px solid var(--border-color);
+    }
+  }
+
+  .luxury-blog-featured__tag {
+    font-size: 9px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    color: var(--gold-accent);
+    margin-bottom: 1.5rem;
+  }
+  .luxury-blog-featured__title {
+    font-family: var(--heading-font);
+    font-size: clamp(32px, 4vw, 44px);
+    font-weight: 300;
+    line-height: 1.1;
+    margin: 0 0 2rem 0;
+    letter-spacing: -0.01em;
+  }
+  .luxury-blog-featured__excerpt {
+    font-size: 13.5px;
+    font-weight: 300;
+    line-height: 1.7;
+    opacity: 0.75;
+    margin: 0 0 3rem 0;
+    max-width: 440px;
+  }
+  .luxury-blog-link {
+    font-size: 9.5px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.25em;
+    color: var(--text-color);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.8rem;
+    border-bottom: 1px solid rgba(26, 28, 26, 0.15);
+    padding-bottom: 4px;
+    transition: gap 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+  }
+  .luxury-blog-link:hover {
+    gap: 1.2rem;
+    color: var(--gold-accent);
+    border-bottom-color: var(--gold-accent);
+  }
+
+  /* Article Grid (3 Columns) */
+  .luxury-blog-grid {
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 0 4rem;
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border-top: 1px solid var(--border-color);
+    background-color: var(--bg-color);
+  }
+  @media (max-width: 992px) {
+    .luxury-blog-grid {
+      grid-template-columns: repeat(2, 1fr);
+      padding: 0 2rem;
+    }
+  }
+  @media (max-width: 768px) {
+    .luxury-blog-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .luxury-blog-card {
+    padding: 3rem;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid var(--border-color);
+    box-sizing: border-box;
+  }
+  .luxury-blog-card:last-child {
+    border-right: none;
+  }
+  @media (max-width: 992px) {
+    .luxury-blog-card {
+      padding: 2.5rem 1.5rem;
+    }
+    .luxury-blog-card:nth-child(2n) {
+      border-right: none;
+    }
+  }
+  @media (max-width: 768px) {
+    .luxury-blog-card {
+      border-right: none;
+      border-bottom: 1px solid var(--border-color);
+    }
+    .luxury-blog-card:last-child {
+      border-bottom: none;
+    }
+  }
+
+  .luxury-blog-card__img-wrap {
+    aspect-ratio: 4/5;
+    overflow: hidden;
+    position: relative;
+    background-color: #eae1d7;
+    margin-bottom: 2rem;
+  }
+  .luxury-blog-card__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 1.8s cubic-bezier(0.25, 1, 0.5, 1);
+  }
+  .luxury-blog-card:hover .luxury-blog-card__img {
+    transform: scale(1.03);
+  }
+
+  .luxury-blog-card__tag {
+    font-size: 8.5px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    color: var(--gold-accent);
+    margin-bottom: 1rem;
+    display: block;
+  }
+  .luxury-blog-card__title {
+    font-family: var(--heading-font);
+    font-size: clamp(22px, 3vw, 28px);
+    font-weight: 300;
+    line-height: 1.2;
+    margin: 0 0 1rem 0;
+    letter-spacing: -0.01em;
+  }
+  .luxury-blog-card__excerpt {
+    font-size: 13px;
+    font-weight: 300;
+    line-height: 1.6;
+    opacity: 0.7;
+    margin: 0 0 2rem 0;
+    flex-grow: 1;
+  }
+
+  /* Pagination */
+  .luxury-blog-pagination {
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 6rem 4rem 4rem 4rem;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    font-family: var(--sans-font);
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text-color);
+  }
+  .luxury-blog-pagination__num {
+    text-decoration: none;
+    color: var(--text-color);
+    opacity: 0.4;
+    transition: opacity 0.3s ease;
+    padding: 4px 8px;
+  }
+  .luxury-blog-pagination__num.active,
+  .luxury-blog-pagination__num:hover {
+    opacity: 1;
+  }
+  .luxury-blog-pagination__arrow {
+    text-decoration: none;
+    color: var(--text-color);
+    transition: transform 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+  }
+  .luxury-blog-pagination__arrow:hover {
+    transform: translateX(4px);
+  }
+</style>
+
+<div class="luxury-blog">
+  
+  <!-- Hero Section with Organic Silhouette -->
+  <header class="luxury-blog-hero">
+    <div class="luxury-blog-hero__content">
+      <span class="luxury-blog-hero__tagline">{{ section.settings.tagline | default: 'ATELIER NOTES' }}</span>
+      <h1 class="luxury-blog-hero__title">{{ section.settings.title | default: 'Journal' }}</h1>
+      <p class="luxury-blog-hero__subtext">
+        {{ section.settings.subtext | default: 'Stories from our atelier, inspirations, and thoughts on timeless design and craft.' }}
+      </p>
+      <a href="#articles-grid" class="luxury-blog-hero__cta">
+        <span>VIEW ALL ARTICLES</span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+    </div>
+    <div class="luxury-blog-hero__shadow"></div>
+  </header>
+
+  <!-- Featured Article (2 Columns) -->
+  <section class="luxury-blog-featured">
+    {%- if blog.articles.size > 0 -%}
+      {%- assign featured_article = blog.articles[0] -%}
+      <div class="luxury-blog-featured__grid">
+        <div class="luxury-blog-featured__img-wrap">
+          <img src="{{ featured_article.image | img_url: '1200x' }}" class="luxury-blog-featured__img" alt="{{ featured_article.title | escape }}" loading="lazy">
+        </div>
+        <div class="luxury-blog-featured__card">
+          <span class="luxury-blog-featured__tag">FEATURED</span>
+          <h2 class="luxury-blog-featured__title">{{ featured_article.title }}</h2>
+          <p class="luxury-blog-featured__excerpt">
+            {%- if featured_article.excerpt != blank -%}
+              {{ featured_article.excerpt | strip_html | truncatewords: 30 }}
+            {%- else -%}
+              {{ featured_article.content | strip_html | truncatewords: 30 }}
+            {%- endif -%}
+          </p>
+          <a href="{{ featured_article.url }}" class="luxury-blog-link">
+            <span>READ ARTICLE</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+      </div>
+    {%- else -%}
+      <!-- Elegant Fallback Mockup based EXACTLY on User's provided image -->
+      <div class="luxury-blog-featured__grid">
+        <div class="luxury-blog-featured__img-wrap">
+          <img src="https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=1200&q=80" class="luxury-blog-featured__img" alt="The Art of Everyday Gold" loading="lazy">
+        </div>
+        <div class="luxury-blog-featured__card">
+          <span class="luxury-blog-featured__tag">FEATURED</span>
+          <h2 class="luxury-blog-featured__title">The Art of Everyday Gold</h2>
+          <p class="luxury-blog-featured__excerpt">
+            Exploring the balance between form and function, and what makes everyday pieces truly timeless.
+          </p>
+          <a href="#" class="luxury-blog-link">
+            <span>READ ARTICLE</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+      </div>
+    {%- endif -%}
+  </section>
+
+  <!-- 3-Column Grid for articles (Dynamic Hybrid Grid) -->
+  <section class="luxury-blog-grid" id="articles-grid">
+    {%- for i in (1..3) -%}
+      {%- assign grid_article = blog.articles[i] -%}
+      {%- if grid_article != blank -%}
+        <!-- Real Article from Shopify Admin -->
+        <article class="luxury-blog-card">
+          <div class="luxury-blog-card__img-wrap">
+            {%- if grid_article.image -%}
+              <img src="{{ grid_article.image | img_url: '600x' }}" class="luxury-blog-card__img" alt="{{ grid_article.title | escape }}" loading="lazy">
+            {%- else -%}
+              <img src="https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=600&q=80" class="luxury-blog-card__img" alt="{{ grid_article.title | escape }}" loading="lazy">
+            {%- endif -%}
+          </div>
+          <span class="luxury-blog-card__tag">
+            {%- if grid_article.tags != blank -%}
+              {{ grid_article.tags[0] }}
+            {%- else -%}
+              STORY
+            {%- endif -%}
+          </span>
+          <h3 class="luxury-blog-card__title">{{ grid_article.title }}</h3>
+          <p class="luxury-blog-card__excerpt">
+            {%- if grid_article.excerpt != blank -%}
+              {{ grid_article.excerpt | strip_html | truncatewords: 16 }}
+            {%- else -%}
+              {{ grid_article.content | strip_html | truncatewords: 16 }}
+            {%- endif -%}
+          </p>
+          <a href="{{ grid_article.url }}" class="luxury-blog-link">
+            <span>READ ARTICLE</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </article>
+      {%- else -%}
+        <!-- Elegant Fallback Mockup Placeholder -->
+        {%- case i -%}
+          {%- when 1 -%}
+            <article class="luxury-blog-card">
+              <div class="luxury-blog-card__img-wrap">
+                <img src="https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=600&q=80" class="luxury-blog-card__img" alt="Inside the Lumina Atelier" loading="lazy">
+              </div>
+              <span class="luxury-blog-card__tag">ATELIER</span>
+              <h3 class="luxury-blog-card__title">Inside the Lumina Atelier</h3>
+              <p class="luxury-blog-card__excerpt">
+                A glimpse into our studio, our process, and the hands behind each piece.
+              </p>
+              <a href="#" class="luxury-blog-link">
+                <span>READ ARTICLE</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+              </a>
+            </article>
+          {%- when 2 -%}
+            <article class="luxury-blog-card">
+              <div class="luxury-blog-card__img-wrap">
+                <img src="https://images.unsplash.com/photo-1599643477877-530eb83abc8e?auto=format&fit=crop&w=600&q=80" class="luxury-blog-card__img" alt="The Beauty of Layering" loading="lazy">
+              </div>
+              <span class="luxury-blog-card__tag">GUIDE</span>
+              <h3 class="luxury-blog-card__title">The Beauty of Layering</h3>
+              <p class="luxury-blog-card__excerpt">
+                Thoughts on layering with intention and creating your own combination.
+              </p>
+              <a href="#" class="luxury-blog-link">
+                <span>READ ARTICLE</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+              </a>
+            </article>
+          {%- else -%}
+            <article class="luxury-blog-card">
+              <div class="luxury-blog-card__img-wrap">
+                <img src="https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=600&q=80" class="luxury-blog-card__img" alt="Objects Designed to Endure" loading="lazy">
+              </div>
+              <span class="luxury-blog-card__tag">STORIES</span>
+              <h3 class="luxury-blog-card__title">Objects Designed to Endure</h3>
+              <p class="luxury-blog-card__excerpt">
+                Why we believe in slow design and pieces made to be kept forever.
+              </p>
+              <a href="#" class="luxury-blog-link">
+                <span>READ ARTICLE</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+              </a>
+            </article>
+        {%- endcase -%}
+      {%- endif -%}
+    {%- endfor -%}
+  </section>
+
+  <!-- Symmetrical Pagination Indice -->
+  <footer class="luxury-blog-pagination">
+    <a href="#" class="luxury-blog-pagination__num active">1</a>
+    <a href="#" class="luxury-blog-pagination__num">2</a>
+    <a href="#" class="luxury-blog-pagination__num">3</a>
+    <a href="#" class="luxury-blog-pagination__arrow" aria-label="Siguiente">
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+    </a>
+  </footer>
+
+</div>
+
+{% schema %}
+{
+  "name": "Luxury Editorial Blog",
+  "settings": [
+    {
+      "type": "text",
+      "id": "tagline",
+      "label": "Tagline del Blog",
+      "default": "ATELIER NOTES"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Título Principal",
+      "default": "Journal"
+    },
+    {
+      "type": "textarea",
+      "id": "subtext",
+      "label": "Subtexto del Hero",
+      "default": "Stories from our atelier, inspirations, and thoughts on timeless design and craft."
+    }
+  ]
+}
+{% endschema %}
