@@ -196,6 +196,7 @@
     display: flex;
     flex-direction: column;
     gap: 4rem;
+    --text-color: #ffffff !important;
   }
   .luxury-header__drawer.active {
     transform: translateX(0);
@@ -268,7 +269,20 @@
       {%- for block in section.blocks -%}
         {%- if block.type == 'nav_item' -%}
           {%- assign has_nav_blocks = true -%}
-          <a href="{{ block.settings.link | default: '#' }}" class="luxury-header__nav-link" {{ block.shopify_attributes }}>
+          {%- assign item_url = block.settings.link -%}
+          {%- if item_url == blank or item_url == '#' -%}
+            {%- assign down_label = block.settings.label | downcase -%}
+            {%- if down_label contains 'shop' or down_label contains 'collection' -%}
+              {%- assign item_url = '/collections' -%}
+            {%- elsif down_label contains 'about' -%}
+              {%- assign item_url = '/pages/about' -%}
+            {%- elsif down_label contains 'journal' -%}
+              {%- assign item_url = '/blogs/journal' -%}
+            {%- else -%}
+              {%- assign item_url = '#' -%}
+            {%- endif -%}
+          {%- endif -%}
+          <a href="{{ item_url }}" class="luxury-header__nav-link" {{ block.shopify_attributes }}>
             {{ block.settings.label }}
           </a>
         {%- endif -%}
@@ -280,10 +294,10 @@
             <a href="{{ link.url }}" class="luxury-header__nav-link">{{ link.title }}</a>
           {%- endfor -%}
         {%- else -%}
-          <a href="#" class="luxury-header__nav-link">Shop</a>
-          <a href="#" class="luxury-header__nav-link">Collections</a>
-          <a href="#" class="luxury-header__nav-link">About</a>
-          <a href="#" class="luxury-header__nav-link">Journal</a>
+          <a href="/collections" class="luxury-header__nav-link">Shop</a>
+          <a href="/collections" class="luxury-header__nav-link">Collections</a>
+          <a href="/pages/about" class="luxury-header__nav-link">About</a>
+          <a href="/blogs/journal" class="luxury-header__nav-link">Journal</a>
         {%- endif -%}
       {%- endif -%}
     </nav>
@@ -306,15 +320,15 @@
 
     <!-- Right side general links -->
     <nav class="luxury-header__nav-desktop luxury-header__nav-right">
-      <a href="/search" class="luxury-header__nav-link">Search</a>
+      <a href="/collections/all" class="luxury-header__nav-link">Search</a>
       {%- if shop.customer_accounts_enabled -%}
         <a href="/account" class="luxury-header__nav-link">Account</a>
       {%- endif -%}
-      <a href="/cart" class="luxury-header__nav-link">Cart ({{ cart.item_count }})</a>
+      <a href="/cart" onclick="openLuxuryCart(event)" class="luxury-header__nav-link">Cart (<span id="cart-icon-bubble">{{ cart.item_count }}</span>)</a>
     </nav>
 
     <!-- Cart icon for mobile -->
-    <a href="/cart" class="luxury-header__hamburger lg:hidden" style="display: none;" aria-label="Carrito">
+    <a href="/cart" onclick="openLuxuryCart(event)" class="luxury-header__hamburger lg:hidden" style="display: none;" aria-label="Carrito">
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
     </a>
   </div>
@@ -347,7 +361,20 @@
     {%- if has_nav_blocks -%}
       {%- for block in section.blocks -%}
         {%- if block.type == 'nav_item' -%}
-          <a href="{{ block.settings.link | default: '#' }}" class="luxury-header__drawer-link">{{ block.settings.label }}</a>
+          {%- assign item_url = block.settings.link -%}
+          {%- if item_url == blank or item_url == '#' -%}
+            {%- assign down_label = block.settings.label | downcase -%}
+            {%- if down_label contains 'shop' or down_label contains 'collection' -%}
+              {%- assign item_url = '/collections' -%}
+            {%- elsif down_label contains 'about' -%}
+              {%- assign item_url = '/pages/about' -%}
+            {%- elsif down_label contains 'journal' -%}
+              {%- assign item_url = '/blogs/journal' -%}
+            {%- else -%}
+              {%- assign item_url = '#' -%}
+            {%- endif -%}
+          {%- endif -%}
+          <a href="{{ item_url }}" class="luxury-header__drawer-link">{{ block.settings.label }}</a>
         {%- endif -%}
       {%- endfor -%}
     {%- else -%}
@@ -356,16 +383,16 @@
           <a href="{{ link.url }}" class="luxury-header__drawer-link">{{ link.title }}</a>
         {%- endfor -%}
       {%- else -%}
-        <a href="#" class="luxury-header__drawer-link">Shop</a>
-        <a href="#" class="luxury-header__drawer-link">Collections</a>
-        <a href="#" class="luxury-header__drawer-link">About</a>
-        <a href="#" class="luxury-header__drawer-link">Journal</a>
+        <a href="/collections" class="luxury-header__drawer-link">Shop</a>
+        <a href="/collections" class="luxury-header__drawer-link">Collections</a>
+        <a href="/pages/about" class="luxury-header__drawer-link">About</a>
+        <a href="/blogs/journal" class="luxury-header__drawer-link">Journal</a>
       {%- endif -%}
     {%- endif -%}
     
     <div style="width: 100%; height: 1px; background: rgba(255,255,255,0.08); margin: 1rem 0;"></div>
     
-    <a href="/search" class="luxury-header__drawer-link">Search</a>
+    <a href="/collections/all" class="luxury-header__drawer-link">Search</a>
     {%- if shop.customer_accounts_enabled -%}
       <a href="/account" class="luxury-header__drawer-link">Account</a>
     {%- endif -%}
