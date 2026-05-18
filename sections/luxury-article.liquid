@@ -1,0 +1,286 @@
+{%- comment -%}
+  Ritual Cosmético / ShopTHEMES - Luxury Article Section (OS 2.0 article)
+  Renders a single blog post/article with a premium, high-end editorial layout.
+{%- endcomment -%}
+
+{%- style -%}
+  .luxury-article-{{ section.id }} {
+    --heading-font: 'Cormorant Garamond', serif;
+    --sans-font: 'Montserrat', sans-serif;
+    --bg-color: {{ section.settings.bg_color | default: '#faf6f0' }};
+    --text-color: {{ section.settings.text_color | default: '#1a1c1a' }};
+    --gold-accent: {{ section.settings.accent_color | default: '#bc9c5d' }};
+    --border-color: rgba(26, 28, 26, 0.08);
+    
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: var(--sans-font);
+    padding: 9rem 0 8rem 0;
+    box-sizing: border-box;
+    width: 100%;
+  }
+
+  @media (max-width: 991px) {
+    .luxury-article-{{ section.id }} {
+      padding: 7rem 0 6rem 0;
+    }
+  }
+
+  .luxury-art-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    box-sizing: border-box;
+  }
+
+  /* Header Section */
+  .luxury-art-header {
+    text-align: center;
+    margin-bottom: 4rem;
+  }
+
+  .luxury-art-header__kicker {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    color: var(--gold-accent);
+    display: block;
+    margin-bottom: 1.5rem;
+  }
+
+  .luxury-art-header__title {
+    font-family: var(--heading-font);
+    font-size: clamp(36px, 5.5vw, 62px);
+    font-weight: 300;
+    line-height: 1.15;
+    margin: 0 0 2rem 0;
+    color: var(--text-color);
+    letter-spacing: -0.01em;
+  }
+
+  .luxury-art-header__meta {
+    font-size: 10px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--text-color);
+    opacity: 0.6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .luxury-art-header__meta-dot {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background-color: var(--gold-accent);
+  }
+
+  /* Main Featured Image */
+  .luxury-art-media {
+    max-width: 1400px;
+    margin: 0 auto 5rem auto;
+    padding: 0 4rem;
+    box-sizing: border-box;
+  }
+
+  @media (max-width: 991px) {
+    .luxury-art-media {
+      padding: 0 2rem;
+      margin-bottom: 3.5rem;
+    }
+  }
+
+  .luxury-art-media__frame {
+    width: 100%;
+    aspect-ratio: 16/9;
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.02);
+    background-color: rgba(26, 28, 26, 0.02);
+  }
+
+  .luxury-art-media__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* Article Content Body */
+  .luxury-art-body {
+    font-size: clamp(14px, 1.6vw, 16px);
+    line-height: 1.95;
+    font-weight: 300;
+    opacity: 0.88;
+    color: var(--text-color);
+    margin-bottom: 6rem;
+  }
+
+  .luxury-art-body p {
+    margin: 0 0 2rem 0;
+  }
+
+  .luxury-art-body p:last-child {
+    margin-bottom: 0;
+  }
+
+  .luxury-art-body h2,
+  .luxury-art-body h3 {
+    font-family: var(--heading-font);
+    font-weight: 300;
+    color: var(--text-color);
+    margin: 3.5rem 0 1.5rem 0;
+    letter-spacing: -0.01em;
+    line-height: 1.25;
+  }
+
+  .luxury-art-body h2 {
+    font-size: clamp(26px, 3.5vw, 36px);
+  }
+
+  .luxury-art-body h3 {
+    font-size: clamp(20px, 2.5vw, 28px);
+  }
+
+  .luxury-art-body blockquote {
+    font-family: var(--heading-font);
+    font-style: italic;
+    font-size: clamp(20px, 2.5vw, 28px);
+    color: var(--gold-accent);
+    line-height: 1.4;
+    border-left: 1px solid var(--gold-accent);
+    padding-left: 2rem;
+    margin: 3rem 0;
+  }
+
+  .luxury-art-body img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+    margin: 3rem 0;
+    display: block;
+  }
+
+  /* Back to Journal Footer Link */
+  .luxury-art-footer {
+    border-top: 1px solid var(--border-color);
+    padding-top: 4rem;
+    display: flex;
+    justify-content: center;
+  }
+
+  .luxury-art-footer__back {
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.25em;
+    color: var(--text-color);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding-bottom: 6px;
+    border-bottom: 1px solid rgba(26, 28, 26, 0.25);
+    transition: border-bottom-color 0.4s ease, gap 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+  }
+
+  .luxury-art-footer__back:hover {
+    border-bottom-color: var(--text-color);
+    gap: 1.2rem;
+  }
+
+  .luxury-art-footer__back svg {
+    width: 14px;
+    height: 14px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2px;
+    transform: rotate(180deg);
+  }
+{%- endstyle -%}
+
+<article class="luxury-article-{{ section.id }}">
+  <div class="luxury-art-container">
+    
+    <!-- Article Header -->
+    <header class="luxury-art-header">
+      <span class="luxury-art-header__kicker">
+        {%- if article.tags != blank -%}
+          {{ article.tags[0] }}
+        {%- else -%}
+          JOURNAL ARTICLE
+        {%- endif -%}
+      </span>
+      <h1 class="luxury-art-header__title">{{ article.title }}</h1>
+      <div class="luxury-art-header__meta">
+        <span>BY {{ article.author | upcase | default: 'ATELIER' }}</span>
+        <span class="luxury-art-header__meta-dot"></span>
+        <span>{{ article.published_at | date: '%B %d, %Y' }}</span>
+      </div>
+    </header>
+
+  </div>
+
+  <!-- Featured Image -->
+  {%- if article.image != blank -%}
+    <div class="luxury-art-media">
+      <div class="luxury-art-media__frame">
+        <img
+          src="{{ article.image | image_url: width: 1800 }}"
+          alt="{{ article.title | escape }}"
+          class="luxury-art-media__img"
+          loading="lazy"
+        >
+      </div>
+    </div>
+  {%- endif -%}
+
+  <div class="luxury-art-container">
+    
+    <!-- Content Body -->
+    <div class="luxury-art-body">
+      {{ article.content }}
+    </div>
+
+    <!-- Navigation Back Link -->
+    <footer class="luxury-art-footer">
+      <a href="{{ blog.url | default: '/blogs/journal' }}" class="luxury-art-footer__back">
+        <svg viewBox="0 0 24 24">
+          <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span>Back to Journal</span>
+      </a>
+    </footer>
+
+  </div>
+</article>
+
+{% schema %}
+{
+  "name": "Luxury Single Article",
+  "settings": [
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Color de Fondo",
+      "default": "#faf6f0"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Color de Texto",
+      "default": "#1a1c1a"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Color de Acento (Gold)",
+      "default": "#bc9c5d"
+    }
+  ]
+}
+{% endschema %}
