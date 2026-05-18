@@ -1,0 +1,593 @@
+{%- comment -%}
+  Ritual Cosmético / ShopTHEMES - Luxury Collections Directory Page (OS 2.0 list-collections)
+  Customizable directory list representing the beautiful "Shop Collections" mockup design.
+{%- endcomment -%}
+
+{%- style -%}
+  .luxury-shop-page-{{ section.id }} {
+    --heading-font: 'Cormorant Garamond', serif;
+    --sans-font: 'Montserrat', sans-serif;
+    
+    background-color: {{ section.settings.bg_color | default: '#fbf9f6' }};
+    color: {{ section.settings.text_color | default: '#1a1c1a' }};
+    font-family: var(--sans-font);
+    padding: 7rem 0 8rem 0;
+    box-sizing: border-box;
+    width: 100%;
+  }
+
+  @media (max-width: 991px) {
+    .luxury-shop-page-{{ section.id }} {
+      padding: 4rem 0 5rem 0;
+    }
+  }
+
+  /* Header Styles */
+  .luxury-shop-header {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 5rem auto;
+    padding: 0 2rem;
+    box-sizing: border-box;
+  }
+
+  @media (max-width: 768px) {
+    .luxury-shop-header {
+      margin-bottom: 3rem;
+    }
+  }
+
+  .luxury-shop-header__title {
+    font-family: var(--heading-font);
+    font-size: clamp(36px, 5.5vw, 62px);
+    font-weight: 300;
+    line-height: 1.15;
+    margin: 0 0 1.25rem 0;
+    color: var(--text-color);
+    letter-spacing: -0.01em;
+  }
+
+  .luxury-shop-header__desc {
+    font-size: clamp(13px, 1.5vw, 15px);
+    line-height: 1.7;
+    font-weight: 300;
+    color: #666;
+    margin: 0;
+    letter-spacing: 0.02em;
+  }
+
+  /* Layout Grid */
+  .luxury-shop-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 0 4rem;
+    box-sizing: border-box;
+  }
+
+  @media (max-width: 991px) {
+    .luxury-shop-grid {
+      padding: 0 2rem;
+      gap: 1.25rem;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .luxury-shop-grid {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+  }
+
+  /* Cards */
+  .luxury-shop-card {
+    position: relative;
+    width: 100%;
+    background-color: #f5f0eb;
+    border-radius: 4px;
+    overflow: hidden;
+    display: block;
+    text-decoration: none;
+    box-sizing: border-box;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.01);
+  }
+
+  .luxury-shop-card--wide {
+    grid-column: span 2;
+    padding-bottom: 28%; /* Elegant slim wide banner ratio on desktop */
+  }
+
+  @media (max-width: 768px) {
+    .luxury-shop-card--wide {
+      grid-column: span 1;
+      padding-bottom: 50%;
+    }
+  }
+
+  .luxury-shop-card--split {
+    padding-bottom: 45%; /* Perfectly symmetrical landscape cards for the halves */
+  }
+
+  @media (max-width: 768px) {
+    .luxury-shop-card--split {
+      padding-bottom: 55%;
+    }
+  }
+
+  /* Card Image */
+  .luxury-shop-card__img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+    z-index: 1;
+  }
+
+  .luxury-shop-card:hover .luxury-shop-card__img {
+    transform: scale(1.025);
+  }
+
+  /* High-key elegant left-aligned gradient to protect text readability */
+  .luxury-shop-card__gradient {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to right, rgba(251, 249, 246, 0.85) 0%, rgba(251, 249, 246, 0.4) 45%, rgba(251, 249, 246, 0) 100%);
+    z-index: 2;
+    transition: opacity 0.4s ease;
+  }
+
+  .luxury-shop-card:hover .luxury-shop-card__gradient {
+    opacity: 0.95;
+  }
+
+  /* Card Content */
+  .luxury-shop-card__content {
+    position: absolute;
+    top: 50%;
+    left: 5rem;
+    transform: translateY(-50%);
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+    box-sizing: border-box;
+  }
+
+  @media (max-width: 991px) {
+    .luxury-shop-card__content {
+      left: 3rem;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .luxury-shop-card__content {
+      left: 2rem;
+    }
+  }
+
+  .luxury-shop-card__title {
+    font-family: var(--heading-font);
+    font-size: clamp(22px, 3vw, 36px);
+    font-weight: 300;
+    color: {{ section.settings.text_color | default: '#1a1c1a' }};
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    line-height: 1.1;
+  }
+
+  .luxury-shop-card__link {
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.25em;
+    color: {{ section.settings.text_color | default: '#1a1c1a' }};
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    opacity: 0.75;
+    transition: opacity 0.3s ease, gap 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+  }
+
+  .luxury-shop-card:hover .luxury-shop-card__link {
+    opacity: 1;
+    gap: 0.9rem;
+  }
+
+  .luxury-shop-card__link svg {
+    width: 14px;
+    height: 14px;
+    stroke: currentColor;
+    fill: none;
+    transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+  }
+
+  /* Bottom Call to Action */
+  .luxury-shop-footer-cta {
+    max-width: 1600px;
+    margin: 8rem auto 0 auto;
+    text-align: center;
+    padding: 0 4rem;
+    box-sizing: border-box;
+  }
+
+  @media (max-width: 768px) {
+    .luxury-shop-footer-cta {
+      margin-top: 5rem;
+      padding: 0 2rem;
+    }
+  }
+
+  .luxury-shop-footer-cta__title {
+    font-family: var(--heading-font);
+    font-size: clamp(24px, 4vw, 42px);
+    font-weight: 300;
+    color: var(--text-color);
+    margin: 0 0 0.75rem 0;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+  }
+
+  .luxury-shop-footer-cta__subtitle {
+    font-size: 13px;
+    font-weight: 300;
+    color: #666;
+    margin: 0 0 2.25rem 0;
+    letter-spacing: 0.05em;
+  }
+
+  .luxury-shop-footer-cta__link {
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.25em;
+    color: var(--text-color);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding-bottom: 6px;
+    border-bottom: 1px solid rgba(26, 28, 26, 0.2);
+    transition: border-color 0.3s ease, gap 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+  }
+
+  .luxury-shop-footer-cta__link:hover {
+    border-bottom-color: var(--text-color);
+    gap: 1rem;
+  }
+
+  .luxury-shop-footer-cta__link svg {
+    width: 14px;
+    height: 14px;
+    stroke: currentColor;
+    fill: none;
+  }
+{%- endstyle -%}
+
+<div class="luxury-shop-page-{{ section.id }}">
+  
+  <!-- Shop Collections Page Header -->
+  <div class="luxury-shop-header">
+    <h1 class="luxury-shop-header__title">{{ section.settings.title | default: 'Shop Collections' }}</h1>
+    {%- if section.settings.description != blank -%}
+      <p class="luxury-shop-header__desc">{{ section.settings.description }}</p>
+    {%- endif -%}
+  </div>
+
+  <!-- Symmetrical & Balanced Collections Directory Grid -->
+  <div class="luxury-shop-grid">
+    
+    <!-- Row 1: Rings (Wide full-width banner) -->
+    {%- assign col_1_link = section.settings.col_1_url -%}
+    {%- if col_1_link == blank or col_1_link == '#' -%}
+      {%- assign col_1_link = '/collections/rings' -%}
+    {%- endif -%}
+    <a href="{{ col_1_link }}" class="luxury-shop-card luxury-shop-card--wide">
+      {%- if section.settings.col_1_image != blank -%}
+        <img src="{{ section.settings.col_1_image | image_url: width: 1800 }}" alt="{{ section.settings.col_1_title | escape }}" class="luxury-shop-card__img" loading="lazy">
+      {%- else -%}
+        <img src="{{ 'collection-rings.png' | asset_url }}" alt="Rings Category" class="luxury-shop-card__img" loading="lazy">
+      {%- endif -%}
+      <div class="luxury-shop-card__gradient"></div>
+      <div class="luxury-shop-card__content">
+        <h2 class="luxury-shop-card__title">{{ section.settings.col_1_title | default: 'RINGS' }}</h2>
+        <span class="luxury-shop-card__link">
+          {{ section.settings.link_label | default: 'Explore' }}
+          <svg viewBox="0 0 24 24">
+            <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+      </div>
+    </a>
+
+    <!-- Row 2, Left: Necklaces -->
+    {%- assign col_2_link = section.settings.col_2_url -%}
+    {%- if col_2_link == blank or col_2_link == '#' -%}
+      {%- assign col_2_link = '/collections/necklaces' -%}
+    {%- endif -%}
+    <a href="{{ col_2_link }}" class="luxury-shop-card luxury-shop-card--split">
+      {%- if section.settings.col_2_image != blank -%}
+        <img src="{{ section.settings.col_2_image | image_url: width: 1000 }}" alt="{{ section.settings.col_2_title | escape }}" class="luxury-shop-card__img" loading="lazy">
+      {%- else -%}
+        <img src="{{ 'collection-necklaces.png' | asset_url }}" alt="Necklaces Category" class="luxury-shop-card__img" loading="lazy">
+      {%- endif -%}
+      <div class="luxury-shop-card__gradient"></div>
+      <div class="luxury-shop-card__content">
+        <h2 class="luxury-shop-card__title">{{ section.settings.col_2_title | default: 'NECKLACES' }}</h2>
+        <span class="luxury-shop-card__link">
+          {{ section.settings.link_label | default: 'Explore' }}
+          <svg viewBox="0 0 24 24">
+            <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+      </div>
+    </a>
+
+    <!-- Row 2, Right: Earrings -->
+    {%- assign col_3_link = section.settings.col_3_url -%}
+    {%- if col_3_link == blank or col_3_link == '#' -%}
+      {%- assign col_3_link = '/collections/earrings' -%}
+    {%- endif -%}
+    <a href="{{ col_3_link }}" class="luxury-shop-card luxury-shop-card--split">
+      {%- if section.settings.col_3_image != blank -%}
+        <img src="{{ section.settings.col_3_image | image_url: width: 1000 }}" alt="{{ section.settings.col_3_title | escape }}" class="luxury-shop-card__img" loading="lazy">
+      {%- else -%}
+        <img src="{{ 'collection-earrings.png' | asset_url }}" alt="Earrings Category" class="luxury-shop-card__img" loading="lazy">
+      {%- endif -%}
+      <div class="luxury-shop-card__gradient"></div>
+      <div class="luxury-shop-card__content">
+        <h2 class="luxury-shop-card__title">{{ section.settings.col_3_title | default: 'EARRINGS' }}</h2>
+        <span class="luxury-shop-card__link">
+          {{ section.settings.link_label | default: 'Explore' }}
+          <svg viewBox="0 0 24 24">
+            <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+      </div>
+    </a>
+
+    <!-- Row 3, Left: Bracelets -->
+    {%- assign col_4_link = section.settings.col_4_url -%}
+    {%- if col_4_link == blank or col_4_link == '#' -%}
+      {%- assign col_4_link = '/collections/bracelets' -%}
+    {%- endif -%}
+    <a href="{{ col_4_link }}" class="luxury-shop-card luxury-shop-card--split">
+      {%- if section.settings.col_4_image != blank -%}
+        <img src="{{ section.settings.col_4_image | image_url: width: 1000 }}" alt="{{ section.settings.col_4_title | escape }}" class="luxury-shop-card__img" loading="lazy">
+      {%- else -%}
+        <img src="{{ 'collection-bracelets.png' | asset_url }}" alt="Bracelets Category" class="luxury-shop-card__img" loading="lazy">
+      {%- endif -%}
+      <div class="luxury-shop-card__gradient"></div>
+      <div class="luxury-shop-card__content">
+        <h2 class="luxury-shop-card__title">{{ section.settings.col_4_title | default: 'BRACELETS' }}</h2>
+        <span class="luxury-shop-card__link">
+          {{ section.settings.link_label | default: 'Explore' }}
+          <svg viewBox="0 0 24 24">
+            <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+      </div>
+    </a>
+
+    <!-- Row 3, Right: Fine Essentials -->
+    {%- assign col_5_link = section.settings.col_5_url -%}
+    {%- if col_5_link == blank or col_5_link == '#' -%}
+      {%- assign col_5_link = '/collections/fine-essentials' -%}
+    {%- endif -%}
+    <a href="{{ col_5_link }}" class="luxury-shop-card luxury-shop-card--split">
+      {%- if section.settings.col_5_image != blank -%}
+        <img src="{{ section.settings.col_5_image | image_url: width: 1000 }}" alt="{{ section.settings.col_5_title | escape }}" class="luxury-shop-card__img" loading="lazy">
+      {%- else -%}
+        <img src="{{ 'collection-rings-alt.png' | asset_url }}" alt="Fine Essentials Category" class="luxury-shop-card__img" loading="lazy">
+      {%- endif -%}
+      <div class="luxury-shop-card__gradient"></div>
+      <div class="luxury-shop-card__content">
+        <h2 class="luxury-shop-card__title">{{ section.settings.col_5_title | default: 'FINE ESSENTIALS' }}</h2>
+        <span class="luxury-shop-card__link">
+          {{ section.settings.link_label | default: 'Explore' }}
+          <svg viewBox="0 0 24 24">
+            <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+      </div>
+    </a>
+
+  </div>
+
+  <!-- Bottom Call to Action Banner -->
+  <div class="luxury-shop-footer-cta">
+    <h3 class="luxury-shop-footer-cta__title">{{ section.settings.cta_title | default: 'CRAFTED TO LAST' }}</h3>
+    {%- if section.settings.cta_subtitle != blank -%}
+      <p class="luxury-shop-footer-cta__subtitle">{{ section.settings.cta_subtitle }}</p>
+    {%- endif -%}
+    {%- if section.settings.cta_link_label != blank -%}
+      <a href="{{ section.settings.cta_link_url | default: '#' }}" class="luxury-shop-footer-cta__link">
+        {{ section.settings.cta_link_label }}
+        <svg viewBox="0 0 24 24">
+          <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    {%- endif -%}
+  </div>
+
+</div>
+
+{% schema %}
+{
+  "name": "Shop Collections List",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Ajustes de Encabezado"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Título de la Página",
+      "default": "Shop Collections"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Descripción de la Página",
+      "default": "Timeless pieces, designed to be worn, loved, and passed down."
+    },
+    {
+      "type": "text",
+      "id": "link_label",
+      "label": "Etiqueta de Enlace del Card",
+      "default": "Explore"
+    },
+    {
+      "type": "header",
+      "content": "Colección 1: RINGS (Fila Superior Completa)"
+    },
+    {
+      "type": "text",
+      "id": "col_1_title",
+      "label": "Título",
+      "default": "RINGS"
+    },
+    {
+      "type": "image_picker",
+      "id": "col_1_image",
+      "label": "Imagen de Fondo"
+    },
+    {
+      "type": "url",
+      "id": "col_1_url",
+      "label": "Enlace de Destino"
+    },
+    {
+      "type": "header",
+      "content": "Colección 2: NECKLACES (Fila 2 - Izquierda)"
+    },
+    {
+      "type": "text",
+      "id": "col_2_title",
+      "label": "Título",
+      "default": "NECKLACES"
+    },
+    {
+      "type": "image_picker",
+      "id": "col_2_image",
+      "label": "Imagen de Fondo"
+    },
+    {
+      "type": "url",
+      "id": "col_2_url",
+      "label": "Enlace de Destino"
+    },
+    {
+      "type": "header",
+      "content": "Colección 3: EARRINGS (Fila 2 - Derecha)"
+    },
+    {
+      "type": "text",
+      "id": "col_3_title",
+      "label": "Título",
+      "default": "EARRINGS"
+    },
+    {
+      "type": "image_picker",
+      "id": "col_3_image",
+      "label": "Imagen de Fondo"
+    },
+    {
+      "type": "url",
+      "id": "col_3_url",
+      "label": "Enlace de Destino"
+    },
+    {
+      "type": "header",
+      "content": "Colección 4: BRACELETS (Fila 3 - Izquierda)"
+    },
+    {
+      "type": "text",
+      "id": "col_4_title",
+      "label": "Título",
+      "default": "BRACELETS"
+    },
+    {
+      "type": "image_picker",
+      "id": "col_4_image",
+      "label": "Imagen de Fondo"
+    },
+    {
+      "type": "url",
+      "id": "col_4_url",
+      "label": "Enlace de Destino"
+    },
+    {
+      "type": "header",
+      "content": "Colección 5: FINE ESSENTIALS (Fila 3 - Derecha)"
+    },
+    {
+      "type": "text",
+      "id": "col_5_title",
+      "label": "Título",
+      "default": "FINE ESSENTIALS"
+    },
+    {
+      "type": "image_picker",
+      "id": "col_5_image",
+      "label": "Imagen de Fondo"
+    },
+    {
+      "type": "url",
+      "id": "col_5_url",
+      "label": "Enlace de Destino"
+    },
+    {
+      "type": "header",
+      "content": "Llamado a la Acción Inferior"
+    },
+    {
+      "type": "text",
+      "id": "cta_title",
+      "label": "Título de Llamado",
+      "default": "CRAFTED TO LAST"
+    },
+    {
+      "type": "text",
+      "id": "cta_subtitle",
+      "label": "Subtítulo",
+      "default": "Discover the artistry behind every Lumina piece."
+    },
+    {
+      "type": "text",
+      "id": "cta_link_label",
+      "label": "Texto del Enlace",
+      "default": "OUR CRAFTSMANSHIP"
+    },
+    {
+      "type": "url",
+      "id": "cta_link_url",
+      "label": "Enlace del Llamado"
+    },
+    {
+      "type": "header",
+      "content": "Estilos y Colores"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Color de Fondo de la Página",
+      "default": "#fbf9f6"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Color de Texto General",
+      "default": "#1a1c1a"
+    }
+  ]
+}
+{% endschema %}
