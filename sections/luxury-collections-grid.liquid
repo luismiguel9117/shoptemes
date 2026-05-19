@@ -354,15 +354,18 @@
       {%- assign first_block = section.blocks | first -%}
       {%- if first_block -%}
         {%- assign card_url = first_block.settings.url -%}
+        {%- if card_url contains 'shopify://' -%}
+          {%- assign card_url = card_url | replace: 'shopify://collections/', '/collections/' | replace: 'shopify://products/', '/products/' | replace: 'shopify://pages/', '/pages/' | replace: 'shopify://blogs/', '/blogs/' -%}
+        {%- endif -%}
         {%- if card_url == blank or card_url == '#' -%}
           {%- assign down_title = first_block.settings.title | default: 'Necklaces' | downcase -%}
-          {%- if down_title contains 'ring' -%}
+          {%- if down_title contains 'ring' or down_title contains 'anillo' -%}
             {%- assign card_url = '/collections/rings' -%}
-          {%- elsif down_title contains 'necklace' -%}
+          {%- elsif down_title contains 'necklace' or down_title contains 'collar' or down_title contains 'necklece' -%}
             {%- assign card_url = '/collections/necklaces' -%}
-          {%- elsif down_title contains 'earring' -%}
+          {%- elsif down_title contains 'earring' or down_title contains 'arete' or down_title contains 'pendiente' -%}
             {%- assign card_url = '/collections/earrings' -%}
-          {%- elsif down_title contains 'bracelet' -%}
+          {%- elsif down_title contains 'bracelet' or down_title contains 'pulsera' or down_title contains 'brazalete' -%}
             {%- assign card_url = '/collections/bracelets' -%}
           {%- else -%}
             {%- assign card_url = '/collections' -%}
@@ -390,15 +393,18 @@
       <!-- Row 2: 3 columns of square cards (Blocks 2, 3, 4) -->
       {%- for block in section.blocks offset: 1 -%}
         {%- assign card_url = block.settings.url -%}
+        {%- if card_url contains 'shopify://' -%}
+          {%- assign card_url = card_url | replace: 'shopify://collections/', '/collections/' | replace: 'shopify://products/', '/products/' | replace: 'shopify://pages/', '/pages/' | replace: 'shopify://blogs/', '/blogs/' -%}
+        {%- endif -%}
         {%- if card_url == blank or card_url == '#' -%}
           {%- assign down_title = block.settings.title | downcase -%}
-          {%- if down_title contains 'ring' -%}
+          {%- if down_title contains 'ring' or down_title contains 'anillo' -%}
             {%- assign card_url = '/collections/rings' -%}
-          {%- elsif down_title contains 'necklace' -%}
+          {%- elsif down_title contains 'necklace' or down_title contains 'collar' or down_title contains 'necklece' -%}
             {%- assign card_url = '/collections/necklaces' -%}
-          {%- elsif down_title contains 'earring' -%}
+          {%- elsif down_title contains 'earring' or down_title contains 'arete' or down_title contains 'pendiente' -%}
             {%- assign card_url = '/collections/earrings' -%}
-          {%- elsif down_title contains 'bracelet' -%}
+          {%- elsif down_title contains 'bracelet' or down_title contains 'pulsera' or down_title contains 'brazalete' -%}
             {%- assign card_url = '/collections/bracelets' -%}
           {%- else -%}
             {%- assign card_url = '/collections' -%}
