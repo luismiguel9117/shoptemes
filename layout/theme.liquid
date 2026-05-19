@@ -20,6 +20,46 @@
     {{ content_for_header }}
     
     {{ 'theme.css' | asset_url | stylesheet_tag }}
+    
+    {% if template == 'index' %}
+      <style>
+        @media (min-width: 992px) {
+          html.snap-active {
+            scroll-snap-type: y mandatory;
+            scroll-behavior: smooth;
+          }
+          .scroll-snap-slide {
+            scroll-snap-align: start;
+            scroll-snap-stop: always;
+            height: 100vh;
+            min-height: 100vh;
+          }
+          /* Snap end for luxury footer so it reveals and snaps cleanly at the bottom */
+          .luxury-footer.scroll-snap-slide {
+            height: auto !important;
+            min-height: auto !important;
+            scroll-snap-align: end !important;
+          }
+        }
+      </style>
+      <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          const handleScroll = () => {
+            const threshold = window.innerHeight * 2.05;
+            if (window.scrollY > threshold) {
+              document.documentElement.classList.remove('snap-active');
+            } else {
+              document.documentElement.classList.add('snap-active');
+            }
+          };
+          window.addEventListener('scroll', handleScroll, { passive: true });
+          handleScroll(); // Run immediately
+        });
+      </script>
+    {% endif %}
+    <script>
+      window.themeMoneyFormat = {{ shop.money_format | json }};
+    </script>
   </head>
   <body class="min-h-screen bg-background font-sans text-on-surface">
     {% section 'header' %}
@@ -29,5 +69,510 @@
     </main>
     
     {% section 'footer' %}
+
+    <!-- Luxury AJAX Cart Drawer -->
+    <div id="luxury-cart-overlay" class="luxury-cart-overlay" onclick="closeLuxuryCart()"></div>
+    <div id="luxury-cart-drawer" class="luxury-cart-drawer">
+      <div class="luxury-cart-drawer__header">
+        <h3 class="luxury-cart-drawer__title">YOUR SELECTION</h3>
+        <button class="luxury-cart-drawer__close" onclick="closeLuxuryCart()" aria-label="Cerrar Carrito">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      
+      <div id="luxury-cart-drawer__items" class="luxury-cart-drawer__items">
+        <!-- Rendered dynamically by Javascript -->
+      </div>
+      
+      <div class="luxury-cart-drawer__footer" id="luxury-cart-drawer__footer">
+        <!-- Subtotal & Checkout rendered dynamically by Javascript -->
+      </div>
+    </div>
+
+    {%- style -%}
+      /* Luxury Cart Drawer Styles */
+      .luxury-cart-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(13, 13, 13, 0.4);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.5s cubic-bezier(0.25, 1, 0.5, 1), visibility 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+        z-index: 999;
+      }
+      .luxury-cart-overlay.active {
+        opacity: 1;
+        visibility: visible;
+      }
+      .luxury-cart-drawer {
+        position: fixed;
+        top: 0;
+        right: -480px;
+        width: 480px;
+        max-width: 100vw;
+        height: 100vh;
+        background-color: #faf6f0;
+        color: #1a1c1a;
+        box-shadow: -10px 0 40px rgba(0, 0, 0, 0.05);
+        z-index: 1000;
+        display: flex;
+        flex-direction: column;
+        transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+        font-family: 'Montserrat', sans-serif;
+      }
+      .luxury-cart-drawer.active {
+        transform: translateX(-480px);
+      }
+      @media (max-width: 576px) {
+        .luxury-cart-drawer {
+          width: 100%;
+          right: -100%;
+        }
+        .luxury-cart-drawer.active {
+          transform: translateX(-100%);
+        }
+      }
+      
+      .luxury-cart-drawer__header {
+        padding: 2.5rem 2.5rem 1.5rem 2.5rem;
+        border-bottom: 1px solid rgba(26, 28, 26, 0.06);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .luxury-cart-drawer__title {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 20px;
+        font-weight: 300;
+        margin: 0;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+      .luxury-cart-drawer__close {
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 0;
+        color: #1a1c1a;
+        opacity: 0.6;
+        transition: opacity 0.3s ease, transform 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .luxury-cart-drawer__close:hover {
+        opacity: 1;
+        transform: rotate(90deg);
+      }
+
+      .luxury-cart-drawer__items {
+        flex-grow: 1;
+        overflow-y: auto;
+        padding: 2rem 2.5rem;
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+      }
+      
+      .luxury-cart-item {
+        display: grid;
+        grid-template-columns: 80px 1fr;
+        gap: 1.5rem;
+        align-items: center;
+      }
+      .luxury-cart-item__image-wrap {
+        aspect-ratio: 4/5;
+        background-color: #eae1d7;
+        border-radius: 4px;
+        overflow: hidden;
+        position: relative;
+      }
+      .luxury-cart-item__image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .luxury-cart-item__details {
+        display: flex;
+        flex-direction: column;
+        gap: 0.3rem;
+      }
+      .luxury-cart-item__title-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 1rem;
+      }
+      .luxury-cart-item__title {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 17px;
+        font-weight: 400;
+        margin: 0;
+        color: #1a1c1a;
+        line-height: 1.2;
+      }
+      .luxury-cart-item__variant {
+        font-size: 9.5px;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: #bc9c5d;
+        margin: 0;
+      }
+      .luxury-cart-item__meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 0.5rem;
+      }
+      .luxury-cart-item__qty {
+        display: flex;
+        align-items: center;
+        border: 1px solid rgba(26, 28, 26, 0.15);
+        border-radius: 20px;
+        padding: 4px 12px;
+        gap: 1rem;
+      }
+      .luxury-cart-item__qty-btn {
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 0;
+        font-size: 12px;
+        color: #1a1c1a;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 14px;
+        height: 14px;
+        transition: opacity 0.2s ease;
+      }
+      .luxury-cart-item__qty-btn:hover {
+        opacity: 0.5;
+      }
+      .luxury-cart-item__qty-num {
+        font-size: 11px;
+        font-weight: 500;
+        min-width: 15px;
+        text-align: center;
+      }
+      .luxury-cart-item__price {
+        font-size: 13.5px;
+        font-weight: 500;
+      }
+      .luxury-cart-item__remove {
+        background: none;
+        border: none;
+        color: #1a1c1a;
+        opacity: 0.4;
+        cursor: pointer;
+        padding: 0;
+        transition: opacity 0.3s ease;
+        display: flex;
+        align-items: center;
+      }
+      .luxury-cart-item__remove:hover {
+        opacity: 1;
+      }
+      
+      .luxury-cart-drawer__footer {
+        padding: 2rem 2.5rem 2.5rem 2.5rem;
+        border-top: 1px solid rgba(26, 28, 26, 0.06);
+        background-color: #faf6f0;
+      }
+      .luxury-cart-drawer__subtotal-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1.5rem;
+      }
+      .luxury-cart-drawer__subtotal-label {
+        font-size: 10px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.2em;
+        color: rgba(26, 28, 26, 0.6);
+      }
+      .luxury-cart-drawer__subtotal-price {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 22px;
+        font-weight: 400;
+      }
+      .luxury-cart-drawer__btn {
+        width: 100%;
+        padding: 1.25rem;
+        background-color: #1a1c1a;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        font-size: 10px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.25em;
+        cursor: pointer;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        transition: background-color 0.4s ease, transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.8rem;
+      }
+      .luxury-cart-drawer__btn:hover {
+        background-color: #bc9c5d;
+        transform: translateY(-2px);
+      }
+      .luxury-cart-drawer__btn:active {
+        transform: translateY(0);
+      }
+      
+      .luxury-cart-empty {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 1.5rem;
+        height: 100%;
+        text-align: center;
+        padding: 0 2rem;
+      }
+      .luxury-cart-empty__icon {
+        color: #bc9c5d;
+        opacity: 0.8;
+      }
+      .luxury-cart-empty__text {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 16px;
+        font-weight: 300;
+        letter-spacing: 0.05em;
+        margin: 0;
+        opacity: 0.6;
+      }
+      .luxury-cart-empty__btn {
+        font-size: 10px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.2em;
+        color: #1a1c1a;
+        border-bottom: 1px solid rgba(26, 28, 26, 0.25);
+        text-decoration: none;
+        padding-bottom: 4px;
+        transition: border-color 0.3s ease;
+      }
+      .luxury-cart-empty__btn:hover {
+        border-bottom-color: #1a1c1a;
+      }
+    {%- endstyle -%}
+
+    <script>
+      // Professional AJAX Currency Formatter
+      const formatMoney = function(cents, format) {
+        if (typeof cents == 'string') { cents = cents.replace('.',''); }
+        var value = '';
+        var placeholderRegex = /\{\{\s*(\w+)\s*\}\}/;
+        var formatString = format || window.themeMoneyFormat || '€{{amount}}';
+
+        function defaultOption(opt, def) {
+           return (typeof opt == 'undefined' ? def : opt);
+        }
+
+        function formatWithDelimiters(number, precision, thousands, decimal) {
+          precision = defaultOption(precision, 2);
+          thousands = defaultOption(thousands, ',');
+          decimal   = defaultOption(decimal, '.');
+
+          if (isNaN(number) || number == null) { return 0; }
+
+          number = (number/100.0).toFixed(precision);
+
+          var parts   = number.split('.'),
+              dollars = parts[0].replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1' + thousands),
+              cents   = parts[1] ? (decimal + parts[1]) : '';
+
+          return dollars + cents;
+        }
+
+        const match = formatString.match(placeholderRegex);
+        if (!match) {
+          return '€' + (cents / 100).toFixed(2);
+        }
+
+        switch(match[1]) {
+          case 'amount':
+            value = formatWithDelimiters(cents, 2, ',', '.');
+            break;
+          case 'amount_no_decimals':
+            value = formatWithDelimiters(cents, 0, ',', '.');
+            break;
+          case 'amount_with_comma_separator':
+            value = formatWithDelimiters(cents, 2, '.', ',');
+            break;
+          case 'amount_no_decimals_with_comma_separator':
+            value = formatWithDelimiters(cents, 0, '.', ',');
+            break;
+          default:
+            value = formatWithDelimiters(cents, 2, ',', '.');
+            break;
+        }
+
+        return formatString.replace(placeholderRegex, value);
+      };
+
+      // Open / Close Drawer Cart Functions
+      window.openLuxuryCart = function(e) {
+        if (e) e.preventDefault();
+        document.getElementById('luxury-cart-overlay').classList.add('active');
+        document.getElementById('luxury-cart-drawer').classList.add('active');
+        fetchCartAndRender();
+      };
+
+      window.closeLuxuryCart = function() {
+        document.getElementById('luxury-cart-overlay').classList.remove('active');
+        document.getElementById('luxury-cart-drawer').classList.remove('active');
+      };
+
+      // Fetch Cart Details and Render inside drawer
+      window.fetchCartAndRender = function() {
+        fetch('/cart.js')
+          .then(res => res.json())
+          .then(cart => {
+            // Update header cart counter bubbles
+            const countBubbles = document.querySelectorAll('#cart-icon-bubble');
+            countBubbles.forEach(b => {
+              b.textContent = cart.item_count;
+            });
+
+            const itemsContainer = document.getElementById('luxury-cart-drawer__items');
+            const footerContainer = document.getElementById('luxury-cart-drawer__footer');
+            
+            if (cart.item_count === 0) {
+              itemsContainer.innerHTML = `
+                <div class="luxury-cart-empty">
+                  <svg class="luxury-cart-empty__icon" xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
+                  <p class="luxury-cart-empty__text">YOUR SELECTION IS CURRENTLY EMPTY</p>
+                  <a href="javascript:void(0)" onclick="closeLuxuryCart()" class="luxury-cart-empty__btn">CONTINUE SHOPPING</a>
+                </div>
+              `;
+              footerContainer.style.display = 'none';
+            } else {
+              footerContainer.style.display = 'block';
+              
+              // Render items
+              let itemsHtml = '';
+              cart.items.forEach((item, index) => {
+                const line = index + 1;
+                const priceFormatted = formatMoney(item.final_line_price);
+                const imageSrc = item.image ? item.image : 'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=400&q=80';
+                const variantText = item.variant_title ? item.variant_title : '';
+                
+                itemsHtml += `
+                  <div class="luxury-cart-item">
+                    <div class="luxury-cart-item__image-wrap">
+                      <img src="${imageSrc}" class="luxury-cart-item__image" alt="${item.product_title}" loading="lazy">
+                    </div>
+                    <div class="luxury-cart-item__details">
+                      <div class="luxury-cart-item__title-row">
+                        <h4 class="luxury-cart-item__title">${item.product_title}</h4>
+                        <button class="luxury-cart-item__remove" onclick="removeCartItem(${line})" aria-label="Eliminar">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>
+                        </button>
+                      </div>
+                      ${variantText ? `<p class="luxury-cart-item__variant">${variantText}</p>` : ''}
+                      
+                      <div class="luxury-cart-item__meta">
+                        <div class="luxury-cart-item__qty">
+                          <button class="luxury-cart-item__qty-btn" onclick="updateCartQuantity(${line}, ${item.quantity - 1})">-</button>
+                          <span class="luxury-cart-item__qty-num">${item.quantity}</span>
+                          <button class="luxury-cart-item__qty-btn" onclick="updateCartQuantity(${line}, ${item.quantity + 1})">+</button>
+                        </div>
+                        <span class="luxury-cart-item__price">${priceFormatted}</span>
+                      </div>
+                    </div>
+                  </div>
+                `;
+              });
+              itemsContainer.innerHTML = itemsHtml;
+              
+              // Render Footer Subtotal & Checkout
+              const totalFormatted = formatMoney(cart.total_price);
+              footerContainer.innerHTML = `
+                <div class="luxury-cart-drawer__subtotal-row">
+                  <span class="luxury-cart-drawer__subtotal-label">SUBTOTAL</span>
+                  <span class="luxury-cart-drawer__subtotal-price">${totalFormatted}</span>
+                </div>
+                <button class="luxury-cart-drawer__btn" onclick="window.location.href='/checkout'">
+                  <span>PROCEED TO CHECKOUT</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </button>
+              `;
+            }
+          });
+      };
+
+      // Change Quantity via Shopify AJAX API
+      window.updateCartQuantity = function(line, newQuantity) {
+        if (newQuantity < 1) {
+          removeCartItem(line);
+          return;
+        }
+        fetch('/cart/change.js', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ line: line, quantity: newQuantity })
+        })
+        .then(res => res.json())
+        .then(() => fetchCartAndRender());
+      };
+
+      // Remove Item
+      window.removeCartItem = function(line) {
+        fetch('/cart/change.js', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ line: line, quantity: 0 })
+        })
+        .then(res => res.json())
+        .then(() => fetchCartAndRender());
+      };
+
+      // Global AJAX Catalog Quick Add Handler
+      window.addCatalogProductToCart = function(event, variantId) {
+        if (event) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+        const btn = event.currentTarget;
+        const originalText = btn.innerHTML;
+        
+        btn.disabled = true;
+        btn.style.opacity = '0.75';
+        btn.innerHTML = `
+          <svg class="animate-spin" style="width:10px; height:10px; animation: luxurySpin 0.8s linear infinite; display: inline-block;" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle style="opacity: 0.25;" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path style="opacity: 0.75;" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+          <span>Añadiendo...</span>
+        `;
+
+        fetch('/cart/add.js', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id: variantId, quantity: 1 })
+        })
+        .then(res => res.json())
+        .then(() => {
+          btn.disabled = false;
+          btn.style.opacity = '1';
+          btn.innerHTML = originalText;
+          if (window.openLuxuryCart) {
+            window.openLuxuryCart();
+          }
+        })
+        .catch(err => {
+          console.error(err);
+          btn.disabled = false;
+          btn.style.opacity = '1';
+          btn.innerHTML = originalText;
+        });
+      };
+    </script>
   </body>
 </html>

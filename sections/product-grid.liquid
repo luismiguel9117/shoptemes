@@ -23,6 +23,19 @@
       padding: 4rem 2rem;
     }
   }
+  @media (min-width: 992px) {
+    .luxury-catalog-{{ section.id }}.scroll-snap-slide {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      height: 100vh;
+      min-height: 100vh;
+      padding: 0 4rem;
+    }
+    .luxury-catalog-{{ section.id }}.scroll-snap-slide .luxury-catalog__container {
+      margin-top: 2rem;
+    }
+  }
 
   .luxury-catalog-{{ section.id }} .luxury-catalog__container {
     max-width: 1600px;
@@ -276,7 +289,7 @@
   }
 </style>
 
-<section class="luxury-catalog-{{ section.id }}">
+<section class="luxury-catalog-{{ section.id }} scroll-snap-slide">
   <div class="luxury-catalog__container">
     
     <!-- Title and Slider navigation controls -->
@@ -343,13 +356,9 @@
                   <!-- Actions Capsules buttons -->
                   <div class="luxury-card__actions">
                     <a href="{{ product.url }}" class="luxury-card__btn-outline">Info</a>
-                    
-                    {%- form 'product', product -%}
-                      <input type="hidden" name="id" value="{{ product.variants.first.id }}">
-                      <button type="submit" class="luxury-card__btn-fill">
-                        Añadir
-                      </button>
-                    {%- endform -%}
+                    <button onclick="addCatalogProductToCart(event, {{ product.selected_or_first_available_variant.id }})" class="luxury-card__btn-fill">
+                      Añadir
+                    </button>
                   </div>
                 </div>
               </div>

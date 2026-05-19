@@ -1,0 +1,12 @@
+{
+  "name": "Blog",
+  "sections": {
+    "main": {
+      "type": "luxury-blog",
+      "settings": {}
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

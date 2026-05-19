@@ -9,31 +9,27 @@
             "nav_1": {
               "type": "nav_item",
               "settings": {
-                "label": "Shop"
-              }
-            },
-            "nav_2": {
-              "type": "nav_item",
-              "settings": {
-                "label": "Collections"
+                "label": "Shop",
+                "link": "/collections"
               }
             },
             "nav_3": {
               "type": "nav_item",
               "settings": {
-                "label": "About"
+                "label": "About",
+                "link": "/pages/about"
               }
             },
             "nav_4": {
               "type": "nav_item",
               "settings": {
-                "label": "Journal"
+                "label": "Journal",
+                "link": "/blogs/journal"
               }
             }
           },
           "block_order": [
             "nav_1",
-            "nav_2",
             "nav_3",
             "nav_4"
           ],

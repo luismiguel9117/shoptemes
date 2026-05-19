@@ -1,0 +1,592 @@
+{%- comment -%}
+  Ritual Cosmético / ShopTHEMES - Luxury About Editorial Section (OS 2.0)
+  Sección premium con estética de alta costura que narra la historia de la marca basándose en el mockup editorial de Lumina.
+{%- endcomment -%}
+
+{%- style -%}
+  .luxury-about-{{ section.id }} {
+    --bg-color: {{ section.settings.bg_color | default: '#faf6f0' }};
+    --text-color: {{ section.settings.text_color | default: '#1a1c1a' }};
+    --accent-color: {{ section.settings.accent_color | default: '#bc9c5d' }};
+    --heading-font: 'Cormorant Garamond', serif;
+    --sans-font: 'Montserrat', sans-serif;
+    
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: var(--sans-font);
+    padding: 10rem 0 7rem 0;
+    box-sizing: border-box;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  @media (max-width: 991px) {
+    .luxury-about-{{ section.id }} {
+      padding: 7rem 0 5rem 0;
+    }
+  }
+
+  .luxury-about-{{ section.id }} .luxury-about__container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 4%;
+    box-sizing: border-box;
+    width: 100%;
+  }
+
+  /* 1. Hero Grid Row */
+  .luxury-about__hero {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 5rem;
+    align-items: flex-start;
+    margin-bottom: 5rem;
+  }
+
+  @media (max-width: 991px) {
+    .luxury-about__hero {
+      grid-template-columns: 1fr;
+      gap: 3rem;
+      margin-bottom: 3.5rem;
+    }
+  }
+
+  /* Left Column */
+  .luxury-about__hero-left {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .luxury-about__tagline {
+    font-size: 10px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.45em;
+    color: var(--accent-color);
+    margin: 0 0 2rem 0;
+    display: block;
+  }
+
+  .luxury-about__heading {
+    font-family: var(--heading-font);
+    font-size: clamp(34px, 4.2vw, 58px);
+    font-weight: 300;
+    line-height: 1.15;
+    margin: 0;
+    letter-spacing: -0.01em;
+    color: var(--text-color);
+    max-width: 750px;
+  }
+
+  /* Right Column */
+  .luxury-about__hero-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    height: 100%;
+    padding-top: 5rem; /* Align vertically with the heading start */
+    box-sizing: border-box;
+  }
+
+  @media (max-width: 991px) {
+    .luxury-about__hero-right {
+      padding-top: 0;
+    }
+  }
+
+  .luxury-about__concept-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 2rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .luxury-about__concept-item {
+    font-size: clamp(13px, 1.5vw, 15px);
+    font-weight: 300;
+    line-height: 1.6;
+    color: var(--text-color);
+    opacity: 0.85;
+    letter-spacing: 0.01em;
+  }
+
+  .luxury-about__divider-line {
+    width: 60px;
+    height: 1px;
+    background-color: var(--text-color);
+    opacity: 0.35;
+    margin: 0;
+  }
+
+  /* 2. Middle Banner Section (Asymmetric with vertical rotated text) */
+  .luxury-about__banner-row {
+    display: flex;
+    align-items: center;
+    gap: 3.5rem;
+    margin-bottom: 7rem;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  @media (max-width: 768px) {
+    .luxury-about__banner-row {
+      gap: 1.5rem;
+      margin-bottom: 4.5rem;
+    }
+  }
+
+  /* Vertical Text Wrapper */
+  .luxury-about__vertical-text-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    width: 40px;
+    flex-shrink: 0;
+    box-sizing: border-box;
+  }
+
+  @media (max-width: 576px) {
+    .luxury-about__vertical-text-wrap {
+      width: 25px;
+    }
+  }
+
+  .luxury-about__vertical-text {
+    writing-mode: vertical-lr;
+    transform: rotate(180deg);
+    font-size: clamp(8.5px, 1.2vw, 10px);
+    font-weight: 500;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--text-color);
+    white-space: nowrap;
+    opacity: 0.7;
+  }
+
+  .luxury-about__vertical-line {
+    width: 1px;
+    height: 80px;
+    background-color: var(--text-color);
+    opacity: 0.25;
+  }
+
+  @media (max-width: 768px) {
+    .luxury-about__vertical-line {
+      height: 50px;
+    }
+  }
+
+  /* Large Image container */
+  .luxury-about__image-container {
+    flex-grow: 1;
+    position: relative;
+    border-radius: 4px;
+    overflow: hidden;
+    padding-bottom: 42%; /* Elegant landscape banner ratio */
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.02);
+    background-color: #eae1d7;
+  }
+
+  @media (max-width: 768px) {
+    .luxury-about__image-container {
+      padding-bottom: 55%;
+    }
+  }
+
+  .luxury-about__image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 30%;
+    transition: transform 0.9s cubic-bezier(0.25, 1, 0.5, 1);
+  }
+
+  .luxury-about__image-container:hover .luxury-about__image {
+    transform: scale(1.025);
+  }
+
+  /* 3. Pillars Value Grid Section */
+  .luxury-about__pillars {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border-top: 1px solid rgba(26, 28, 26, 0.08);
+    border-bottom: 1px solid rgba(26, 28, 26, 0.08);
+    padding: 5rem 0;
+    margin-bottom: 6rem;
+    box-sizing: border-box;
+    width: 100%;
+  }
+
+  @media (max-width: 991px) {
+    .luxury-about__pillars {
+      grid-template-columns: 1fr;
+      gap: 3.5rem;
+      padding: 3.5rem 0;
+      border-bottom: none;
+      margin-bottom: 4rem;
+    }
+  }
+
+  .luxury-about__pillar-item {
+    padding: 0 4rem;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .luxury-about__pillar-item:first-child {
+    padding-left: 0;
+  }
+
+  .luxury-about__pillar-item:last-child {
+    padding-right: 0;
+  }
+
+  .luxury-about__pillar-item:not(:last-child) {
+    border-right: 1px solid rgba(26, 28, 26, 0.08);
+  }
+
+  @media (max-width: 991px) {
+    .luxury-about__pillar-item {
+      padding: 0 0 3.5rem 0;
+      border-bottom: 1px solid rgba(26, 28, 26, 0.08);
+    }
+    .luxury-about__pillar-item:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+    .luxury-about__pillar-item:not(:last-child) {
+      border-right: none;
+    }
+  }
+
+  .luxury-about__pillar-num {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--accent-color);
+    letter-spacing: 0.1em;
+    margin: 0 0 1.25rem 0;
+    display: block;
+  }
+
+  .luxury-about__pillar-title {
+    font-family: var(--heading-font);
+    font-size: clamp(24px, 2.5vw, 32px);
+    font-weight: 300;
+    line-height: 1.2;
+    margin: 0 0 1.25rem 0;
+    color: var(--text-color);
+    letter-spacing: -0.01em;
+  }
+
+  .luxury-about__pillar-desc {
+    font-size: 13.5px;
+    font-weight: 300;
+    line-height: 1.75;
+    color: var(--text-color);
+    opacity: 0.8;
+    margin: 0;
+    max-width: 320px;
+  }
+
+  /* 4. Footer CTA Section */
+  .luxury-about__footer-cta {
+    text-align: center;
+    margin-bottom: 2rem;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .luxury-about__cta-link {
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    color: var(--text-color);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding-bottom: 6px;
+    border-bottom: 1px solid rgba(26, 28, 26, 0.25);
+    transition: border-color 0.4s ease, gap 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+  }
+
+  .luxury-about__cta-link:hover {
+    border-bottom-color: var(--text-color);
+    gap: 1.2rem;
+  }
+
+  .luxury-about__cta-link svg {
+    width: 14px;
+    height: 14px;
+    stroke: currentColor;
+    fill: none;
+    transition: transform 0.4s ease;
+  }
+{%- endstyle -%}
+
+<div class="luxury-about-{{ section.id }}">
+  <div class="luxury-about__container">
+    
+    <!-- 1. Hero Grid Block -->
+    <div class="luxury-about__hero">
+      
+      <!-- Left side story header -->
+      <div class="luxury-about__hero-left">
+        {%- if section.settings.tagline != blank -%}
+          <span class="luxury-about__tagline">{{ section.settings.tagline }}</span>
+        {%- endif -%}
+        {%- if section.settings.heading != blank -%}
+          <h1 class="luxury-about__heading">{{ section.settings.heading }}</h1>
+        {%- endif -%}
+      </div>
+
+      <!-- Right side editorial statements -->
+      <div class="luxury-about__hero-right">
+        <ul class="luxury-about__concept-list">
+          {%- if section.settings.concept_1 != blank -%}
+            <li class="luxury-about__concept-item">{{ section.settings.concept_1 }}</li>
+          {%- endif -%}
+          {%- if section.settings.concept_2 != blank -%}
+            <li class="luxury-about__concept-item">{{ section.settings.concept_2 }}</li>
+          {%- endif -%}
+          {%- if section.settings.concept_3 != blank -%}
+            <li class="luxury-about__concept-item">{{ section.settings.concept_3 }}</li>
+          {%- endif -%}
+        </ul>
+        <div class="luxury-about__divider-line"></div>
+      </div>
+
+    </div>
+
+    <!-- 2. Middle Banner Section -->
+    <div class="luxury-about__banner-row">
+      
+      <!-- Left vertical rotated tagline -->
+      <div class="luxury-about__vertical-text-wrap">
+        {%- if section.settings.vertical_tagline != blank -%}
+          <span class="luxury-about__vertical-text">{{ section.settings.vertical_tagline }}</span>
+        {%- endif -%}
+        <div class="luxury-about__vertical-line"></div>
+      </div>
+
+      <!-- Right editorial banner image -->
+      <div class="luxury-about__image-container">
+        {%- if section.settings.image != blank -%}
+          <img src="{{ section.settings.image | image_url: width: 1800 }}" alt="Our Story Banner" class="luxury-about__image" loading="lazy">
+        {%- else -%}
+          <img src="https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&w=1800&q=80" alt="Lumina Editorial Jewelry Banner" class="luxury-about__image" loading="lazy">
+        {%- endif -%}
+      </div>
+
+    </div>
+
+    <!-- 3. Pillars Grid Section -->
+    <div class="luxury-about__pillars">
+      
+      <!-- Pillar 1 -->
+      <div class="luxury-about__pillar-item">
+        <span class="luxury-about__pillar-num">{{ section.settings.pillar_1_num | default: '01' }}</span>
+        <h2 class="luxury-about__pillar-title">{{ section.settings.pillar_1_title | default: 'Intentional by Design' }}</h2>
+        <p class="luxury-about__pillar-desc">{{ section.settings.pillar_1_desc | default: 'Every piece begins with purpose and intention.' }}</p>
+      </div>
+
+      <!-- Pillar 2 -->
+      <div class="luxury-about__pillar-item">
+        <span class="luxury-about__pillar-num">{{ section.settings.pillar_2_num | default: '02' }}</span>
+        <h2 class="luxury-about__pillar-title">{{ section.settings.pillar_2_title | default: 'Crafted with Care' }}</h2>
+        <p class="luxury-about__pillar-desc">{{ section.settings.pillar_2_desc | default: 'Handcrafted by skilled artisans with attention to every detail.' }}</p>
+      </div>
+
+      <!-- Pillar 3 -->
+      <div class="luxury-about__pillar-item">
+        <span class="luxury-about__pillar-num">{{ section.settings.pillar_3_num | default: '03' }}</span>
+        <h2 class="luxury-about__pillar-title">{{ section.settings.pillar_3_title | default: 'Made to Endure' }}</h2>
+        <p class="luxury-about__pillar-desc">{{ section.settings.pillar_3_desc | default: 'Timeless designs created to be worn and loved for life.' }}</p>
+      </div>
+
+    </div>
+
+    <!-- 4. Footer CTA Link -->
+    <div class="luxury-about__footer-cta">
+      <a href="{{ section.settings.cta_link | default: '/' }}" class="luxury-about__cta-link">
+        {{ section.settings.cta_label | default: 'DISCOVER THE LUMINA STORY' }}
+        <svg viewBox="0 0 24 24">
+          <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </div>
+
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "About Page Editorial",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Ajustes de Encabezado y Textos"
+    },
+    {
+      "type": "text",
+      "id": "tagline",
+      "label": "Etiqueta Superior",
+      "default": "OUR STORY"
+    },
+    {
+      "type": "textarea",
+      "id": "heading",
+      "label": "Título Principal",
+      "default": "We believe fine jewelry should be more than beautiful."
+    },
+    {
+      "type": "text",
+      "id": "concept_1",
+      "label": "Declaración Poética 1",
+      "default": "It should carry meaning."
+    },
+    {
+      "type": "text",
+      "id": "concept_2",
+      "label": "Declaración Poética 2",
+      "default": "It should mark moments."
+    },
+    {
+      "type": "text",
+      "id": "concept_3",
+      "label": "Declaración Poética 3",
+      "default": "It should be cherished for generations."
+    },
+    {
+      "type": "header",
+      "content": "Banner e Imagen Asimétrica"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Imagen Editorial Principal"
+    },
+    {
+      "type": "text",
+      "id": "vertical_tagline",
+      "label": "Texto Vertical Rotado",
+      "default": "INTENTIONAL DESIGN. ENDURING BEAUTY."
+    },
+    {
+      "type": "header",
+      "content": "Pilar de Valor 1 (Izquierda)"
+    },
+    {
+      "type": "text",
+      "id": "pillar_1_num",
+      "label": "Número Pilar 1",
+      "default": "01"
+    },
+    {
+      "type": "text",
+      "id": "pillar_1_title",
+      "label": "Título Pilar 1",
+      "default": "Intentional by Design"
+    },
+    {
+      "type": "textarea",
+      "id": "pillar_1_desc",
+      "label": "Descripción Pilar 1",
+      "default": "Every piece begins with purpose and intention."
+    },
+    {
+      "type": "header",
+      "content": "Pilar de Valor 2 (Centro)"
+    },
+    {
+      "type": "text",
+      "id": "pillar_2_num",
+      "label": "Número Pilar 2",
+      "default": "02"
+    },
+    {
+      "type": "text",
+      "id": "pillar_2_title",
+      "label": "Título Pilar 2",
+      "default": "Crafted with Care"
+    },
+    {
+      "type": "textarea",
+      "id": "pillar_2_desc",
+      "label": "Descripción Pilar 2",
+      "default": "Handcrafted by skilled artisans with attention to every detail."
+    },
+    {
+      "type": "header",
+      "content": "Pilar de Valor 3 (Derecha)"
+    },
+    {
+      "type": "text",
+      "id": "pillar_3_num",
+      "label": "Número Pilar 3",
+      "default": "03"
+    },
+    {
+      "type": "text",
+      "id": "pillar_3_title",
+      "label": "Título Pilar 3",
+      "default": "Made to Endure"
+    },
+    {
+      "type": "textarea",
+      "id": "pillar_3_desc",
+      "label": "Descripción Pilar 3",
+      "default": "Timeless designs created to be worn and loved for life."
+    },
+    {
+      "type": "header",
+      "content": "Llamado a la Acción (CTA)"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "Texto del Enlace CTA",
+      "default": "DISCOVER THE LUMINA STORY"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "Enlace CTA"
+    },
+    {
+      "type": "header",
+      "content": "Estilos de Colores"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Color de Fondo",
+      "default": "#faf6f0"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Color de Texto",
+      "default": "#1a1c1a"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Color de Acento (Gold)",
+      "default": "#bc9c5d"
+    }
+  ]
+}
+{% endschema %}

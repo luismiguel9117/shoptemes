@@ -21,6 +21,19 @@
       padding: 4rem 2rem;
     }
   }
+  @media (min-width: 992px) {
+    .luxury-gallery-{{ section.id }}.scroll-snap-slide {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      min-height: 100vh;
+      padding: 0 4rem;
+    }
+    .luxury-gallery-{{ section.id }}.scroll-snap-slide .luxury-gallery__container {
+      margin-top: 2rem;
+    }
+  }
 
   .luxury-gallery-{{ section.id }} .luxury-gallery__container {
     max-width: 1600px;
@@ -196,7 +209,7 @@
   }
 </style>
 
-<section class="luxury-gallery-{{ section.id }}">
+<section class="luxury-gallery-{{ section.id }} scroll-snap-slide">
   <div class="luxury-gallery__container">
     
     <!-- Editorial Header text -->

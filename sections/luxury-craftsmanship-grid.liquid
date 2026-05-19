@@ -1,0 +1,335 @@
+{%- comment -%}
+  Ritual Cosmético / ShopTHEMES - Luxury Craftsmanship Grid Section (OS 2.0)
+  Sección editorial que presenta las 3 columnas de proceso artesanal y la declaración institucional de marca.
+{%- endcomment -%}
+
+{%- style -%}
+  .luxury-craft-grid-{{ section.id }} {
+    --bg-color: {{ section.settings.bg_color }};
+    --text-color: {{ section.settings.text_color }};
+    --accent-color: {{ section.settings.accent_color }};
+    --heading-font: 'Cormorant Garamond', serif;
+    --sans-font: 'Montserrat', sans-serif;
+    
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: var(--sans-font);
+    box-sizing: border-box;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  /* Full Screen Slide heights on Desktop snap layout */
+  @media (min-width: 992px) {
+    .luxury-craft-grid-{{ section.id }} {
+      min-height: 100vh;
+      padding: 7rem 0;
+      box-sizing: border-box;
+    }
+  }
+
+  /* Mobile/Tablet dynamic auto height */
+  @media (max-width: 991px) {
+    .luxury-craft-grid-{{ section.id }} {
+      padding: 5rem 0;
+      box-sizing: border-box;
+    }
+  }
+  
+  .luxury-craft-grid-{{ section.id }} .luxury-craft__grid-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 4%;
+    box-sizing: border-box;
+    width: 100%;
+  }
+  
+  .luxury-craft-grid-{{ section.id }} .luxury-craft__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3.5rem;
+    margin-bottom: clamp(3rem, 5vh, 6rem);
+  }
+  
+  @media screen and (max-width: 991px) {
+    .luxury-craft-grid-{{ section.id }} .luxury-craft__grid {
+      gap: 1.5rem;
+    }
+  }
+  
+  @media screen and (max-width: 767px) {
+    .luxury-craft-grid-{{ section.id }} .luxury-craft__grid {
+      grid-template-columns: 1fr;
+      gap: 3rem;
+      margin-bottom: 4rem;
+    }
+  }
+  
+  /* 3-column visuals aspect ratio control */
+  .luxury-craft-grid-{{ section.id }} .luxury-feat-card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    position: relative;
+  }
+  
+  .luxury-craft-grid-{{ section.id }} .luxury-feat-card__frame {
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    border-radius: 4px;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+  }
+  
+  .luxury-craft-grid-{{ section.id }} .luxury-feat-card__img-box {
+    position: relative;
+    width: 100%;
+    padding-bottom: 100%; /* Perfect Square aspect ratio (1:1) as seen in reference mockup */
+    overflow: hidden;
+    background-color: rgba(26, 28, 26, 0.03);
+  }
+  
+  .luxury-craft-grid-{{ section.id }} .luxury-feat-card__img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  
+  .luxury-craft-grid-{{ section.id }} .luxury-feat-card:hover .luxury-feat-card__img {
+    transform: scale(1.05);
+  }
+  
+  .luxury-craft-grid-{{ section.id }} .luxury-feat-card__tag {
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.25em;
+    color: var(--text-color);
+    margin: 0 0 0.5rem 0;
+    opacity: 0.95;
+  }
+  
+  .luxury-craft-grid-{{ section.id }} .luxury-feat-card__line {
+    width: 35px;
+    height: 1px;
+    background-color: var(--accent-color);
+    margin: 0 0 1.2rem 0;
+    opacity: 0.5;
+  }
+  
+  .luxury-craft-grid-{{ section.id }} .luxury-feat-card__desc {
+    font-size: 13px;
+    font-weight: 300;
+    line-height: 1.75;
+    opacity: 0.75;
+    margin: 0;
+    max-width: 90%;
+  }
+  
+  /* Footer Statement block with an elegant top horizontal divider rule */
+  .luxury-craft-grid-{{ section.id }} .luxury-craft__footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: clamp(2rem, 4vh, 4rem) 2rem 0 2rem;
+    border-top: 1px solid {{ section.settings.text_color | color_modify: 'alpha', 0.08 }};
+    box-sizing: border-box;
+  }
+  
+  .luxury-craft-grid-{{ section.id }} .luxury-craft__star {
+    color: var(--accent-color);
+    margin-bottom: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .luxury-craft-grid-{{ section.id }} .luxury-craft__star svg {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+  }
+  
+  .luxury-craft-grid-{{ section.id }} .luxury-craft__statement {
+    font-size: clamp(13px, 1.8vw, 16px);
+    font-weight: 300;
+    line-height: 1.6;
+    letter-spacing: 0.03em;
+    opacity: 0.85;
+    margin: 0;
+  }
+  
+  .luxury-craft-grid-{{ section.id }} .luxury-craft__statement span.italic {
+    font-family: var(--heading-font);
+    font-style: italic;
+    font-size: clamp(15px, 2vw, 19px);
+    opacity: 0.95;
+    margin-left: 4px;
+  }
+{%- endstyle -%}
+
+<div class="luxury-craft-grid-{{ section.id }}">
+  <div class="luxury-craft__grid-container">
+    
+    <!-- Three columns of portrait visuals as dynamic blocks -->
+    <div class="luxury-craft__grid">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'column' -%}
+          <div class="luxury-feat-card" {{ block.shopify_attributes }}>
+            <div class="luxury-feat-card__frame">
+              <div class="luxury-feat-card__img-box">
+                {%- if block.settings.image != blank -%}
+                  {{ block.settings.image | image_url: width: 800 | image_tag:
+                     widths: '300, 500, 800',
+                     sizes: '(min-width: 768px) 33vw, 100vw',
+                     class: 'luxury-feat-card__img',
+                     loading: 'lazy'
+                  }}
+                {%- else -%}
+                  {%- case forloop.index -%}
+                    {%- when 1 -%}
+                      <img src="{{ 'luxury-grid-3.png' | asset_url }}" alt="Fine 18k gold details" class="luxury-feat-card__img" loading="lazy">
+                    {%- when 2 -%}
+                      <img src="{{ 'luxury-grid-1.png' | asset_url }}" alt="Expert Handcrafting" class="luxury-feat-card__img" loading="lazy">
+                    {%- else -%}
+                      <img src="{{ 'luxury-grid-2.png' | asset_url }}" alt="Made to Last Engraving" class="luxury-feat-card__img" loading="lazy">
+                  {%- endcase -%}
+                {%- endif -%}
+              </div>
+            </div>
+            <h3 class="luxury-feat-card__tag">{{ block.settings.title }}</h3>
+            <div class="luxury-feat-card__line"></div>
+            <p class="luxury-feat-card__desc">{{ block.settings.description }}</p>
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+
+    <!-- Centered Editorial Footer Statement -->
+    <div class="luxury-craft__footer">
+      <div class="luxury-craft__star">
+        <svg viewBox="0 0 24 24">
+          <path d="M12 2c0 5.52 4.48 10 10 10-5.52 0-10 4.48-10 10 0-5.52-4.48-10-10-10 5.52 0 10-4.48 10-10z"/>
+        </svg>
+      </div>
+      <p class="luxury-craft__statement">
+        {{ section.settings.statement_prefix }}
+        {%- if section.settings.statement_italic != blank -%}
+          <span class="italic">{{ section.settings.statement_italic }}</span>
+        {%- endif -%}
+      </p>
+    </div>
+
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Luxury Craftsmanship Grid",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Estilos y Colores Globales"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Color de Fondo",
+      "default": "#faf6f0"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Color del Texto",
+      "default": "#1a1c1a"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Color de Acento (Gold)",
+      "default": "#bc9c5d"
+    },
+    {
+      "type": "header",
+      "content": "Declaración Final"
+    },
+    {
+      "type": "text",
+      "id": "statement_prefix",
+      "label": "Texto Declaración (Normal)",
+      "default": "Thoughtful design. Responsible sourcing. Traditional techniques."
+    },
+    {
+      "type": "text",
+      "id": "statement_italic",
+      "label": "Texto Declaración (Cursiva)",
+      "default": "This is the Lumina standard."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "column",
+      "name": "Ficha / Columna",
+      "limit": 4,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Imagen del Proceso"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Título de la Ficha",
+          "default": "FINE MATERIALS"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Descripción corta",
+          "default": "We use premium materials chosen for their beauty and longevity."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Luxury Craftsmanship Grid",
+      "category": "Editorial Galleries",
+      "blocks": [
+        {
+          "type": "column",
+          "settings": {
+            "title": "FINE MATERIALS",
+            "description": "We use 18k gold, ethically sourced diamonds, and premium materials chosen for their beauty and longevity."
+          }
+        },
+        {
+          "type": "column",
+          "settings": {
+            "title": "EXPERT HANDCRAFTED",
+            "description": "Skilled artisans shape, set, and polish each piece by hand in our studio, ensuring exceptional quality in every detail."
+          }
+        },
+        {
+          "type": "column",
+          "settings": {
+            "title": "MADE TO LAST",
+            "description": "Timeless by design and made to endure, our pieces are created to be worn, loved, and passed down."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

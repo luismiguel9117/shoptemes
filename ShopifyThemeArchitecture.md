@@ -586,6 +586,44 @@ Shopify cuenta con excelentes herramientas para SEO, pero debemos configurarlas 
   ```
 - [ ] **Rutas Semánticas de Foco:** Cualquier modal de carrito (`drawer`) o menú desplegable debe poder cerrarse con la tecla `ESC` y soportar navegación por teclado (`tabindex="0"`).
 
+## 8. Ingeniería de Espaciado Modular y Personalización Total (Bloques)
+
+Para garantizar un diseño de alta gama que sea 100% editable e interactivo desde el **Shopify Theme Editor**, baneamos por completo los textos rígidos configurados en el ámbito general de la sección (`settings`) y los márgenes verticales rígidos o estáticos en CSS.
+
+### 8.1 El Concepto de Componentización Total de Bloques
+Todos los elementos textuales, decorativos y de enlace individuales dentro de una columna o panel deben tratarse como **Bloques dinámicos individuales** (`blocks`) de Shopify OS 2.0.
+*   **Propósito:** Al hacer esto, Shopify inyecta automáticamente los **"recuadros editables" (blue outline highlights)** cuando el comerciante pasa el cursor por encima en la previsualización, permitiendo la edición instantánea con un clic y el reordenamiento vertical dinámico (Drag-and-Drop).
+
+### 8.2 La Técnica del "Spacer Block" (Bloque Espaciador)
+Para dar control absoluto al comerciante sobre la retícula de aire sin romper el diseño minimalista, implementamos **Bloques Espaciadores** en lugar de márgenes forzados en CSS:
+
+1.  **CSS en Cero:** Todos los elementos hermanos en el CSS se definen con `margin: 0;` (o márgenes basales extremadamente reducidos).
+2.  **Definición del Bloque Espaciador:**
+    ```json
+    {
+      "type": "spacer",
+      "name": "Espaciador",
+      "settings": [
+        {
+          "type": "range",
+          "id": "height",
+          "min": 4,
+          "max": 120,
+          "step": 4,
+          "unit": "px",
+          "label": "Altura del Espacio",
+          "default": 24
+        }
+      ]
+    }
+    ```
+3.  **Renderizado en Liquid:**
+    ```liquid
+    {%- when 'spacer' -%}
+      <div class="luxury-craft__spacer" style="height: {{ block.settings.height }}px;" {{ block.shopify_attributes }}></div>
+    ```
+4.  **Preservación de Estilos en Presets:** En la clave `"presets"` de la sección y en los archivos de plantilla `.json` (como `templates/index.json`), preconfiguramos los espaciadores con la altura exacta recomendada en los mockups de diseño, asegurando que el tema cargue inicialmente con un aspecto impecable, pero dando control absoluto al cliente para expandir, encoger o mover las zonas de aire.
+
 ---
 
 ## ⚠️ REGLAS DE ORO & ERRORES CRÍTICOS EN THEMES

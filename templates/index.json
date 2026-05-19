@@ -66,35 +66,253 @@
         "bottom_right_text": "Limited Edition Pieces",
         "show_slide_indicator": true,
         "slide_current": "01",
-        "slide_total": "03"
+        "slide_total": "11"
       }
     },
-    "editorial-gallery": {
-      "type": "luxury-editorial-gallery",
+    "featured-product": {
+      "type": "luxury-featured-product",
+      "blocks": {
+        "subtitle": {
+          "type": "subtitle",
+          "settings": {
+            "text": "FEATURED PIECE"
+          }
+        },
+        "spacer_1": {
+          "type": "spacer",
+          "settings": {
+            "height": 20
+          }
+        },
+        "title": {
+          "type": "title",
+          "settings": {
+            "title_line_1": "Celeste",
+            "title_line_2": "Necklace",
+            "title_line_2_italic": true
+          }
+        },
+        "spacer_2": {
+          "type": "spacer",
+          "settings": {
+            "height": 20
+          }
+        },
+        "description": {
+          "type": "description",
+          "settings": {
+            "text": "A delicate balance of light and form, designed to be worn every day, and treasured forever.",
+            "max_width": 460
+          }
+        },
+        "spacer_3": {
+          "type": "spacer",
+          "settings": {
+            "height": 35
+          }
+        },
+        "buttons": {
+          "type": "buttons",
+          "settings": {
+            "button_style": "underline",
+            "btn_1_label": "Discover this piece"
+          }
+        }
+      },
+      "block_order": [
+        "subtitle",
+        "spacer_1",
+        "title",
+        "spacer_2",
+        "description",
+        "spacer_3",
+        "buttons"
+      ],
       "settings": {
-        "tagline": "THE ART OF JEWELRY",
-        "title": "Meticulously Crafted",
-        "tag_large": "THE WORKSHOP",
-        "title_large": "Pure 18k Yellow Gold",
-        "desc_large": "Each piece is hand-polished and micro-stamped, capturing the light in its most natural form.",
-        "tag_small_1": "MATERIALS",
-        "title_small_1": "Sustainably Sourced",
-        "tag_small_2": "DESIGN",
-        "title_small_2": "Natural Fine Diamonds"
+        "bottom_left_label": "FEATURED PIECE",
+        "bottom_left_text": "Celeste Necklace",
+        "bottom_right_label": "MATERIAL",
+        "bottom_right_text": "18k Gold & Fine Diamond",
+        "show_slide_indicator": true,
+        "slide_current": "02",
+        "slide_total": "11"
       }
     },
-    "product-grid": {
-      "type": "product-grid",
+    "craftsmanship": {
+      "type": "luxury-craftsmanship",
+      "blocks": {
+        "tagline_1": {
+          "type": "tagline",
+          "settings": {
+            "text": "OUR CRAFTSMANSHIP"
+          }
+        },
+        "spacer_1": {
+          "type": "spacer",
+          "settings": {
+            "height": 24
+          }
+        },
+        "heading_1": {
+          "type": "heading",
+          "settings": {
+            "text": "Crafted with purpose."
+          }
+        },
+        "spacer_2": {
+          "type": "spacer",
+          "settings": {
+            "height": 32
+          }
+        },
+        "divider_1": {
+          "type": "divider"
+        },
+        "spacer_3": {
+          "type": "spacer",
+          "settings": {
+            "height": 32
+          }
+        },
+        "desc_1": {
+          "type": "description",
+          "settings": {
+            "text": "Every Lumina piece is the result of meticulous craftsmanship and a deep respect for materials."
+          }
+        },
+        "spacer_4": {
+          "type": "spacer",
+          "settings": {
+            "height": 16
+          }
+        },
+        "desc_2": {
+          "type": "description",
+          "settings": {
+            "text": "We believe that true beauty lies in the details—the ones you see, and the ones you feel."
+          }
+        },
+        "spacer_5": {
+          "type": "spacer",
+          "settings": {
+            "height": 48
+          }
+        },
+        "link_1": {
+          "type": "link",
+          "settings": {
+            "label": "EXPLORE OUR PROCESS",
+            "url": ""
+          }
+        }
+      },
+      "block_order": [
+        "tagline_1",
+        "spacer_1",
+        "heading_1",
+        "spacer_2",
+        "divider_1",
+        "spacer_3",
+        "desc_1",
+        "spacer_4",
+        "desc_2",
+        "spacer_5",
+        "link_1"
+      ],
       "settings": {
-        "tagline": "MÁS VENDIDOS",
-        "title": "Favoritos de la Temporada",
-        "products_to_show": 8
+        "text_color": "#1a1c1a",
+        "accent_color": "#bc9c5d"
+      }
+    },
+    "collections-grid": {
+      "type": "luxury-collections-grid",
+      "blocks": {
+        "col_1": {
+          "type": "collection_card",
+          "settings": {
+            "title": "Necklaces"
+          }
+        },
+        "col_2": {
+          "type": "collection_card",
+          "settings": {
+            "title": "Rings"
+          }
+        },
+        "col_3": {
+          "type": "collection_card",
+          "settings": {
+            "title": "Earrings"
+          }
+        },
+        "col_4": {
+          "type": "collection_card",
+          "settings": {
+            "title": "Bracelets"
+          }
+        }
+      },
+      "block_order": [
+        "col_1",
+        "col_2",
+        "col_3",
+        "col_4"
+      ],
+      "settings": {
+        "bg_color": "#faf6f0",
+        "text_color": "#1a1c1a",
+        "accent_color": "#bc9c5d",
+        "tagline": "COLLECTIONS",
+        "title": "Timeless by design. Made to be lived in.",
+        "description": "Discover our signature collections, crafted with intention and cherished every day.",
+        "link_label": "EXPLORE ALL COLLECTIONS",
+        "show_props": true
+      }
+    },
+    "craftsmanship-grid": {
+      "type": "luxury-craftsmanship-grid",
+      "blocks": {
+        "column_1": {
+          "type": "column",
+          "settings": {
+            "title": "FINE MATERIALS",
+            "description": "We use 18k gold, ethically sourced diamonds, and premium materials chosen for their beauty and longevity."
+          }
+        },
+        "column_2": {
+          "type": "column",
+          "settings": {
+            "title": "EXPERT HANDCRAFTED",
+            "description": "Skilled artisans shape, set, and polish each piece by hand in our studio, ensuring exceptional quality in every detail."
+          }
+        },
+        "column_3": {
+          "type": "column",
+          "settings": {
+            "title": "MADE TO LAST",
+            "description": "Timeless by design and made to endure, our pieces are created to be worn, loved, and passed down."
+          }
+        }
+      },
+      "block_order": [
+        "column_1",
+        "column_2",
+        "column_3"
+      ],
+      "settings": {
+        "bg_color": "#faf6f0",
+        "text_color": "#1a1c1a",
+        "accent_color": "#bc9c5d",
+        "statement_prefix": "Thoughtful design. Responsible sourcing. Traditional techniques.",
+        "statement_italic": "This is the Lumina standard."
       }
     }
   },
   "order": [
-    "hero",
-    "editorial-gallery",
-    "product-grid"
-  ]
+      "hero",
+      "featured-product",
+      "craftsmanship",
+      "craftsmanship-grid",
+      "collections-grid"
+    ]
 }

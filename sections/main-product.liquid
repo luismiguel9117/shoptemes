@@ -85,8 +85,63 @@
         priceDisplay.textContent = selectedOption.getAttribute('data-price');
       });
     }
+
+    // Intercept form submit using AJAX
+    const cartForm = document.getElementById('add-to-cart-form');
+    if (cartForm) {
+      cartForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const submitBtn = cartForm.querySelector('button[type="submit"]');
+        if (!submitBtn) return;
+        
+        const originalText = submitBtn.innerHTML;
+        
+        // Premium loading state
+        submitBtn.disabled = true;
+        submitBtn.style.opacity = '0.75';
+        submitBtn.innerHTML = `
+          <svg class="animate-spin" style="width:16px; height:16px; animation: luxurySpin 0.8s linear infinite;" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle style="opacity: 0.25;" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path style="opacity: 0.75;" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+          <span>Agregando...</span>
+        `;
+        
+        const formData = new FormData(cartForm);
+        
+        fetch('/cart/add.js', {
+          method: 'POST',
+          body: formData
+        })
+        .then(res => res.json())
+        .then(() => {
+          submitBtn.disabled = false;
+          submitBtn.style.opacity = '1';
+          submitBtn.innerHTML = originalText;
+          
+          // Open global custom AJAX Cart Drawer!
+          if (window.openLuxuryCart) {
+            window.openLuxuryCart();
+          } else {
+            window.location.href = '/cart';
+          }
+        })
+        .catch(err => {
+          console.error(err);
+          submitBtn.disabled = false;
+          submitBtn.style.opacity = '1';
+          submitBtn.innerHTML = originalText;
+          window.location.href = '/cart';
+        });
+      });
+    }
   });
 </script>
+
+<style>
+  @keyframes luxurySpin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+</style>
 
 {% schema %}
 {

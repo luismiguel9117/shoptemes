@@ -1,0 +1,419 @@
+{%- comment -%}
+  Ritual Cosmético / ShopTHEMES - Luxury Craftsmanship Hero (OS 2.0)
+  Sección de cabecera editorial premium con fondo completo y bloques textuales flotantes en el lateral izquierdo.
+{%- endcomment -%}
+
+{%- style -%}
+  .luxury-craftsmanship-hero-{{ section.id }} {
+    --text-color: {{ section.settings.text_color }};
+    --accent-color: {{ section.settings.accent_color }};
+    --bg-color: {{ section.settings.bg_color | default: '#faf6f0' }};
+    --heading-font: 'Cormorant Garamond', serif;
+    --sans-font: 'Montserrat', sans-serif;
+    
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    background-color: var(--bg-color);
+    font-family: var(--sans-font);
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+
+  /* Full Screen Slide heights on Desktop snap layout */
+  @media (min-width: 992px) {
+    .luxury-craftsmanship-hero-{{ section.id }} {
+      height: 100vh;
+      min-height: 100vh;
+    }
+  }
+
+  /* Mobile/Tablet dynamic auto height */
+  @media (max-width: 991px) {
+    .luxury-craftsmanship-hero-{{ section.id }} {
+      min-height: 650px;
+      padding: 4rem 0;
+    }
+  }
+  
+  /* The full-bleed background image cover */
+  .luxury-craftsmanship-hero-{{ section.id }}::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    {%- if section.settings.hero_image != blank -%}
+      background-image: url('{{ section.settings.hero_image | image_url: width: 2000 }}');
+    {%- else -%}
+      background-image: url('{{ 'craftman.png' | asset_url }}');
+    {%- endif -%}
+    background-size: cover;
+    background-position: center right;
+    background-repeat: no-repeat;
+    z-index: 1;
+  }
+  
+  /* Semi-transparent soft fade overlay on mobile for text readability */
+  @media screen and (max-width: 767px) {
+    .luxury-craftsmanship-hero-{{ section.id }}::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to right, {{ section.settings.bg_color | default: '#faf6f0' | color_modify: 'alpha', 0.95 }} 0%, {{ section.settings.bg_color | default: '#faf6f0' | color_modify: 'alpha', 0.6 }} 100%);
+      z-index: 2;
+    }
+  }
+  
+  .luxury-craftsmanship-hero-{{ section.id }} .luxury-craft-hero__container {
+    position: relative;
+    z-index: 3;
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 4%;
+    box-sizing: border-box;
+  }
+  
+  .luxury-craftsmanship-hero-{{ section.id }} .luxury-craft-hero__info {
+    max-width: 500px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  /* Element Typographies and Styles */
+  .luxury-craftsmanship-hero-{{ section.id }} .luxury-craft__tag {
+    font-size: 10px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.45em;
+    color: var(--accent-color);
+    margin: 0;
+    display: block;
+  }
+  
+  .luxury-craftsmanship-hero-{{ section.id }} .luxury-craft__title {
+    font-family: var(--heading-font);
+    font-size: clamp(40px, 4.5vw, 68px);
+    font-weight: 300;
+    line-height: 1.05;
+    margin: 0;
+    letter-spacing: -0.01em;
+    color: var(--text-color);
+  }
+  
+  .luxury-craftsmanship-hero-{{ section.id }} .luxury-craft__title-line {
+    width: 60px;
+    height: 1px;
+    background-color: var(--accent-color);
+    opacity: 0.4;
+    margin: 0;
+  }
+  
+  .luxury-craftsmanship-hero-{{ section.id }} .luxury-craft__desc {
+    font-size: 13.5px;
+    font-weight: 300;
+    line-height: 1.85;
+    opacity: 0.8;
+    margin: 0;
+    max-width: 460px;
+    color: var(--text-color);
+  }
+  
+  .luxury-craftsmanship-hero-{{ section.id }} .luxury-craft__link {
+    font-size: 10px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    color: var(--text-color);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 1rem;
+    padding-bottom: 8px;
+    border-bottom: 1px solid {{ section.settings.text_color | color_modify: 'alpha', 0.25 }};
+    transition: border-bottom-color 0.4s ease, gap 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+  }
+  .luxury-craftsmanship-hero-{{ section.id }} .luxury-craft__link:hover {
+    border-bottom-color: var(--text-color);
+    gap: 1.5rem;
+  }
+  .luxury-craftsmanship-hero-{{ section.id }} .luxury-craft__link svg {
+    width: 18px;
+    height: 10px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2px;
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+  }
+  
+  .luxury-craftsmanship-hero-{{ section.id }} .luxury-craft__spacer {
+    width: 100%;
+    display: block;
+    clear: both;
+    transition: height 0.2s ease;
+  }
+{%- endstyle -%}
+
+<div class="luxury-craftsmanship-hero-{{ section.id }} scroll-snap-slide">
+  <div class="luxury-craft-hero__container">
+    <div class="luxury-craft-hero__info">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'tagline' or block.type == 'heading' or block.type == 'divider' or block.type == 'description' or block.type == 'link' or block.type == 'spacer' -%}
+          {%- case block.type -%}
+            {%- when 'tagline' -%}
+              {%- if block.settings.text != blank -%}
+                <span class="luxury-craft__tag" style="{% if block.settings.color != blank %}color: {{ block.settings.color }};{% endif %}" {{ block.shopify_attributes }}>{{ block.settings.text }}</span>
+              {%- endif -%}
+            {%- when 'heading' -%}
+              {%- if block.settings.text != blank -%}
+                <h2 class="luxury-craft__title" style="{% if block.settings.color != blank %}color: {{ block.settings.color }};{% endif %}" {{ block.shopify_attributes }}>{{ block.settings.text }}</h2>
+              {%- endif -%}
+            {%- when 'divider' -%}
+              <div class="luxury-craft__title-line" style="{% if block.settings.color != blank %}background-color: {{ block.settings.color }};{% endif %}" {{ block.shopify_attributes }}></div>
+            {%- when 'description' -%}
+              {%- if block.settings.text != blank -%}
+                <p class="luxury-craft__desc" style="{% if block.settings.color != blank %}color: {{ block.settings.color }};{% endif %}" {{ block.shopify_attributes }}>{{ block.settings.text }}</p>
+              {%- endif -%}
+            {%- when 'link' -%}
+              {%- if block.settings.label != blank -%}
+                <a href="{{ block.settings.url | default: '#' }}" class="luxury-craft__link" style="{% if block.settings.color != blank %}color: {{ block.settings.color }}; border-bottom-color: {{ block.settings.color | color_modify: 'alpha', 0.25 }};{% endif %}" {{ block.shopify_attributes }}>
+                  {{ block.settings.label }}
+                  <svg viewBox="0 0 24 24">
+                    <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </a>
+              {%- endif -%}
+            {%- when 'spacer' -%}
+              <div class="luxury-craft__spacer" style="height: {{ block.settings.height }}px;" {{ block.shopify_attributes }}></div>
+          {%- endcase -%}
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Luxury Craftsmanship Hero",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Estilos y Colores Globales"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Color de Fondo",
+      "default": "#faf6f0"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Color del Texto",
+      "default": "#1a1c1a"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Color de Acento (Gold)",
+      "default": "#bc9c5d"
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Imagen de Fondo Personalizada",
+      "info": "Si se deja en blanco, se usará la imagen premium por defecto de la marca."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "tagline",
+      "name": "Etiqueta (Kicker)",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Texto",
+          "default": "OUR CRAFTSMANSHIP"
+        },
+        {
+          "type": "color",
+          "id": "color",
+          "label": "Color del Texto",
+          "info": "Si se deja vacío, se usará el color de acento global de la sección."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "name": "Título",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Texto",
+          "default": "Crafted with purpose."
+        },
+        {
+          "type": "color",
+          "id": "color",
+          "label": "Color del Texto",
+          "info": "Si se deja vacío, se usará el color de texto global de la sección."
+        }
+      ]
+    },
+    {
+      "type": "divider",
+      "name": "Línea Decorativa",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "color",
+          "id": "color",
+          "label": "Color de la Línea",
+          "info": "Si se deja vacío, se usará el color de acento global de la sección."
+        }
+      ]
+    },
+    {
+      "type": "description",
+      "name": "Párrafo de Descripción",
+      "limit": 3,
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Contenido",
+          "default": "We believe that true beauty lies in the details."
+        },
+        {
+          "type": "color",
+          "id": "color",
+          "label": "Color del Texto",
+          "info": "Si se deja vacío, se usará el color de texto global de la sección."
+        }
+      ]
+    },
+    {
+      "type": "link",
+      "name": "Enlace Editorial",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Texto del Enlace",
+          "default": "EXPLORE OUR PROCESS"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "URL del Enlace"
+        },
+        {
+          "type": "color",
+          "id": "color",
+          "label": "Color del Texto",
+          "info": "Si se deja vacío, se usará el color de texto global de la sección."
+        }
+      ]
+    },
+    {
+      "type": "spacer",
+      "name": "Espaciador",
+      "settings": [
+        {
+          "type": "range",
+          "id": "height",
+          "min": 4,
+          "max": 120,
+          "step": 4,
+          "unit": "px",
+          "label": "Altura del Espacio",
+          "default": 24
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Luxury Craftsmanship Hero",
+      "blocks": [
+        {
+          "type": "tagline",
+          "settings": {
+            "text": "OUR CRAFTSMANSHIP"
+          }
+        },
+        {
+          "type": "spacer",
+          "settings": {
+            "height": 24
+          }
+        },
+        {
+          "type": "heading",
+          "settings": {
+            "text": "Crafted with purpose."
+          }
+        },
+        {
+          "type": "spacer",
+          "settings": {
+            "height": 32
+          }
+        },
+        {
+          "type": "divider"
+        },
+        {
+          "type": "spacer",
+          "settings": {
+            "height": 32
+          }
+        },
+        {
+          "type": "description",
+          "settings": {
+            "text": "Every Lumina piece is the result of meticulous craftsmanship and a deep respect for materials."
+          }
+        },
+        {
+          "type": "spacer",
+          "settings": {
+            "height": 16
+          }
+        },
+        {
+          "type": "description",
+          "settings": {
+            "text": "We believe that true beauty lies in the details—the ones you see, and the ones you feel."
+          }
+        },
+        {
+          "type": "spacer",
+          "settings": {
+            "height": 48
+          }
+        },
+        {
+          "type": "link",
+          "settings": {
+            "label": "EXPLORE OUR PROCESS"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

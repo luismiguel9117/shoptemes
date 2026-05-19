@@ -1,10 +1,10 @@
 {%- comment -%}
-  Ritual Cosmético / ShopTHEMES - Luxury Hero Section (OS 2.0 Banner Pure Content)
-  Este componente se enfoca 100% en la presentación visual del Hero (títulos, espaciadores, descripciones, botones).
+  Ritual Cosmético / ShopTHEMES - Luxury Featured Product Slide Section (OS 2.0)
+  Representa la segunda diapositiva de pantalla completa (Celeste Necklace) con soporte para scroll snap.
 {%- endcomment -%}
 
 <style>
-  .luxury-hero-{{ section.id }} {
+  .luxury-feat-{{ section.id }} {
     --heading-font: 'Cormorant Garamond', serif;
     --sans-font: 'Montserrat', sans-serif;
     
@@ -26,7 +26,7 @@
   }
 
   /* Background Image & Overlay */
-  .luxury-hero-{{ section.id }} .luxury-hero__bg {
+  .luxury-feat-{{ section.id }} .luxury-feat__bg {
     position: absolute;
     top: 0;
     left: 0;
@@ -34,7 +34,7 @@
     height: 100%;
     z-index: 1;
   }
-  .luxury-hero-{{ section.id }} .luxury-hero__bg-img {
+  .luxury-feat-{{ section.id }} .luxury-feat__bg-img {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -43,10 +43,10 @@
     transform: scale(1.03);
     transition: transform 3s cubic-bezier(0.25, 1, 0.5, 1);
   }
-  .luxury-hero-{{ section.id }}:hover .luxury-hero__bg-img {
+  .luxury-feat-{{ section.id }}:hover .luxury-feat__bg-img {
     transform: scale(1);
   }
-  .luxury-hero-{{ section.id }} .luxury-hero__overlay {
+  .luxury-feat-{{ section.id }} .luxury-feat__overlay {
     position: absolute;
     inset: 0;
     background: var(--overlay-color);
@@ -55,8 +55,8 @@
     transition: opacity 0.5s ease;
   }
 
-  /* Main Hero Content Container */
-  .luxury-hero-{{ section.id }} .luxury-hero__container {
+  /* Main Content Container */
+  .luxury-feat-{{ section.id }} .luxury-feat__container {
     position: relative;
     z-index: 10;
     height: 100%;
@@ -68,18 +68,18 @@
     box-sizing: border-box;
   }
   @media (max-width: 768px) {
-    .luxury-hero-{{ section.id }} .luxury-hero__container {
+    .luxury-feat-{{ section.id }} .luxury-feat__container {
       padding: 0 2rem;
     }
   }
-  .luxury-hero-{{ section.id }} .luxury-hero__content {
+  .luxury-feat-{{ section.id }} .luxury-feat__content {
     max-width: 680px;
     text-align: left;
     margin-top: 4rem;
   }
 
   /* Subtitle Block */
-  .luxury-hero-{{ section.id }} .luxury-hero__subtitle {
+  .luxury-feat-{{ section.id }} .luxury-feat__subtitle {
     font-size: 11px;
     font-weight: 500;
     text-transform: uppercase;
@@ -87,11 +87,11 @@
     display: block;
     margin: 0;
     opacity: 0;
-    animation: fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation: fadeInUpFeat 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
 
   /* Title Block */
-  .luxury-hero-{{ section.id }} .luxury-hero__title {
+  .luxury-feat-{{ section.id }} .luxury-feat__title {
     font-family: var(--heading-font);
     font-size: clamp(48px, 6vw, 84px);
     font-weight: 300;
@@ -101,9 +101,9 @@
     letter-spacing: -0.02em;
     color: var(--text-color);
     opacity: 0;
-    animation: fadeInUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation: fadeInUpFeat 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
-  .luxury-hero-{{ section.id }} .luxury-hero__title span.italic {
+  .luxury-feat-{{ section.id }} .luxury-feat__title span.italic {
     font-family: var(--heading-font);
     font-style: italic;
     font-weight: 300;
@@ -112,27 +112,27 @@
   }
 
   /* Description Block */
-  .luxury-hero-{{ section.id }} .luxury-hero__desc {
+  .luxury-feat-{{ section.id }} .luxury-feat__desc {
     font-size: clamp(13px, 1.5vw, 15px);
     line-height: 1.8;
     margin: 0;
     font-weight: 300;
     opacity: 0;
-    animation: fadeInUp 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation: fadeInUpFeat 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
 
   /* CTAs: Underlined Link vs Dual Pills */
-  .luxury-hero-{{ section.id }} .luxury-hero__ctas {
+  .luxury-feat-{{ section.id }} .luxury-feat__ctas {
     display: flex;
     flex-wrap: wrap;
     gap: 1.5rem;
     align-items: center;
     opacity: 0;
-    animation: fadeInUp 1.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation: fadeInUpFeat 1.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
   
   /* Underlined Link Style */
-  .luxury-hero-{{ section.id }} .luxury-hero__cta-underline {
+  .luxury-feat-{{ section.id }} .luxury-feat__cta-underline {
     font-size: 11px;
     font-weight: 500;
     text-transform: uppercase;
@@ -146,11 +146,11 @@
     border-bottom: 1px solid rgba(255, 255, 255, 0.4);
     transition: border-bottom-color 0.4s ease, gap 0.4s cubic-bezier(0.25, 1, 0.5, 1);
   }
-  .luxury-hero-{{ section.id }} .luxury-hero__cta-underline:hover {
+  .luxury-feat-{{ section.id }} .luxury-feat__cta-underline:hover {
     border-bottom-color: var(--text-color);
     gap: 1.5rem;
   }
-  .luxury-hero-{{ section.id }} .luxury-hero__cta-underline svg {
+  .luxury-feat-{{ section.id }} .luxury-feat__cta-underline svg {
     width: 18px;
     height: 12px;
     fill: currentColor;
@@ -158,7 +158,7 @@
   }
 
   /* Pills Style */
-  .luxury-hero-{{ section.id }} .luxury-hero__btn-fill {
+  .luxury-feat-{{ section.id }} .luxury-feat__btn-fill {
     font-size: 12px;
     font-weight: 500;
     text-transform: uppercase;
@@ -171,13 +171,13 @@
     box-shadow: 0 4px 20px rgba(0,0,0,0.1);
     transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), background-color 0.4s ease, box-shadow 0.4s ease;
   }
-  .luxury-hero-{{ section.id }} .luxury-hero__btn-fill:hover {
+  .luxury-feat-{{ section.id }} .luxury-feat__btn-fill:hover {
     transform: translateY(-2px);
     background-color: rgba(255, 255, 255, 0.9);
     box-shadow: 0 8px 30px rgba(255, 255, 255, 0.15);
   }
   
-  .luxury-hero-{{ section.id }} .luxury-hero__btn-outline {
+  .luxury-feat-{{ section.id }} .luxury-feat__btn-outline {
     font-size: 12px;
     font-weight: 500;
     text-transform: uppercase;
@@ -192,20 +192,20 @@
     -webkit-backdrop-filter: blur(10px);
     transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.4s ease, background-color 0.4s ease;
   }
-  .luxury-hero-{{ section.id }} .luxury-hero__btn-outline:hover {
+  .luxury-feat-{{ section.id }} .luxury-feat__btn-outline:hover {
     transform: translateY(-2px);
     border-color: var(--text-color);
     background-color: rgba(255,255,255,0.08);
   }
 
   /* Spacers */
-  .luxury-hero-{{ section.id }} .luxury-hero__spacer {
+  .luxury-feat-{{ section.id }} .luxury-feat__spacer {
     width: 100%;
     clear: both;
   }
 
   /* Bottom Details Grid */
-  .luxury-hero-{{ section.id }} .luxury-hero__bottom {
+  .luxury-feat-{{ section.id }} .luxury-feat__bottom {
     position: absolute;
     bottom: 2.5rem;
     left: 4rem;
@@ -217,37 +217,37 @@
     box-sizing: border-box;
   }
   @media (max-width: 768px) {
-    .luxury-hero-{{ section.id }} .luxury-hero__bottom {
+    .luxury-feat-{{ section.id }} .luxury-feat__bottom {
       left: 2rem;
       right: 2rem;
       bottom: 2rem;
     }
-    .luxury-hero-{{ section.id }} .luxury-hero__bottom-right {
+    .luxury-feat-{{ section.id }} .luxury-feat__bottom-right {
       display: none !important;
     }
   }
-  .luxury-hero-{{ section.id }} .luxury-hero__bottom-block {
+  .luxury-feat-{{ section.id }} .luxury-feat__bottom-block {
     opacity: 0.65;
     transition: opacity 0.5s ease;
   }
-  .luxury-hero-{{ section.id }} .luxury-hero__bottom-block:hover {
+  .luxury-feat-{{ section.id }} .luxury-feat__bottom-block:hover {
     opacity: 0.95;
   }
-  .luxury-hero-{{ section.id }} .luxury-hero__bottom-label {
+  .luxury-feat-{{ section.id }} .luxury-feat__bottom-label {
     font-size: 10px;
     font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 0.3em;
     margin: 0 0 6px 0;
   }
-  .luxury-hero-{{ section.id }} .luxury-hero__bottom-val {
+  .luxury-feat-{{ section.id }} .luxury-feat__bottom-val {
     font-size: 13px;
     margin: 0;
     font-weight: 300;
   }
 
   /* Slides Carousel Indicator (Bottom-Left custom visual) */
-  .luxury-hero-{{ section.id }} .luxury-hero__indicator {
+  .luxury-feat-{{ section.id }} .luxury-feat__indicator {
     position: absolute;
     bottom: 12rem;
     left: 4rem;
@@ -258,11 +258,11 @@
     gap: 12px;
   }
   @media (max-width: 768px) {
-    .luxury-hero-{{ section.id }} .luxury-hero__indicator {
+    .luxury-feat-{{ section.id }} .luxury-feat__indicator {
       display: none !important;
     }
   }
-  .luxury-hero-{{ section.id }} .luxury-hero__indicator-line {
+  .luxury-feat-{{ section.id }} .luxury-feat__indicator-line {
     width: 1px;
     height: 60px;
     background-color: var(--text-color);
@@ -270,16 +270,16 @@
     position: relative;
     overflow: hidden;
   }
-  .luxury-hero-{{ section.id }} .luxury-hero__indicator-line::after {
+  .luxury-feat-{{ section.id }} .luxury-feat__indicator-line::after {
     content: '';
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
-    height: 40%;
+    height: 66%; /* 02 out of 03 represents roughly 66% progress */
     background-color: var(--text-color);
   }
-  .luxury-hero-{{ section.id }} .luxury-hero__indicator-num {
+  .luxury-feat-{{ section.id }} .luxury-feat__indicator-num {
     font-size: 11px;
     font-weight: 400;
     letter-spacing: 0.1em;
@@ -287,8 +287,8 @@
     line-height: 1.5;
   }
 
-  /* FadeInUp entry animations */
-  @keyframes fadeInUp {
+  /* FadeInUpFeat entry animations */
+  @keyframes fadeInUpFeat {
     from {
       opacity: 0;
       transform: translateY(20px);
@@ -300,9 +300,9 @@
   }
 </style>
 
-<div class="luxury-hero-{{ section.id }} scroll-snap-slide">
-  <!-- Background Image with responsive sizing -->
-  <div class="luxury-hero__bg">
+<div class="luxury-feat-{{ section.id }} scroll-snap-slide">
+  <!-- Background Image -->
+  <div class="luxury-feat__bg">
     {%- if section.settings.image != blank -%}
       <picture>
         {%- if section.settings.image_mobile != blank -%}
@@ -315,30 +315,30 @@
                   {{ section.settings.image | image_url: width: 2000 }} 2000w"
           src="{{ section.settings.image | image_url: width: 1600 }}"
           alt="{{ section.settings.image.alt | escape }}"
-          loading="eager"
+          loading="lazy"
           width="100%"
           height="100%"
-          class="luxury-hero__bg-img"
+          class="luxury-feat__bg-img"
         >
       </picture>
     {%- else -%}
       <img
-        src="{{ 'luxury-hero-bg.jpg' | asset_url }}"
-        alt="Luxury Jewelry Default Background"
-        loading="eager"
+        src="{{ 'luxury-hero-bg-2.jpg' | asset_url }}"
+        alt="Celeste Necklace Background"
+        loading="lazy"
         width="100%"
         height="100%"
-        class="luxury-hero__bg-img"
+        class="luxury-feat__bg-img"
       >
     {%- endif -%}
-    <div class="luxury-hero__overlay"></div>
+    <div class="luxury-feat__overlay"></div>
   </div>
 
-  <!-- Main visual indicators (LUMINA slide style) -->
+  <!-- Slide indicator -->
   {%- if section.settings.show_slide_indicator -%}
-    <div class="luxury-hero__indicator">
-      <div class="luxury-hero__indicator-line"></div>
-      <div class="luxury-hero__indicator-num">
+    <div class="luxury-feat__indicator">
+      <div class="luxury-feat__indicator-line"></div>
+      <div class="luxury-feat__indicator-num">
         {{ section.settings.slide_current }}<br>
         {{ section.settings.slide_total }}
       </div>
@@ -346,20 +346,20 @@
   {%- endif -%}
 
   <!-- Main Content container iterating blocks -->
-  <div class="luxury-hero__container">
-    <div class="luxury-hero__content">
+  <div class="luxury-feat__container">
+    <div class="luxury-feat__content">
       {%- for block in section.blocks -%}
         {%- case block.type -%}
           
           {%- when 'subtitle' -%}
             {%- if block.settings.text != blank -%}
-              <span class="luxury-hero__subtitle" style="{% if block.settings.color != blank %}color: {{ block.settings.color }};{% endif %}" {{ block.shopify_attributes }}>
+              <span class="luxury-feat__subtitle" style="{% if block.settings.color != blank %}color: {{ block.settings.color }};{% endif %}" {{ block.shopify_attributes }}>
                 {{ block.settings.text }}
               </span>
             {%- endif -%}
 
           {%- when 'title' -%}
-            <h1 class="luxury-hero__title" style="{% if block.settings.color != blank %}color: {{ block.settings.color }};{% endif %}" {{ block.shopify_attributes }}>
+            <h1 class="luxury-feat__title" style="{% if block.settings.color != blank %}color: {{ block.settings.color }};{% endif %}" {{ block.shopify_attributes }}>
               {{ block.settings.title_line_1 }}
               {%- if block.settings.title_line_2 != blank -%}
                 <span class="{% if block.settings.title_line_2_italic %}italic{% endif %}">
@@ -370,16 +370,16 @@
 
           {%- when 'description' -%}
             {%- if block.settings.text != blank -%}
-              <p class="luxury-hero__desc" style="max-width: {{ block.settings.max_width }}px; {% if block.settings.color != blank %}color: {{ block.settings.color }};{% endif %}" {{ block.shopify_attributes }}>
+              <p class="luxury-feat__desc" style="max-width: {{ block.settings.max_width }}px; {% if block.settings.color != blank %}color: {{ block.settings.color }};{% endif %}" {{ block.shopify_attributes }}>
                 {{ block.settings.text }}
               </p>
             {%- endif -%}
 
           {%- when 'buttons' -%}
-            <div class="luxury-hero__ctas" {{ block.shopify_attributes }}>
+            <div class="luxury-feat__ctas" {{ block.shopify_attributes }}>
               {%- if block.settings.button_style == 'underline' -%}
                 {%- if block.settings.btn_1_label != blank -%}
-                  <a href="{{ block.settings.btn_1_link | default: '#' }}" class="luxury-hero__cta-underline">
+                  <a href="{{ block.settings.btn_1_link | default: '#' }}" class="luxury-feat__cta-underline">
                     {{ block.settings.btn_1_label }}
                     <svg viewBox="0 0 24 24">
                       <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -388,12 +388,12 @@
                 {%- endif -%}
               {%- else -%}
                 {%- if block.settings.btn_1_label != blank -%}
-                  <a href="{{ block.settings.btn_1_link | default: '#' }}" class="luxury-hero__btn-fill">
+                  <a href="{{ block.settings.btn_1_link | default: '#' }}" class="luxury-feat__btn-fill">
                     {{ block.settings.btn_1_label }}
                   </a>
                 {%- endif -%}
                 {%- if block.settings.btn_2_label != blank -%}
-                  <a href="{{ block.settings.btn_2_link | default: '#' }}" class="luxury-hero__btn-outline">
+                  <a href="{{ block.settings.btn_2_link | default: '#' }}" class="luxury-feat__btn-outline">
                     {{ block.settings.btn_2_label }}
                   </a>
                 {%- endif -%}
@@ -401,7 +401,7 @@
             </div>
 
           {%- when 'spacer' -%}
-            <div class="luxury-hero__spacer" style="height: {{ block.settings.height }}px;" {{ block.shopify_attributes }}></div>
+            <div class="luxury-feat__spacer" style="height: {{ block.settings.height }}px;" {{ block.shopify_attributes }}></div>
 
         {%- endcase -%}
       {%- endfor -%}
@@ -409,22 +409,22 @@
   </div>
 
   <!-- Bottom Craftsmanship details -->
-  <div class="luxury-hero__bottom">
-    <div class="luxury-hero__bottom-block luxury-hero__bottom-left">
-      <p class="luxury-hero__bottom-label">{{ section.settings.bottom_left_label }}</p>
-      <p class="luxury-hero__bottom-val">{{ section.settings.bottom_left_text }}</p>
+  <div class="luxury-feat__bottom">
+    <div class="luxury-feat__bottom-block luxury-feat__bottom-left">
+      <p class="luxury-feat__bottom-label">{{ section.settings.bottom_left_label }}</p>
+      <p class="luxury-feat__bottom-val">{{ section.settings.bottom_left_text }}</p>
     </div>
 
-    <div class="luxury-hero__bottom-block luxury-hero__bottom-right">
-      <p class="luxury-hero__bottom-label">{{ section.settings.bottom_right_label }}</p>
-      <p class="luxury-hero__bottom-val">{{ section.settings.bottom_right_text }}</p>
+    <div class="luxury-feat__bottom-block luxury-feat__bottom-right">
+      <p class="luxury-feat__bottom-label">{{ section.settings.bottom_right_label }}</p>
+      <p class="luxury-feat__bottom-val">{{ section.settings.bottom_right_text }}</p>
     </div>
   </div>
 </div>
 
 {% schema %}
 {
-  "name": "Luxury Hero Editorial",
+  "name": "Luxury Featured Piece",
   "settings": [
     {
       "type": "header",
@@ -434,7 +434,7 @@
       "type": "image_picker",
       "id": "image",
       "label": "Imagen de Fondo (Desktop)",
-      "info": "Se recomienda un tamaño de 2000 x 1200px."
+      "info": "Si se deja en blanco, cargará la imagen de Celeste Necklace por defecto."
     },
     {
       "type": "image_picker",
@@ -450,25 +450,25 @@
       "type": "text",
       "id": "bottom_left_label",
       "label": "Detalle Izquierdo - Etiqueta",
-      "default": "Handcrafted"
+      "default": "FEATURED PIECE"
     },
     {
       "type": "text",
       "id": "bottom_left_text",
       "label": "Detalle Izquierdo - Valor",
-      "default": "Lima — Peru"
+      "default": "Celeste Necklace"
     },
     {
       "type": "text",
       "id": "bottom_right_label",
       "label": "Detalle Derecho - Etiqueta",
-      "default": "New Drop"
+      "default": "MATERIAL"
     },
     {
       "type": "text",
       "id": "bottom_right_text",
       "label": "Detalle Derecho - Valor",
-      "default": "Limited Edition Pieces"
+      "default": "18k Gold & Fine Diamond"
     },
     {
       "type": "checkbox",
@@ -480,13 +480,13 @@
       "type": "text",
       "id": "slide_current",
       "label": "Diapositiva Actual",
-      "default": "01"
+      "default": "02"
     },
     {
       "type": "text",
       "id": "slide_total",
       "label": "Total de Diapositivas",
-      "default": "03"
+      "default": "11"
     },
     {
       "type": "header",
@@ -512,7 +512,7 @@
       "step": 5,
       "unit": "%",
       "label": "Opacidad del Overlay",
-      "default": 25
+      "default": 10
     },
     {
       "type": "color",
@@ -537,7 +537,7 @@
           "type": "text",
           "id": "text",
           "label": "Texto del Subtítulo",
-          "default": "Fine Jewelry Collection 2026"
+          "default": "FEATURED PIECE"
         },
         {
           "type": "color",
@@ -555,13 +555,13 @@
           "type": "text",
           "id": "title_line_1",
           "label": "Título - Línea 1",
-          "default": "Designed to be"
+          "default": "Celeste"
         },
         {
           "type": "text",
           "id": "title_line_2",
           "label": "Título - Línea 2",
-          "default": "cherished forever."
+          "default": "Necklace"
         },
         {
           "type": "checkbox",
@@ -585,7 +585,7 @@
           "type": "textarea",
           "id": "text",
           "label": "Texto de Descripción",
-          "default": "Timeless pieces, handcrafted with precision and passion in 18k gold and natural diamonds."
+          "default": "A delicate balance of light and form, designed to be worn every day, and treasured forever."
         },
         {
           "type": "range",
@@ -629,7 +629,7 @@
           "type": "text",
           "id": "btn_1_label",
           "label": "Botón Principal - Texto",
-          "default": "Explore Collection"
+          "default": "Discover this piece"
         },
         {
           "type": "url",
@@ -668,7 +668,7 @@
   ],
   "presets": [
     {
-      "name": "Luxury Hero Editorial",
+      "name": "Luxury Featured Piece",
       "category": "Hero Banners",
       "blocks": [
         {
