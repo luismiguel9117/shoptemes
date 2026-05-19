@@ -1,8 +1,37 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
       "type": "luxury-list-collections",
-      "settings": {}
+      "settings": {
+        "title": "Shop Collections",
+        "description": "Timeless pieces, designed to be worn, loved, and passed down.",
+        "link_label": "Explore",
+        "col_1_title": "RINGS",
+        "col_1_url": "",
+        "col_2_title": "NECKLACES",
+        "col_2_url": "shopify://collections/neckleces",
+        "col_3_title": "EARRINGS",
+        "col_3_url": "shopify://collections/earrings",
+        "col_4_title": "BRACELETS",
+        "col_4_url": "shopify://collections/bracelets",
+        "col_5_title": "FINE ESSENTIALS",
+        "col_5_url": "shopify://collections/neckleces",
+        "cta_title": "CRAFTED TO LAST",
+        "cta_subtitle": "Discover the artistry behind every Lumina piece.",
+        "cta_link_label": "OUR CRAFTSMANSHIP",
+        "cta_link_url": "",
+        "bg_color": "#fbf9f6",
+        "text_color": "#1a1c1a"
+      }
     }
   },
   "order": [

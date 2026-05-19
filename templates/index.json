@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "hero": {
@@ -6,7 +15,8 @@
         "subtitle": {
           "type": "subtitle",
           "settings": {
-            "text": "Fine Jewelry Collection 2026"
+            "text": "Fine Jewelry Collection 2026",
+            "color": ""
           }
         },
         "spacer_1": {
@@ -20,7 +30,8 @@
           "settings": {
             "title_line_1": "Designed to be",
             "title_line_2": "cherished forever.",
-            "title_line_2_italic": true
+            "title_line_2_italic": true,
+            "color": ""
           }
         },
         "spacer_2": {
@@ -33,7 +44,8 @@
           "type": "description",
           "settings": {
             "text": "Timeless pieces, handcrafted with precision and passion in 18k gold and natural diamonds.",
-            "max_width": 460
+            "max_width": 460,
+            "color": ""
           }
         },
         "spacer_3": {
@@ -46,7 +58,10 @@
           "type": "buttons",
           "settings": {
             "button_style": "underline",
-            "btn_1_label": "Explore Collection"
+            "btn_1_label": "Explore Collection",
+            "btn_1_link": "",
+            "btn_2_label": "Discover Brand",
+            "btn_2_link": ""
           }
         }
       },
@@ -66,7 +81,12 @@
         "bottom_right_text": "Limited Edition Pieces",
         "show_slide_indicator": true,
         "slide_current": "01",
-        "slide_total": "11"
+        "slide_total": "11",
+        "text_color": "#ffffff",
+        "overlay_color": "#000000",
+        "overlay_opacity": 25,
+        "btn_fill_bg": "#ffffff",
+        "btn_fill_text": "#000000"
       }
     },
     "featured-product": {
@@ -75,7 +95,8 @@
         "subtitle": {
           "type": "subtitle",
           "settings": {
-            "text": "FEATURED PIECE"
+            "text": "FEATURED PIECE",
+            "color": ""
           }
         },
         "spacer_1": {
@@ -89,7 +110,8 @@
           "settings": {
             "title_line_1": "Celeste",
             "title_line_2": "Necklace",
-            "title_line_2_italic": true
+            "title_line_2_italic": true,
+            "color": ""
           }
         },
         "spacer_2": {
@@ -102,7 +124,8 @@
           "type": "description",
           "settings": {
             "text": "A delicate balance of light and form, designed to be worn every day, and treasured forever.",
-            "max_width": 460
+            "max_width": 460,
+            "color": ""
           }
         },
         "spacer_3": {
@@ -115,7 +138,10 @@
           "type": "buttons",
           "settings": {
             "button_style": "underline",
-            "btn_1_label": "Discover this piece"
+            "btn_1_label": "Discover this piece",
+            "btn_1_link": "",
+            "btn_2_label": "Discover Brand",
+            "btn_2_link": ""
           }
         }
       },
@@ -135,7 +161,12 @@
         "bottom_right_text": "18k Gold & Fine Diamond",
         "show_slide_indicator": true,
         "slide_current": "02",
-        "slide_total": "11"
+        "slide_total": "11",
+        "text_color": "#ffffff",
+        "overlay_color": "#000000",
+        "overlay_opacity": 10,
+        "btn_fill_bg": "#ffffff",
+        "btn_fill_text": "#000000"
       }
     },
     "craftsmanship": {
@@ -144,7 +175,8 @@
         "tagline_1": {
           "type": "tagline",
           "settings": {
-            "text": "OUR CRAFTSMANSHIP"
+            "text": "OUR CRAFTSMANSHIP",
+            "color": ""
           }
         },
         "spacer_1": {
@@ -156,7 +188,8 @@
         "heading_1": {
           "type": "heading",
           "settings": {
-            "text": "Crafted with purpose."
+            "text": "Crafted with purpose.",
+            "color": ""
           }
         },
         "spacer_2": {
@@ -166,7 +199,10 @@
           }
         },
         "divider_1": {
-          "type": "divider"
+          "type": "divider",
+          "settings": {
+            "color": ""
+          }
         },
         "spacer_3": {
           "type": "spacer",
@@ -177,7 +213,8 @@
         "desc_1": {
           "type": "description",
           "settings": {
-            "text": "Every Lumina piece is the result of meticulous craftsmanship and a deep respect for materials."
+            "text": "Every Lumina piece is the result of meticulous craftsmanship and a deep respect for materials.",
+            "color": ""
           }
         },
         "spacer_4": {
@@ -189,7 +226,8 @@
         "desc_2": {
           "type": "description",
           "settings": {
-            "text": "We believe that true beauty lies in the details—the ones you see, and the ones you feel."
+            "text": "We believe that true beauty lies in the details—the ones you see, and the ones you feel.",
+            "color": ""
           }
         },
         "spacer_5": {
@@ -202,7 +240,8 @@
           "type": "link",
           "settings": {
             "label": "EXPLORE OUR PROCESS",
-            "url": ""
+            "url": "",
+            "color": ""
           }
         }
       },
@@ -220,53 +259,9 @@
         "link_1"
       ],
       "settings": {
-        "text_color": "#1a1c1a",
-        "accent_color": "#bc9c5d"
-      }
-    },
-    "collections-grid": {
-      "type": "luxury-collections-grid",
-      "blocks": {
-        "col_1": {
-          "type": "collection_card",
-          "settings": {
-            "title": "Necklaces"
-          }
-        },
-        "col_2": {
-          "type": "collection_card",
-          "settings": {
-            "title": "Rings"
-          }
-        },
-        "col_3": {
-          "type": "collection_card",
-          "settings": {
-            "title": "Earrings"
-          }
-        },
-        "col_4": {
-          "type": "collection_card",
-          "settings": {
-            "title": "Bracelets"
-          }
-        }
-      },
-      "block_order": [
-        "col_1",
-        "col_2",
-        "col_3",
-        "col_4"
-      ],
-      "settings": {
         "bg_color": "#faf6f0",
         "text_color": "#1a1c1a",
-        "accent_color": "#bc9c5d",
-        "tagline": "COLLECTIONS",
-        "title": "Timeless by design. Made to be lived in.",
-        "description": "Discover our signature collections, crafted with intention and cherished every day.",
-        "link_label": "EXPLORE ALL COLLECTIONS",
-        "show_props": true
+        "accent_color": "#bc9c5d"
       }
     },
     "craftsmanship-grid": {
@@ -306,13 +301,75 @@
         "statement_prefix": "Thoughtful design. Responsible sourcing. Traditional techniques.",
         "statement_italic": "This is the Lumina standard."
       }
+    },
+    "collections-grid": {
+      "type": "luxury-collections-grid",
+      "blocks": {
+        "col_1": {
+          "type": "collection_card",
+          "settings": {
+            "title": "Necklaces",
+            "link_label": "DISCOVER THE COLLECTION",
+            "url": "shopify://collections/neckleces"
+          }
+        },
+        "col_2": {
+          "type": "collection_card",
+          "settings": {
+            "title": "Rings",
+            "link_label": "DISCOVER THE COLLECTION",
+            "url": ""
+          }
+        },
+        "col_3": {
+          "type": "collection_card",
+          "settings": {
+            "title": "Earrings",
+            "link_label": "DISCOVER THE COLLECTION",
+            "url": "shopify://collections/earrings"
+          }
+        },
+        "col_4": {
+          "type": "collection_card",
+          "settings": {
+            "title": "Bracelets",
+            "link_label": "DISCOVER THE COLLECTION",
+            "url": "shopify://collections/bracelets"
+          }
+        }
+      },
+      "block_order": [
+        "col_1",
+        "col_2",
+        "col_3",
+        "col_4"
+      ],
+      "settings": {
+        "bg_color": "#faf6f0",
+        "text_color": "#1a1c1a",
+        "accent_color": "#bc9c5d",
+        "tagline": "COLLECTIONS",
+        "title": "Timeless by design. Made to be lived in.",
+        "description": "Discover our signature collections, crafted with intention and cherished every day.",
+        "link_label": "EXPLORE ALL COLLECTIONS",
+        "link_url": "",
+        "show_props": true,
+        "prop_title_1": "HANDCRAFTED",
+        "prop_desc_1": "BY SKILLED ARTISANS",
+        "prop_title_2": "ETHICAL MATERIALS",
+        "prop_desc_2": "RESPONSIBLY SOURCED",
+        "prop_title_3": "FINEST QUALITY",
+        "prop_desc_3": "MADE TO LAST",
+        "prop_title_4": "COMPLIMENTARY SHIPPING",
+        "prop_desc_4": "ON ALL ORDERS"
+      }
     }
   },
   "order": [
-      "hero",
-      "featured-product",
-      "craftsmanship",
-      "craftsmanship-grid",
-      "collections-grid"
-    ]
+    "hero",
+    "featured-product",
+    "craftsmanship",
+    "craftsmanship-grid",
+    "collections-grid"
+  ]
 }
